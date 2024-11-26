@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('firstName');
             $table->string('lastName');
-            $table->string('cardNumber');
-            $table->date('birthDate');
-            $table->enum('sex', ['M', 'F']);
+            $table->string('cardNumber')->nullable();
+            $table->date('birthDate')->nullable();
+            $table->enum('sex', ['M', 'F'])->nullable();
             $table->float('wallet')->default(0);
             $table->boolean('isActive')->default(false);
             $table->enum('role' , ['admin' , 'user'])->default('user');
