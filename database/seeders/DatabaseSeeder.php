@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert(
             [
                 'firstName' => 'دانیال ',
-                'lastName' => 'دانیال رومیانی',
+                'lastName' => ' رومیانی',
                 'email' => 'daniyal_roomiyani@yahoo.com',
                 'password' =>'$2y$12$7PkuFKThjOM5pzZwaHja9e9CWm8iMwnvfrS42ecEqVnqXyMO66WWq',
 //                'admin' =>true,

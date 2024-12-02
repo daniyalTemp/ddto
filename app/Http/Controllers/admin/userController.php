@@ -3,18 +3,22 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use function Symfony\Component\String\u;
 
 class userController extends Controller
 {
-    public function index()
+    public function list()
     {
-
+        $users= User::all();
+        return view('dashboard.user.list' , compact('users'));
     }
-    public function create(){
+    public function add(){
 
+        return view('dashboard.user.form');
     }
     public function store(Request $request){}
     public function show($id){}

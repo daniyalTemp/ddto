@@ -1,4 +1,4 @@
-@extends('back.layout.main')
+@extends('dashboard.layout.main')
 
 @section('content')
 
@@ -17,6 +17,8 @@
                             <tr>
                                 <th></th>
                                 <th>نام</th>
+                                <th>تلقن</th>
+                                <th>تلقن</th>
                                 <th>ایمیل</th>
                                 <th>تاریخ عضویت</th>
                                 <th>عملیات</th>
@@ -27,10 +29,12 @@
                                 @foreach($users as $user)
                                     <tr>
                                         <td><img class="rounded-circle" width="35"
-                                                 src="{{asset('storage/images/profile/'.$user->image)}}" alt=""></td>
-                                        <td>{{$user->name}}</td>
+                                                 src="{{asset('storage/images/profile/'.$user->pic)}}" alt=""></td>
+                                        <td>{{$user->getFullName()}}</td>
                                         <td><a href="javascript:void(0);"><strong>{{$user->email}}</strong></a></td>
-                                        <td>{{verta($user->created_at)->format('Y/m/d');}}</td>
+                                        <td>{{$user->phone}}</td>
+                                        <td>{{$user->email}}</td>
+                                        <td>{{verta($user->created_at)->format('Y/m/d')}}</td>
                                         <td>
                                             <div class="d-flex">
                                                 <a href="{{route('dashboard.user.edit' , $user->id)}}" class="btn btn-primary shadow btn-xs sharp mr-1"><i
@@ -51,7 +55,7 @@
                                                             <div class="modal-body">
                                                                 <p>
                                                                     ایا از حذف کابر
-                                                                    {{$user->name}}
+                                                                    {{$user->getFullName()}}
 
                                                                     اطمینان دارید؟
                                                                 </p>

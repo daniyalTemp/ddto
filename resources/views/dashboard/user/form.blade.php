@@ -1,4 +1,4 @@
-@extends('back.layout.main')
+@extends('dashboard.layout.main')
 
 @section('content')
 
@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="form-validation">
                         <form class="form-valide"
-                              action="{{route('dashboard.user.addSave' , isset($user)? $user->id :-1)}}"
+                              action="{{route('dashboard.user.save' , isset($user)? $user->id :-1)}}"
                               enctype="multipart/form-data" method="post">
                             <div class="row ">
 

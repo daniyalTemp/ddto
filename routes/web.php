@@ -21,11 +21,14 @@ Route::prefix('panel')->middleware('auth')->namespace('App\Http\Controllers\admi
     Route::get('/', 'dashboardController@index')->name('dashboard.index');
 
 
-//    Route::prefix('config')->group(function () {
-//        Route::get('/', 'configController@show')->name('dashboard.config.show');
-//        Route::post('/', 'configController@save')->name('dashboard.config.save');
-//
-//    });
+    Route::prefix('users')->group(function () {
+        Route::get('/', 'userController@list')->name('dashboard.user.list');
+        Route::get('/add', 'userController@add')->name('dashboard.user.add');
+        Route::get('/edit', 'userController@edit')->name('dashboard.user.edit');
+        Route::get('/del', 'userController@del')->name('dashboard.user.del');
+       Route::post('/save', 'userController@save')->name('dashboard.user.save');
+
+    });
 //    Route::prefix('post')->group(function () {
 //        Route::get('/', 'postController@list')->name('dashboard.post.list');
 //        Route::get('/add', 'postController@add')->name('dashboard.post.add');
