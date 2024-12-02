@@ -24,9 +24,9 @@ Route::prefix('panel')->middleware('auth')->namespace('App\Http\Controllers\admi
     Route::prefix('users')->group(function () {
         Route::get('/', 'userController@list')->name('dashboard.user.list');
         Route::get('/add', 'userController@add')->name('dashboard.user.add');
-        Route::get('/edit', 'userController@edit')->name('dashboard.user.edit');
+        Route::get('/edit/{id}', 'userController@edit')->name('dashboard.user.edit');
         Route::get('/del', 'userController@del')->name('dashboard.user.del');
-       Route::post('/save', 'userController@save')->name('dashboard.user.save');
+       Route::post('/save/{id}', 'userController@save')->name('dashboard.user.save');
 
     });
 //    Route::prefix('post')->group(function () {

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('firstName');
             $table->string('lastName');
-            $table->string('NationalCode');
+            $table->string('NationalCode')->nullable();
             $table->string('cardNumber')->nullable();
-            $table->date('birthDate')->nullable();
+            $table->date('birthday')->nullable();
             $table->enum('sex', ['M', 'F'])->nullable();
             $table->float('wallet')->default(0);
             $table->boolean('isActive')->default(false);
