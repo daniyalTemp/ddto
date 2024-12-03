@@ -30,5 +30,16 @@ class DatabaseSeeder extends Seeder
 //                'image' =>'profile.png',
             ]
         );
+
+        DB::table('config')->insert(
+            [
+                'phone' => '-',
+                'address' => '-',
+                'telegram' => '-',
+                'instagram' =>'-',
+//                'admin' =>true,
+//                'image' =>'profile.png',
+            ]
+        );
     }
 }

@@ -78,7 +78,7 @@ class userController extends Controller
                 'cardNumber' => $request->cardNumber ? $request->cardNumber : null,
                 'birthday' => $request->birthDate ? $request->birthday : null,
                 'isActive' => $request->isActive ? true : false,
-                'sex' => $request->isActive ? $request->isActive : null,
+                'sex' => $request->sex ? $request->sex : null,
                 'role' => $request->role ? $request->role : 'user',
             ]);
         } else {
@@ -91,9 +91,9 @@ class userController extends Controller
             if ($request->password != null)
                 $user->password = $request->password;
             $user->cardNumber = $request->cardNumber ? $request->cardNumber : null;
-            $user->birthday = $request->birthday ?$request->birthday   : null;
+            $user->birthday = $request->birthday ? $request->birthday : null;
             $user->isActive = $request->isActive ? true : false;
-            $user->sex = $request->sex ? $request->sex  : $user->sex;
+            $user->sex = $request->sex ? $request->sex : $user->sex;
             $user->role = $request->role ? $request->role : $user->role;
             $user->save();
 
@@ -108,9 +108,73 @@ class userController extends Controller
 //        dd($request->all());
     }
 
-    public function show($id)
+    public function Profile()
     {
+        $user = Auth::user();
+        return view('dashboard.user.profile', compact('user'));
     }
+
+    public function saveProfile(Request $request)
+    {
+        $valRules = [
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'image' => 'image',
+        ];
+        $valMassage = [
+            'firstName.required' => 'ورود نام الزامیست',
+            'lastName.required' => 'ورود نام خانوادگی الزامیست',
+//            'email.unique' => 'ایمیل وارد شده تکراری نیست',
+//            'password.required' => 'ورود رمز الزامیست',
+
+            'image.image' => 'عکس ارسالی معتبر نیست',
+        ];
+
+//        dd($request->all());
+        if ($request->get('password') != null) {
+            $valMassage = ['password.min' => 'رمز عبور کمتر از 6 کاراکتر',
+                'password.max' => 'رمز عبور بیشتر از 12 کاراکتر',];
+            $valRules = ['password' => 'min:6|max:12',
+            ];
+
+        }
+        if ($request->get('cardNumber') != null) {
+            $valMassage = ['cardNumber.digits' => 'شماره کارت 16 مجاز نیست',
+            ];
+            $valRules = ['cardNumber' => 'digits:16',
+
+            ];
+
+        }
+
+        $this->validate($request, $valRules, $valMassage);
+//        dd(substr($request->birthday ,8,2 ));
+//dd(Verta::createJalaliDate(substr($request->birthday ,0,4 ) , substr($request->birthday ,5,2 ) ,substr($request->birthday ,8,2 ))->toCarbon());
+
+
+        $user = Auth::user();
+        $user->firstName = $request->firstname ? $request->firstname : $user->firstName;
+        $user->lastName = $request->lastName ? $request->lastName : $user->lastName;
+//        $user->email = $request->email;
+        $user->NationalCode = $request->NationalCode ? $request->NationalCode : $user->NationalCode;
+        if ($request->password != null)
+            $user->password = $request->password;
+        $user->cardNumber = $request->cardNumber ? $request->cardNumber : null;
+        $user->birthday = $request->birthday ? $request->birthday : null;
+//        $user->isActive = $request->isActive ? true : false;
+        $user->sex = $request->sex ? $request->sex : $user->sex;
+//        $user->role = $request->role ? $request->role : $user->role;
+        $user->save();
+
+
+        if ($request->files->count() > 0) {
+            $user->pic = $request->file('image')->getClientOriginalName();
+            $user->save();
+            $request->file('image')->move(storage_path('app/public/images/profiles/' . $user->id . '/'), $request->file('image')->getClientOriginalName());
+        }
+        return redirect()->route('dashboard.user.Profile');
+    }
+
 
     public function edit(Request $request, int $id)
     {

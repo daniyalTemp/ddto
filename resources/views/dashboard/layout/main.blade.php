@@ -95,14 +95,14 @@ Preloader start
                         </li>
                         <li class="nav-item dropdown header-profile">
                             <a class="nav-link" href="#" role="button" data-toggle="dropdown">
-                                <img src="{{asset('storage/images/profile/'.\Illuminate\Support\Facades\Auth::user()->pic)}}" width="20" alt=""/>
+                                <img src="{{asset('storage/images/profiles/'.\Illuminate\Support\Facades\Auth::user()->id.'/'.\Illuminate\Support\Facades\Auth::user()->pic)}}" width="20" alt=""/>
                                 <div class="header-info">
                                     <span>سلام, <strong> {{\Illuminate\Support\Facades\Auth::user()->firstName.' '.\Illuminate\Support\Facades\Auth::user()->lastName }}   </strong></span>
 
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="app-profile.html" class="dropdown-item ai-icon">
+                                <a href="{{route('dashboard.user.Profile')}}" class="dropdown-item ai-icon">
                                     <svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" class="text-primary"
                                          width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -174,6 +174,30 @@ Preloader start
                     </a>
                     <ul aria-expanded="false">
                         <li><a  href="{{route('dashboard.user.list')}}" aria-expanded="false">کابران</a>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+                <li class="nav-label">تنظیمات</li>
+                <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                             height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <polygon points="0 0 24 0 24 24 0 24"/>
+                                <path
+                                    d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
+                                    fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                                <path
+                                    d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
+                                    fill="#000000" fill-rule="nonzero"/>
+                            </g>
+                        </svg>
+                        <span class="nav-text">تنظیمات</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a  href="{{route('dashboard.config')}}" aria-expanded="false">تنظیمات</a>
 
                         </li>
 

@@ -23,11 +23,16 @@ Route::prefix('panel')->middleware('auth')->namespace('App\Http\Controllers\admi
 
     Route::prefix('users')->group(function () {
         Route::get('/', 'userController@list')->name('dashboard.user.list');
+        Route::get('/Profile', 'userController@Profile')->name('dashboard.user.Profile');
+        Route::post('/Profile', 'userController@saveProfile')->name('dashboard.user.saveProfile');
         Route::get('/add', 'userController@add')->name('dashboard.user.add');
         Route::get('/edit/{id}', 'userController@edit')->name('dashboard.user.edit');
         Route::get('/del', 'userController@del')->name('dashboard.user.del');
        Route::post('/save/{id}', 'userController@save')->name('dashboard.user.save');
 
+    });
+    Route::prefix('config')->group(function () {
+        Route::get('/', 'configController@showConfig')->name('dashboard.config');
     });
 //    Route::prefix('post')->group(function () {
 //        Route::get('/', 'postController@list')->name('dashboard.post.list');
