@@ -33,6 +33,7 @@ Route::prefix('panel')->middleware('auth')->namespace('App\Http\Controllers\admi
     });
     Route::prefix('config')->group(function () {
         Route::get('/', 'configController@showConfig')->name('dashboard.config');
+        Route::post('/', 'configController@saveConfig')->name('dashboard.saveConfig');
     });
 //    Route::prefix('post')->group(function () {
 //        Route::get('/', 'postController@list')->name('dashboard.post.list');

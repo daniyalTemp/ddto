@@ -6,12 +6,12 @@
         <div class="col-lg-9">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">اطلاعات کابر</h4>
+                    <h4 class="card-title">اطلاعات </h4>
                 </div>
                 <div class="card-body">
                     <div class="form-validation">
                         <form class="form-valide"
-                              action="{{route('dashboard.user.save' , isset($user)? $user->id :-1)}}"
+                              action="{{route('dashboard.saveConfig')}}"
                               enctype="multipart/form-data" method="post">
                             <div class="row ">
 
@@ -39,6 +39,31 @@
                                             <input type="text" class="form-control" id="address" name="address"
                                                    value="{{(isset($config)?$config->address : (old('address') ? old('address') : ''))}}"
                                                    placeholder="آدرس">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label text-center" for="telegram">لینک تلگرام
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="telegram" name="telegram"
+                                                   value="{{(isset($config)?$config->telegram : (old('telegram') ? old('telegram') : ''))}}"
+                                                   placeholder="لینک تلگرام">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group row">
+                                        <label class="col-lg-4 col-form-label text-center" for="instagram">لینک اینستاگرام
+                                        </label>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="instagram" name="instagram"
+                                                   value="{{(isset($config)?$config->instagram : (old('instagram') ? old('instagram') : ''))}}"
+                                                   placeholder="لینک اینستاگرام">
                                         </div>
                                     </div>
 

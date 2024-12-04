@@ -14,4 +14,10 @@ class configController extends Controller
         return view('dashboard.config.form' , compact('config'));
 
     }
+
+    public function saveConfig(Request $request)
+    {
+
+
+    }
 }
