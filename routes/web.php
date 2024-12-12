@@ -7,17 +7,13 @@ Route::get('/', function () {
 });
 
 
-
 Route::get('/logout', 'App\Http\Controllers\admin\userController@logout')->name('logout');
 Route::get('/login', 'App\Http\Controllers\admin\userController@login')->name('login');
 Route::post('/login', 'App\Http\Controllers\admin\userController@doLogin')->name('doLogin');
 
 
-
-
-
 //panel
-Route::prefix('panel')->middleware('auth')->namespace('App\Http\Controllers\admin')->group(function () {
+Route::prefix('panel')->middleware(['auth',\App\Http\Middleware\getConfigForAll::class])->namespace('App\Http\Controllers\admin')->group(function () {
     Route::get('/', 'dashboardController@index')->name('dashboard.index');
 
 
@@ -28,24 +24,41 @@ Route::prefix('panel')->middleware('auth')->namespace('App\Http\Controllers\admi
         Route::get('/add', 'userController@add')->name('dashboard.user.add');
         Route::get('/edit/{id}', 'userController@edit')->name('dashboard.user.edit');
         Route::get('/del', 'userController@del')->name('dashboard.user.del');
-       Route::post('/save/{id}', 'userController@save')->name('dashboard.user.save');
+        Route::post('/save/{id}', 'userController@save')->name('dashboard.user.save');
 
     });
     Route::prefix('config')->group(function () {
         Route::get('/', 'configController@showConfig')->name('dashboard.config');
         Route::post('/', 'configController@saveConfig')->name('dashboard.saveConfig');
     });
-//    Route::prefix('post')->group(function () {
-//        Route::get('/', 'postController@list')->name('dashboard.post.list');
-//        Route::get('/add', 'postController@add')->name('dashboard.post.add');
-//        Route::get('/edit/{id}', 'postController@edit')->name('dashboard.post.edit');
-//        Route::get('/delete/{id}', 'postController@delete')->name('dashboard.post.del');
-//        Route::post('/addSave/{id}', 'postController@addSave')->name('dashboard.post.addSave');
-//    });
-//    Route::prefix('contact')->group(function () {
-//        Route::get('/', 'contactController@list')->name('dashboard.contact.list');
-//        Route::get('/seen/{id}', 'contactController@seen')->name('dashboard.contact.seen');
-//
-//    });
+    //shop
+    Route::prefix('shop')->group(function () {
+        //category
+        Route::prefix('category')->group(function () {
+            Route::get('/', 'shopController@categoryList')->name('dashboard.shop.category.list');
+            Route::get('/add', 'shopController@categoryAdd')->name('dashboard.shop.category.add');
+            Route::get('/edite/{id}', 'shopController@categoryEdit')->name('dashboard.shop.category.edit');
+            Route::post('/save/{id}', 'shopController@categorySave')->name('dashboard.shop.category.save');
+            Route::get('/del{id}', 'shopController@categoryDel')->name('dashboard.shop.category.del');
+        });
 
+
+        Route::get('/', 'shopcontroller@productLsit')->name('dashboard.shop.product.list');
+        Route::get('/add', 'shopController@productAdd')->name('dashboard.shop.product.add');
+        Route::get('/edite/{id}', 'shopController@productLsit')->name('dashboard.shop.product.edit');
+        Route::post('/save/{id}', 'shopController@productSave')->name('dashboard.shop.product.save');
+        Route::get('/del{id}', 'shopController@productLsit')->name('dashboard.shop.product.del');
+
+    });
+
+
+    Route::prefix('comments')->group(function () {
+        Route::get('/', 'commentController@list')->name('dashboard.comments.list');
+        Route::get('/show/{id}', 'commentController@show')->name('dashboard.comments.show');
+        Route::get('/del/{id}', 'commentController@del')->name('dashboard.comments.del');
+        Route::get('/seen/{id}/{status}', 'commentController@seen')->name('dashboard.comments.seen');
+        Route::get('/showInWeb/{id}/{status}', 'commentController@showInWeb')->name('dashboard.comments.showInWeb');
+        Route::post('/addNote/{id}', 'commentController@addNote')->name('dashboard.comments.addNote');
+
+    });
 });
