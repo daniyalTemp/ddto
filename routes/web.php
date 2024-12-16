@@ -5,6 +5,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::middleware(\App\Http\Middleware\configFront::class)->namespace('App\Http\Controllers\front')->group(function () {
+    Route::get('/', 'homePageController@index')->name('index');
+
+
+});
 
 
 Route::get('/logout', 'App\Http\Controllers\admin\userController@logout')->name('logout');
@@ -30,6 +35,7 @@ Route::prefix('panel')->middleware(['auth',\App\Http\Middleware\getConfigForAll:
     Route::prefix('config')->group(function () {
         Route::get('/', 'configController@showConfig')->name('dashboard.config');
         Route::post('/', 'configController@saveConfig')->name('dashboard.saveConfig');
+        Route::post('/saveService', 'configController@saveservice')->name('dashboard.saveService');
     });
     //shop
     Route::prefix('shop')->group(function () {
@@ -45,9 +51,11 @@ Route::prefix('panel')->middleware(['auth',\App\Http\Middleware\getConfigForAll:
 
         Route::get('/', 'shopcontroller@productLsit')->name('dashboard.shop.product.list');
         Route::get('/add', 'shopController@productAdd')->name('dashboard.shop.product.add');
-        Route::get('/edite/{id}', 'shopController@productLsit')->name('dashboard.shop.product.edit');
+        Route::get('/edite/{id}', 'shopController@productEdit')->name('dashboard.shop.product.edit');
         Route::post('/save/{id}', 'shopController@productSave')->name('dashboard.shop.product.save');
-        Route::get('/del{id}', 'shopController@productLsit')->name('dashboard.shop.product.del');
+        Route::post('/saveExtra/{id}/{type?}/{Eid?}', 'shopController@productSaveExtra')->name('dashboard.shop.product.saveExtra');
+        Route::get('/del/{id}', 'shopController@productDel')->name('dashboard.shop.product.del');
+        Route::get('/delExtra/{type}/{pid}/{id}', 'shopController@productDelExtra')->name('dashboard.shop.product.delExtra');
 
     });
 

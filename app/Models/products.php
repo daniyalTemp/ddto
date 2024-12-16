@@ -14,10 +14,17 @@ class products extends Model
         'discount',
         'count',
         'description',
-        'availableColors',
-        'availableSizes',
-        'availableSizes',
+        'color',
+        'size',
         'material',
         'image',
     ];
+    protected $casts=[
+        'color'=>'array',
+        'size'=>'array',
+        'material'=>'array',
+    ];
+   public function Category(){
+       return $this->belongsToMany(category::class , 'category_products_pivot' , 'product_id','category_id');
+   }
 }

@@ -13,4 +13,7 @@ class config extends Model
         'telegram',
         'instagram',
     ];
+    protected $casts=[
+      'presents'=>'array'
+    ];
 }

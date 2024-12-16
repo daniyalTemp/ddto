@@ -20,13 +20,13 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('price')->nullable();
+            $table->string('BasePrice')->nullable();
             $table->float('discount')->nullable();
             $table->integer('count')->nullable();
             $table->text('description')->nullable();
-            $table->text('availableColors')->nullable();
-            $table->text('availableSizes')->nullable();
-            $table->string('material')->nullable();
+            $table->text('color')->nullable();
+            $table->text('size')->nullable();
+            $table->text('material')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });

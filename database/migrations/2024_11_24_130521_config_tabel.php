@@ -16,6 +16,9 @@ return new class extends Migration {
             $table->string('address')->nullable();
             $table->string('telegram')->nullable();
             $table->string('instagram')->nullable();
+            $table->text('bannerUP')->nullable();
+            $table->text('about')->nullable();
+            $table->text('presents')->nullable();
             $table->timestamps();
         });
     }

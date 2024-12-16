@@ -11,6 +11,8 @@
                     <h4 class="card-title">لیست  محصولات </h4>
                 </div>
                 <div class="card-body">
+                    @include('error')
+
                     <div class="table-responsive">
                         <table  id="example3" class="display" style="min-width: 845px;colo">
                             <thead>
@@ -31,7 +33,7 @@
                                             <div class="d-flex">
                                                 <a href="{{route('dashboard.shop.product.edit' , $product->id)}}" class="btn btn-primary shadow btn-xs sharp mr-1"><i
                                                         class="fa fa-pencil"></i></a>
-                                                <a href="{{route('dashboard.shop.product.del' , $product->id)}}" class="btn btn-danger shadow btn-xs sharp"   data-toggle="modal" data-target="#delete{{$product->id}}" ><i
+                                                <a href="#" class="btn btn-danger shadow btn-xs sharp"   data-toggle="modal" data-target="#delete{{$product->id}}" ><i
                                                         class="fa fa-trash"></i></a>
 
 

@@ -13,41 +13,38 @@
 
 </head>
 
-<body class="h-100">
+<body class="h-100" style="background-color: #1E201E">
 <div class="authincation h-100">
     <div class="container h-100">
         <div class="row justify-content-center h-100 align-items-center">
             <div class="col-md-6">
                 <div class="authincation-content">
                     <div class="row no-gutters">
-                        <div class="col-xl-12">
+                        <div class="col-xl-12" style="background-color: #3C3D37; color: white">
+                            <div class="col-12">
+                                <img style="width: 45%;margin-right: 27%;margin-top: 10%;" src="{{asset('assets/images/1.png')}}">
+                            </div>
+
                             <div class="auth-form">
-                                <h4 class="text-center mb-4">وارد حساب خود شوید</h4>
+                                <h4 class="text-center mb-4" style="color: white">وارد حساب خود شوید</h4>
 
                                 @include('error')
-                                <form action="{{route('doLogin')}}" method="post" >
+                                <form action="{{route('doLogin')}}" method="post">
                                     {{csrf_field()}}
                                     <div class="form-group">
                                         <label class="mb-1"><strong>ایمیل</strong></label>
-                                        <input type="email"  name="email" class="form-control" >
+                                        <input type="email" name="email" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label class="mb-1"><strong>رمز عبور</strong></label>
                                         <input type="password" name="password" class="form-control" value="رمز عبور">
                                     </div>
-                                    <div class="form-row d-flex justify-content-between mt-4 mb-2">
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox ml-1">
-                                                <input type="checkbox" class="custom-control-input"  name="remember" id="remember">
-                                                <label class="custom-control-label" for="remember">مرا به خاطر بسپار</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <a href="page-forgot-password.html">فراموشی رمز عبور؟</a>
-                                        </div>
-                                    </div>
+                                    <br>
+                                    <br>
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-primary btn-block">وارد شوید</button>
+                                        <button type="submit" class="btn btn-primary btn-block "
+                                                style="background-color: #697565">وارد شوید
+                                        </button>
                                     </div>
                                 </form>
 

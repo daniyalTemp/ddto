@@ -37,6 +37,33 @@ class DatabaseSeeder extends Seeder
                 'address' => '-',
                 'telegram' => '-',
                 'instagram' =>'-',
+                'presents' =>json_encode([
+                    '1'=>[
+                        'name'=>'طراحی مدل‌های ترند و خاص',
+                        'des'=>'-',
+                        'pic'=>'ui-design.svg'
+                    ],'2'=>[
+                        'name'=>'چاپ ایده‌ها',
+                        'des'=>'-',
+                        'pic'=>'print.svg'
+                    ],'3'=>[
+                        'name'=>'تولید محصولات خاص ',
+                        'des'=>'-',
+                        'pic'=>'idea.svg'
+                    ],'4'=>[
+                        'name'=>'فروشگاه',
+                        'des'=>'-',
+                        'pic'=>'online-shop.svg'
+                    ],'5'=>[
+                        'name'=>'محتوای آموزشی ',
+                        'des'=>'-',
+                        'pic'=>'content-writing.svg'
+                    ],'6'=>[
+                        'name'=>'جنده بازی ( برای این ایده بدید ) ',
+                        'des'=>'-',
+                        'pic'=>'youtube.svg'
+                    ],
+                ]),
 //                'admin' =>true,
 //                'image' =>'profile.png',
             ]
