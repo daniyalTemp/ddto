@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('card_holder')->nullable();
             $table->string('trans_id')->nullable();
             $table->string('shaparak_ID')->nullable();
-            $table->enum('status', ['pending' , 'payed' , 'failed'])->default('contact');
+            $table->enum('status', ['pending' , 'payed' , 'failed'])->default('pending');
             $table->timestamps();
         });
     }

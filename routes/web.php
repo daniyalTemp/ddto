@@ -39,6 +39,20 @@ Route::prefix('panel')->middleware(['auth',\App\Http\Middleware\getConfigForAll:
     });
     //shop
     Route::prefix('shop')->group(function () {
+        //payments
+        Route::prefix('payment')->group(function () {
+            Route::get('/', 'paymentController@index')->name('dashboard.shop.payment.list');
+//            Route::get('/add', 'paymentController@create')->name('dashboard.shop.payment.add');
+
+        });
+        Route::prefix('order')->group(function () {
+            Route::get('/', 'orderController@index')->name('dashboard.shop.order.list');
+            Route::get('/add', 'orderController@create')->name('dashboard.shop.order.add');
+            Route::post('/save/{id}', 'orderController@store')->name('dashboard.shop.order.save');
+            Route::get('/edit/{id}', 'orderController@iedit')->name('dashboard.shop.order.edit');
+//            Route::get('/add', 'paymentController@create')->name('dashboard.shop.payment.add');
+
+        });
         //category
         Route::prefix('category')->group(function () {
             Route::get('/', 'shopController@categoryList')->name('dashboard.shop.category.list');
@@ -49,7 +63,7 @@ Route::prefix('panel')->middleware(['auth',\App\Http\Middleware\getConfigForAll:
         });
 
 
-        Route::get('/', 'shopcontroller@productLsit')->name('dashboard.shop.product.list');
+        Route::get('/', 'shopController@productLsit')->name('dashboard.shop.product.list');
         Route::get('/add', 'shopController@productAdd')->name('dashboard.shop.product.add');
         Route::get('/edite/{id}', 'shopController@productEdit')->name('dashboard.shop.product.edit');
         Route::post('/save/{id}', 'shopController@productSave')->name('dashboard.shop.product.save');

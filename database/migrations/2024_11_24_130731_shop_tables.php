@@ -43,7 +43,16 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user');
             $table->foreign('user')->references('id')->on('users');
-            
+            $table->enum('status', ['initial', 'getData','waiting','printing','delivered' , 'cancel'])->default('initial');
+            $table->enum('paymentStatus', ['pay', 'waiting'])->default('waiting');
+            $table->string('cancelReason')->nullable();
+            $table->text('comment')->nullable();
+            $table->text('address')->nullable();
+            $table->string('postRefCode')->nullable();
+            $table->date('sendIn')->nullable();
+            $table->unsignedBigInteger('totalPrice')->nullable();
+            $table->unsignedBigInteger('cancelBy')->nullable();
+            $table->foreign('cancelBy')->references('id')->on('users');
             $table->timestamps();
         });
 
