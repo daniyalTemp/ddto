@@ -10,14 +10,15 @@ class products extends Model
 
     protected $fillable=[
         'name',
-        'price',
+        'BasePrice',
         'discount',
-        'count',
+        'available',
         'description',
         'color',
         'size',
         'material',
         'image',
+        'weight',
     ];
     protected $casts=[
         'color'=>'array',

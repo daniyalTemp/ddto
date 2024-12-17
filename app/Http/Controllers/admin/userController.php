@@ -104,7 +104,7 @@ class userController extends Controller
             $user->save();
             $request->file('image')->move(storage_path('app/public/images/profiles/' . $user->id . '/'), $request->file('image')->getClientOriginalName());
         }
-        return redirect()->route('dashboard.user.list');
+        return redirect()->route('dashboard.user.list')->with(['msg' => 'عملیات با موفیت انجام شد']);
 //        dd($request->all());
     }
 
@@ -172,7 +172,7 @@ class userController extends Controller
             $user->save();
             $request->file('image')->move(storage_path('app/public/images/profiles/' . $user->id . '/'), $request->file('image')->getClientOriginalName());
         }
-        return redirect()->route('dashboard.user.Profile');
+        return redirect()->route('dashboard.user.Profile')->with(['msg' => 'عملیات با موفیت انجام شد']);
     }
 
 

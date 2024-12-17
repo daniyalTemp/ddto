@@ -10,7 +10,8 @@ class dashboardController extends Controller
 {
     public function index()
     {
-//        dd($unseenComment);
+
+       
         return view('dashboard.index');
     }
 

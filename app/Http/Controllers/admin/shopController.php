@@ -48,13 +48,13 @@ class shopController extends Controller
 
         }
 
-        return redirect()->route('dashboard.shop.category.list');
+        return redirect()->route('dashboard.shop.category.list')->with(['msg' => 'عملیات با موفیت انجام شد']);
     }
 
     public function categoryDel(Request $request, int $id)
     {
         category::destroy([$id]);
-        return redirect()->route('dashboard.shop.category.list');
+        return redirect()->route('dashboard.shop.category.list')->with(['msg' => 'عملیات با موفیت انجام شد']);
 
     }
 
@@ -64,7 +64,7 @@ class shopController extends Controller
     public function productLsit(Request $request)
     {
         $products = products::all();
-        return view('dashboard.shop.list', compact('products'));
+        return view('dashboard.shop.list', compact('products'))->with(['msg' => 'عملیات با موفیت انجام شد']);
     }
 
     public function productAdd(Request $request)
@@ -121,10 +121,11 @@ class shopController extends Controller
         {
             $product = products::create([
                 'name' => $request->name,
-                'count' => $request->count ? $request->count : 0,
+                'available' => (bool)$request->available,
                 'discount' => $request->discount ? $request->discount : 0,
-                'BasePrice' => $request->BasePrice,
+                'BasePrice' => $request->BasePrice ? $request->BasePrice : 0,
                 'description' => $request->description ? $request->description : 'ندارد',
+                'weight' => $request->weight ? $request->weight : '0',
                 'color' => [],
                 'size' => [],
                 'material' => [],
@@ -142,10 +143,11 @@ class shopController extends Controller
         } else {
             $product = products::find($id);
             $product->name = $request->name;
-            $product->count = $request->count ? $request->count : $product->count;
+            $product->available = (bool)$request->available;
             $product->discount = $request->discount ? $request->discount : $product->discount;
             $product->BasePrice = $request->BasePrice;
             $product->description = $request->description ? $request->description : $product->description;
+            $product->weight = $request->weight ? $request->weight : $product->weight;
             $product->save();
             if ($request->has('category') && $request->category != -1)
                 $product->Category()->sync([$request->category]);
@@ -218,47 +220,46 @@ class shopController extends Controller
                     $color = $product->color;
 
                     if (($request->addition != null))
-                        $color[$Eid]=new ProductAttribute($request->name, $request->addition, 'addition', $request->colorCode);
+                        $color[$Eid] = new ProductAttribute($request->name, $request->addition, 'addition', $request->colorCode);
                     if (($request->percentage != null))
-                        $color[$Eid]=new ProductAttribute($request->name, $request->percentage, 'percentage', $request->colorCode);
+                        $color[$Eid] = new ProductAttribute($request->name, $request->percentage, 'percentage', $request->colorCode);
                     if (($request->ratio != null))
-                        $color[$Eid]=new ProductAttribute($request->name, $request->ratio, 'ratio', $request->colorCode);
+                        $color[$Eid] = new ProductAttribute($request->name, $request->ratio, 'ratio', $request->colorCode);
 
                     $product->color = $color;
 
                 } elseif ($request->type == 'size') {
                     $size = $product->size;
                     if (($request->addition != null))
-                        $size[$Eid]=new ProductAttribute($request->name, $request->addition, 'addition','-');
+                        $size[$Eid] = new ProductAttribute($request->name, $request->addition, 'addition', '-');
 
                     if (($request->percentage != null))
-                        $size[$Eid]=new ProductAttribute($request->name, $request->percentage, 'percentage','-');
+                        $size[$Eid] = new ProductAttribute($request->name, $request->percentage, 'percentage', '-');
 
 
                     if (($request->ratio != null))
-                        $size[$Eid]=new ProductAttribute($request->name, $request->ratio, 'ratio','-');
+                        $size[$Eid] = new ProductAttribute($request->name, $request->ratio, 'ratio', '-');
 
                     $product->size = $size;
 
                 } elseif ($request->type == 'material') {
                     $material = $product->material;
                     if (($request->addition != null))
-                        $material[$Eid]=new ProductAttribute($request->name, $request->addition, 'addition','-');
+                        $material[$Eid] = new ProductAttribute($request->name, $request->addition, 'addition', '-');
 
                     if (($request->percentage != null))
-                        $material[$Eid]=new ProductAttribute($request->name, $request->percentage, 'percentage','-');
+                        $material[$Eid] = new ProductAttribute($request->name, $request->percentage, 'percentage', '-');
 
 
                     if (($request->ratio != null))
-                        $material[$Eid]=new ProductAttribute($request->name, $request->ratio, 'ratio','-');
+                        $material[$Eid] = new ProductAttribute($request->name, $request->ratio, 'ratio', '-');
 
                     $product->material = $material;
 
 
                 }
 
-            }
-            else {//add Mode
+            } else {//add Mode
                 if ($request->type == 'color') {
                     $color = $product->color;
 

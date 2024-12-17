@@ -127,25 +127,50 @@
                                                                     <div class="form-group row">
                                                                         <label
                                                                             class="col-lg-4 col-form-label text-center"
-                                                                            for="count">تعداد موجود
+                                                                            for="available">موجود ؟
+                                                                        </label>
+                                                                        <div class="col-lg-8">
+                                                                            <div class="col">
+                                                                                <div
+                                                                                    class="custom-control custom-checkbox mb-3 checkbox-success">
+                                                                                    <input type="checkbox"
+                                                                                           class="custom-control-input"
+                                                                                           {{((isset($product) && $product->available )?'checked' : '')}}
+
+                                                                                           id="available"
+                                                                                           name="available">
+                                                                                    <label class="custom-control-label"
+                                                                                           for="available">بله</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-xl-6">
+                                                                    <div class="form-group row">
+                                                                        <label
+                                                                            class="col-lg-4 col-form-label text-center"
+                                                                            for="weight">وزن(گرم)
                                                                         </label>
                                                                         <div class="col-lg-6">
                                                                             <input type="text" class="form-control"
-                                                                                   id="count" name="count"
-                                                                                   value="{{(isset($product)?$product->count : (old('count') ? old('count') : ''))}}"
-                                                                                   placeholder="تعداد موجود">
+                                                                                   id="weight" name="weight"
+                                                                                   value="{{(isset($product)?$product->weight : (old('weight') ? old('weight') : ''))}}"
+                                                                                   placeholder="وزن(گرم)">
                                                                         </div>
                                                                     </div>
 
                                                                 </div>
-                                                                <div class="col-xl-12">
+
+                                                                <div class="col-xl-6">
                                                                     <div class="form-group row">
                                                                         <label
-                                                                            class="col-lg-2 col-form-label text-center"
+                                                                            class="col-lg-4 col-form-label text-center"
                                                                             for="image">عکس
                                                                             <span class="text-danger">*</span>
                                                                         </label>
-                                                                        <div class="col-lg-9">
+                                                                        <div class="col-lg-6">
                                                                             <input type="file" class="form-control"
                                                                                    id="name" name="image"
                                                                                    value="{{(isset($product)?$product->image : (old('image') ? old('image') : ''))}}"
@@ -855,10 +880,16 @@
                                                                                                     <div
                                                                                                         class="media ai-icon">
 									<span class="mr-3">
-										<svg id="icon-database-widget" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database">
-											<path d="M3,5A9,3 0,1,1 21,5A9,3 0,1,1 3,5" style="stroke-dasharray: 41px, 61px; stroke-dashoffset: 0px;"></path>
-											<path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" style="stroke-dasharray: 21px, 41px; stroke-dashoffset: 0px;"></path>
-											<path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" style="stroke-dasharray: 49px, 69px; stroke-dashoffset: 0px;"></path>
+										<svg id="icon-database-widget" xmlns="http://www.w3.org/2000/svg" width="24"
+                                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                             class="feather feather-database">
+											<path d="M3,5A9,3 0,1,1 21,5A9,3 0,1,1 3,5"
+                                                  style="stroke-dasharray: 41px, 61px; stroke-dashoffset: 0px;"></path>
+											<path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"
+                                                  style="stroke-dasharray: 21px, 41px; stroke-dashoffset: 0px;"></path>
+											<path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"
+                                                  style="stroke-dasharray: 49px, 69px; stroke-dashoffset: 0px;"></path>
 										</svg>						</span>
                                                                                                         <div
                                                                                                             class="media-body">
@@ -869,11 +900,14 @@
                                                                                                             <span
                                                                                                                 class="badge badge-warning">
                                                                                                                  @if($material['status']=='percentage')
-                                                                                                                    % درصد
+                                                                                                                    %
+                                                                                                                    درصد
                                                                                                                 @elseif($material['status']=='ratio')
-                                                                                                                    * ضریب
+                                                                                                                    *
+                                                                                                                    ضریب
                                                                                                                 @elseif($material['status']=='addition')
-                                                                                                                    + تومان
+                                                                                                                    +
+                                                                                                                    تومان
                                                                                                                 @endif
                                                                                                             </span>
                                                                                                         </div>
@@ -907,7 +941,7 @@
                                                                                                         class="modal-header">
                                                                                                         <h5 class="modal-title">
                                                                                                             ویرایش
-                                                                                                            جنس  {{$material['name']}} </h5>
+                                                                                                            جنس {{$material['name']}} </h5>
                                                                                                         <button
                                                                                                             type="button"
                                                                                                             class="close"
@@ -1055,7 +1089,7 @@
                                                                                                         class="modal-header">
                                                                                                         <h5 class="modal-title">
                                                                                                             حذف
-                                                                                                            جنس  {{$material['name']}}
+                                                                                                            جنس {{$material['name']}}
                                                                                                         </h5>
                                                                                                         <button
                                                                                                             type="button"

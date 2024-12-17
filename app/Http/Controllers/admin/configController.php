@@ -26,7 +26,7 @@ class configController extends Controller
         $config->instagram= $request->instagram ?$request->instagram : $config->instagram;
         $config->telegram= $request->telegram ? $request->telegram : $config->telegram;
         $config->save();
-        return redirect()->route('dashboard.index');
+        return redirect()->route('dashboard.index')->with(['msg' => 'عملیات با موفیت انجام شد']);
 
     }
 
