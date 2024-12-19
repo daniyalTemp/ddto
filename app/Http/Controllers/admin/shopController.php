@@ -7,7 +7,9 @@ use App\Models\category;
 use App\Models\products;
 use App\Utility\ProductAttribute;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use phpDocumentor\Reflection\DocBlock\Serializer;
+use function PHPUnit\Framework\directoryExists;
 
 class shopController extends Controller
 {
@@ -148,6 +150,14 @@ class shopController extends Controller
             $product->BasePrice = $request->BasePrice;
             $product->description = $request->description ? $request->description : $product->description;
             $product->weight = $request->weight ? $request->weight : $product->weight;
+//            $path='public/storage/pages/productsDes/';
+//            if(!Storage::exists($path)){
+//                Storage::makeDirectory($path);
+//            }
+//
+//            $myfile = fopen($path.$product->id."blade.php", "w") ;
+//            fwrite($myfile, $product->description);
+//            fclose($myfile);
             $product->save();
             if ($request->has('category') && $request->category != -1)
                 $product->Category()->sync([$request->category]);

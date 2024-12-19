@@ -1,433 +1,414 @@
 @extends('front.layout')
+
 @section('content')
-    <!-- Hero section -->
-    <section class="hero-section" id="home">
-        <div class="container">
-            <div class="hero-inner d-flex">
-                <div class="col-left">
-                        <span class="sub-heading">دیدیتو
-                        </span>
-                    <h1 class="heading">دنیای
-                        <span>خودت رو بساز</span>
-                    </h1>
 
-                    </h4>
-                    <p class="paragraph">
-                        {{$config->bannerUP}}
-                    </p>
-                    <div class="btn-blk">
-                        <a href="#contact" class="btn btn-blue"> ثبت طرح خاص خود</a>
-                        <a href="#portfolio" class="btn btn-black">مشاهده محصولات ها</a>
-                    </div>
-                    <div class="social">
-                        <ul>
-                            <li class="social-icon"><a target="_blank" href="{{$config->instagram}}"><img
-                                        src="assets/images/social-icons/feather_instagram.svg" alt="instagram"></a>
-                            </li>
-                            <li class="social-icon"><a href="{{$config->telegram}}"><img
-                                        src="assets/images/social-icons/tell.svg" alt="linkedin"></a>
-                            </li>
-                            <li class="social-icon"><a href="#"><img
-                                        src="assets/images/social-icons/feather_github.svg" alt="github"></a>
-                            </li>
-                            <li class="social-icon"><a href="#"><img
-                                        src="assets/images/social-icons/feather_dribbble.svg" alt="dribble"></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-right">
-                    <img class="image-main"
-                         src="assets/images/—Pngtree—3d printing technology printer link_6689630.png"
-                         alt="user image">
-                    <img class="image-darkmode"
-                         src="assets/images/—Pngtree—3d printing technology printer link_6689630.png"
-                         alt="user image">
-                </div>
+
+    <!-- BANNER -->
+    <div class="banner-wrap">
+        <section class="banner">
+            <h5>خوش آمدید به </h5>
+            <h1>دنیای دلخواه <span>تو</span></h1>
+            <p>
+                جایی که رویاهای شما ساخته می شوند
+            </p>
+            <img src="{{asset('front/images/top_items.png')}}" alt="banner-img">
+
+            <!-- SEARCH WIDGET -->
+            <div class="search-widget">
+                <form class="search-widget-form">
+                    <input type="text" name="category_name" placeholder="جستجوی محصولات و یا خدمات">
+                    <label for="categories" class="select-block">
+                        <select name="categories" id="categories">
+                            <option value="0">تمام دسته بندیها</option>
+                            <option value="1">قالبهای PSD</option>
+                            <option value="2">نصاویر</option>
+                            <option value="3">سایت کودک</option>
+                            <option value="4">بسته ههای آیکن</option>
+                            <option value="5">گرافیک</option>
+                            <option value="6">آگهی</option>
+                            <option value="7">پس زمینه ها</option>
+                            <option value="8">شبکه اجتماعی</option>
+                        </select>
+                        <!-- SVG ARROW -->
+                        <svg class="svg-arrow">
+                            <use xlink:href="#svg-arrow"></use>
+                        </svg>
+                        <!-- /SVG ARROW -->
+                    </label>
+                    <button class="button medium dark">جستجو</button>
+                </form>
             </div>
-        </div>
-    </section>
+            <!-- /SEARCH WIDGET -->
+        </section>
+    </div>
+    <!-- /BANNER -->
+    <div style="padding-top: 2.5%;">
 
-    <!-- features -->
-    <section class="features">
-        <div class="container">
-            <div class="features-inner d-grid">
-                <div class="feature-item d-flex">
-                    <div class="icon d-flex color1">
-                        <img src="assets/images/experience.svg" alt="experience">
+
+        <!-- PROMO -->
+        <div class="promo-banner dark left">
+        <span class="icon-bag" style="color: #16ffd8;
+                      top: 53px;
+                      font-size: 50px;
+                      left: 25px;
+                      position: absolute;
+                      left: 48%;"></span>
+            <h5>محصولات متنوع ما</h5>
+            <h1>در <span>دیدیتو</span></h1>
+            <a href="{{route('shop.index')}}" class="button medium primary">از فروشگاه دیدن کنید</a>
+        </div>
+        <!-- /PROMO -->
+
+        <!-- PROMO -->
+        <div class="promo-banner secondary right">
+            <span class="icon-tag"></span>
+            <h5>ساختن کردن هر چیزی که شما می خواهید</h5>
+            <h1>شروع کنیم؟</h1>
+            <a href="#" class="button medium dark">به ما بگید</a>
+        </div>
+        <!-- /PROMO -->
+    </div>
+    <!-- SERVICES -->
+    <div id="services-wrap" style="  padding-top: 15%;">
+        <section id="services">
+            <!-- SERVICE LIST -->
+            <div class="service-list column4-wrap">
+                <!-- SERVICE ITEM -->
+                <div class="service-item column">
+                    <div class="circle medium gradient"></div>
+                    <div class="circle white-cover"></div>
+                    <div class="circle dark">
+                        <span class="icon-present"></span>
                     </div>
-                    <div>
-                        <h3>7 سال</h3>
-                        <p>تجربه</p>
-                    </div>
+                    <h3>خرید محصولات خاص</h3>
+                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ. و با استفاده از طراحان گرافیک است.
+                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
                 </div>
-                <div class="feature-item d-flex">
-                    <div class="icon d-flex color2">
-                        <img src="assets/images/happy-clients.svg" alt="happy clients ">
+                <!-- /SERVICE ITEM -->
+
+                <!-- SERVICE ITEM -->
+                <div class="service-item column">
+                    <div class="circle medium gradient"></div>
+                    <div class="circle white-cover"></div>
+                    <div class="circle dark">
+                        <span class="icon-diamond"></span>
                     </div>
-                    <div>
-                        <h3>73</h3>
-                        <p>مشتریان راضی</p>
-                    </div>
+                    <h3>ساخت مخصول دلخواه</h3>
+                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ. و با استفاده از طراحان گرافیک است.
+                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
                 </div>
-                <div class="feature-item d-flex">
-                    <div class="icon d-flex color3">
-                        <img src="assets/images/projects-completed.svg" alt="happy clients ">
+                <!-- /SERVICE ITEM -->
+
+                <!-- SERVICE ITEM -->
+                <div class="service-item column">
+                    <div class="circle medium gradient"></div>
+                    <div class="circle white-cover"></div>
+                    <div class="circle dark">
+                        <span class="icon-like"></span>
                     </div>
-                    <div>
-                        <h3>120+</h3>
-                        <p>محصول چاپ شده </p>
-                    </div>
+                    <h3>کنترل محصولات</h3>
+                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ. و با استفاده از طراحان گرافیک است.
+                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
                 </div>
-                <div class="feature-item d-flex">
-                    <div class="icon d-flex  color4">
-                        <img src="assets/images/awards-won.svg" alt="awards ">
+                <!-- /SERVICE ITEM -->
+
+                <!-- SERVICE ITEM -->
+                <div class="service-item column">
+                    <div class="circle medium gradient"></div>
+                    <div class="circle white-cover"></div>
+                    <div class="circle dark">
+                        <span class="icon-wallet"></span>
                     </div>
-                    <div>
-                        <h3>10+</h3>
-                        <p>نفر کصخل</p>
-                    </div>
+                    <h3>تخفیف های متنوع</h3>
+                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ. و با استفاده از طراحان گرافیک است.
+                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
                 </div>
+                <!-- /SERVICE ITEM -->
             </div>
-        </div>
-    </section>
-    <!-- About -->
-    <section class="about ptb-100" id="about">
-        <div class="container">
-            <div class="about-inner d-flex">
-                <div class="about-col-left">
-                    <img style="width: 50%;
-                        height: 50%;
-                        margin-right: 15%;" src="assets/images/1.png" alt="about">
-                </div>
-                <div class="about-col-right">
-                    <h2 class="about-heading">درباره ما</h2>
-                    <h3 class="about2">ما کصخلیم هستیم - مرجع کصخلان ململانی</h3>
-                    <p class="about3">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
-                        طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای
-                        شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد </p>
-                    <div class="about-btn-blk">
-                        <a href="#" class="btn btn-blue about-btn">تماس با ما</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            <!-- /SERVICE LIST -->
+            <div class="clearfix"></div>
+        </section>
+    </div>
+    <!-- /SERVICES -->
 
-    <!-- Experience -->
-    <section class="experience ptb-100">
-        <div class="container">
-            <h2>برای این قسمت ایده بدید </h2>
-            <div class="experience-inner d-grid">
-                <!-- item -->
-                <div class="progressbar-item">
-                    <div class="progressbar-content d-flex">
-                        <h3>کصخلیت</h3>
-                        <h4>95%</h4>
-                    </div>
-                    <div class="progessbar-bg">
-                        <div class="progressbar-size" style="width:95%">
 
+    <div class="clearfix"></div>
+
+
+
+    <!-- PRODUCT SIDESHOW -->
+    <div id="product-sideshow-wrap">
+        <div id="product-sideshow">
+            <!-- PRODUCT SHOWCASE -->
+            <div class="product-showcase">
+                <!-- HEADLINE -->
+                <div class="headline primary">
+                    <h4>جدیدترین محصولات</h4>
+                    <!-- SLIDE CONTROLS -->
+                    <div class="slide-control-wrap">
+                        <div class="slide-control left">
+                            <!-- SVG ARROW -->
+                            <svg class="svg-arrow">
+                                <use xlink:href="#svg-arrow"></use>
+                            </svg>
+                            <!-- /SVG ARROW -->
+                        </div>
+
+                        <div class="slide-control right">
+                            <!-- SVG ARROW -->
+                            <svg class="svg-arrow">
+                                <use xlink:href="#svg-arrow"></use>
+                            </svg>
+                            <!-- /SVG ARROW -->
                         </div>
                     </div>
+                    <!-- /SLIDE CONTROLS -->
                 </div>
-                <!-- item -->
-                <div class="progressbar-item">
-                    <div class="progressbar-content d-flex">
-                        <h3>بگایی</h3>
-                        <h4>85%</h4>
-                    </div>
-                    <div class="progessbar-bg">
-                        <div class="progressbar-size" style="width:85%">
+                <!-- /HEADLINE -->
 
-                        </div>
-                    </div>
-                </div>
+                <!-- PRODUCT LIST -->
+                <div id="pl-1" class="product-list grid column4-wrap owl-carousel">
 
-            </div>
-        </div>
-    </section>
 
-    <!-- Services -->
-    <section class="services ptb-100" id="services">
-        <div class="container">
-            <h2>آنچه ارائه می دهیم</h2>
-            <div class="services-inner d-grid">
-                @foreach($config->presents as $item)
-                    <!-- item -->
-                    <div class="services-block">
-                        <div class="service-icon color1 d-flex">
-                            <img width="40px" height="40px" src="assets/images/services/{{$item['pic']}}"
-                                 alt="ui design">
-                        </div>
-                        <h3>{{$item['name']}}</h3>
-                        <p>
-                            {{$item['des']}}
-                        </p>
-                    </div>
+                    @if(isset($hotProducts) && count($hotProducts)>0)
+                        @foreach($hotProducts as $hProduct)
+                            <!-- PRODUCT ITEM -->
+                            <div class="product-item column">
+                                <!-- PRODUCT PREVIEW ACTIONS -->
+                                <div class="product-preview-actions">
+                                    <!-- PRODUCT PREVIEW IMAGE -->
+                                    <figure class="product-preview-image">
+                                        <img style="width: 258px;
+                                            height: 150px; " src="{{asset('storage/images/products/'.$hProduct->id.'/'.$hProduct->image)}}" alt="{{$hProduct->name}}">
+                                    </figure>
+                                    <!-- /PRODUCT PREVIEW IMAGE -->
 
-                @endforeach
+                                    <!-- PREVIEW ACTIONS -->
+                                    <div class="preview-actions " >
+                                        <!-- PREVIEW ACTION -->
+                                        <div class="preview-action" style="  right: 110px;">
+                                            <a href="item-v1.html">
+                                                <div class="circle tiny primary">
+                                                    <span class="icon-tag"></span>
+                                                </div>
+                                            </a>
+                                            <a href="item-v1.html">
+                                                <p>نمایش</p>
+                                            </a>
+                                        </div>
+                                        <!-- /PREVIEW ACTION -->
 
-            </div>
-        </div>
-    </section>
-    <!-- CTA -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-inner d-flex">
-                <div class="cta-content">
-                    <h3>آیامحصول خاصی در ذهن دارید؟</h3>
-                    <p>نیازمندی های خود بیان کنید و به نمونه چاپ شده را برای اولین بار در دنیا خاص خودتان داشته
-                        باشید </p>
-                </div>
-                <a href="#contact" class="btn btn-default ">ثبت سفارش خاص</a>
-            </div>
-        </div>
-    </section>
-    <!-- projects -->
-    <section class="projects ptb-100" id="portfolio">
-        <div class="container">
-            <h2>نمونه کار‌های چاپ شده</h2>
-            <div class="projects-inner d-grid">
-                @if(isset($products) && count($products))
-                    @foreach($products as $product)
-
-                        <!-- item -->
-                        <div class="project-item">
-                            <div class="project-image">
-                                <img src="{{asset('storage/images/products/'.$product->id.'/'.$product->image)}}"
-                                     alt="{{$product->name}}">
-                            </div>
-                            <div class="project-content">
-                                <h3>{{$product->name}}
-                                    - <span>{{$product->Category()->get()->first()->name}}</span>
-
-                                </h3>
-                                <div class="project-view d-flex" style="justify-content: space-between">
-
-                                    <span>
-                                        رنگ ها
-                                    </span>
-
-                                    <span>
-                                        سایز ها
-                                    </span>
-
-                                    <span>
-                                        متریال
-                                    </span>
-
+                                    </div>
+                                    <!-- /PREVIEW ACTIONS -->
                                 </div>
+                                <!-- /PRODUCT PREVIEW ACTIONS -->
 
-
-                                <div class="project-view d-flex">
-
-                                    <span>
-                                        <br>
-                                        @foreach($product->color as $color)
-                                            <div
-                                                  style="
-                                                  color: {{$color['color']}};
-                                                  margin-left: 5px;
-                                                  border: 8px solid;
-                                                  border-radius: 50%;">
-
-                                            </div>
+                                <!-- PRODUCT INFO -->
+                                <div class="product-info">
+                                    <a href="item-v1.html">
+                                        <p class="text-header">{{$hProduct->name}}</p>
+                                    </a>
+                                    <p class="product-description">
+                                        @foreach($hProduct->material as $material)
+                                            <span>{{$material['name']}}</span>
                                         @endforeach
-                                    </span>
-                                    <span>
+                                    </p>
+                                    <a href="shop-gridview-v1.html">
+                                        <p class="category primary">{{$hProduct->Category()->get()->first()->name}}</p>
+                                    </a>
+                                    <p class="price">
 
-                                          @foreach($product->size as $size)
-                                            <span href="#" class="footer-social" > <i>{{$size['name']}}</i></span>
-                                    @endforeach
-                                    </span>
-                                    <span>
-                                          @foreach($product->material as $material)
-                                            <span href="#" style="border: #0b0d17;" class="footer-social" > <i>{{$material['name']}}</i></span>
+                                       {{number_format($hProduct->BasePrice)}}
+<span>تومان</span>
+
+                                    </p>
+                                </div>
+                                <!-- /PRODUCT INFO -->
+                                <hr class="line-separator">
+
+                                <!-- USER RATING -->
+                                <div class="user-rating">
+                                    <a href="author-profile.html">
+                                        @foreach($hProduct->color as $color)
+
+                                        <figure class="user-avatar small">
+                                            <div style="border: solid 1px;border-radius: 50%;border-color: #0c0c0c;height: 20px;background-color: {{$color['color']}}"></div>
+                                        </figure>
                                         @endforeach
-                                    </span>
+                                    </a>
+                                    <p class="price" style="padding-top: 2px">
+                                        @foreach($hProduct->size as $size)
+                                            <span style="border: solid 1px;border-color: #0ae7c2;border-radius: 30%;">{{$size['name']}}</span>
+                                        @endforeach
 
 
-                                </div>
-                                <br>
-                                <div class="project-view d-flex">
-
-
-                                    <a data-toggle="modal" data-target="#show{{$product->id}}"
-                                       class="btn-view" style="flex-grow: 10">مشاهده </a>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!-- Project view modal -->
-                        <div class="modal-container">
-                            <div class="modal" id="show{{$product->id}}">
-                                <div class="modal-image">
-                                    <img src="assets/images/projects/1.jpg" alt="image">
-                                </div>
-                                <div class="modal-content">
-
-                                    <h3>{{$product->name}}</h3>
-                                    <p class="requirments">
-                                        {{$product->description}}
                                     </p>
 
-                                    <ul>
-                                        <li><span>رنگ های موجود:-</span> HTML, CSS, BOOTSTRAP 4, JAVASCRIPT, FIGMA,
-                                            PHOTOSHOP
-                                        </li>
-                                        <li><span>سایز های موجود:-</span> HTML, CSS, BOOTSTRAP 4, JAVASCRIPT, FIGMA,
-                                            PHOTOSHOP
-                                        </li>
-                                        <li><span>متریال  موجود:-</span> HTML, CSS, BOOTSTRAP 4, JAVASCRIPT, FIGMA,
-                                            PHOTOSHOP
-                                        </li>
-
-                                    </ul>
-
-                                    <div class="close-btn">
-                                        <a href="javascript:void(0)" class="btn btn-blue close-modal">بستن</a>
-                                    </div>
                                 </div>
+                                <!-- /USER RATING -->
                             </div>
-                        </div>
+                            <!-- /PRODUCT ITEM -->
 
-                    @endforeach
-                @endif
+                        @endforeach
+                    @endif
 
 
-            </div>
-            <div class="view-more-block">
-                <a href="#" class="btn btn-outline">مشاهده فروشگاه</a>
-            </div>
-        </div>
-    </section>
-    <!-- Testmonial -->
-    <section class="testmonial">
-        <div class="container">
-            <div class="testmonial-inner">
-                <h2>مشتریان راضی </h2>
-                <div class="testmonial-slider owl-carousel owl-theme">
-                    <!-- item -->
-                    <div class="testmonial-item">
-                        <h3>نام پروژه</h3>
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                            است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                            تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد </p>
-                        <div class="client-data d-flex">
-                            <img src="assets/images/client-1.png" alt="client thumb">
-                            <h4>نام مشتری
-                                <br> <span>سمت مشتری</span>
-                            </h4>
-
-                        </div>
-                    </div>
-                    <!-- item -->
-                    <div class="testmonial-item">
-                        <h3>نام پروژه</h3>
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                            است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                            تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد </p>
-                        <div class="client-data d-flex">
-                            <img src="assets/images/client-2.png" alt="client thumb">
-                            <h4>نام مشتری
-                                <br> <span>سمت مشتری</span>
-                            </h4>
-
-                        </div>
-                    </div>
-                    <!-- item -->
-                    <div class="testmonial-item">
-                        <h3>نام پروژه</h3>
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                            است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                            تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد </p>
-                        <div class="client-data d-flex">
-                            <img src="assets/images/client-1.png" alt="client thumb">
-                            <h4>نام مشتری
-                                <br> <span>سمت مشتری</span>
-                            </h4>
-
-                        </div>
-                    </div>
-                    <div class="testmonial-item">
-                        <h3>نام پروژه</h3>
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                            است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                            تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد </p>
-                        <div class="client-data d-flex">
-                            <img src="assets/images/client-2.png" alt="client thumb">
-                            <h4>نام مشتری
-                                <br> <span>سمت مشتری</span>
-                            </h4>
-
-                        </div>
-                    </div>
-                    <!-- item -->
-                    <div class="testmonial-item">
-                        <h3>نام پروژه</h3>
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                            است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                            تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد </p>
-                        <div class="client-data d-flex">
-                            <img src="assets/images/client-1.png" alt="client thumb">
-                            <h4>نام مشتری
-                                <br> <span>سمت مشتری</span>
-                            </h4>
-
-                        </div>
-                    </div>
                 </div>
+                <!-- /PRODUCT LIST -->
+
 
             </div>
-        </div>
-    </section>
+            <!-- /PRODUCT SHOWCASE -->
 
-
-    <!-- Contact Me -->
-    <section class="contact ptb-100" id="contact">
-        <div class="container">
-            <h2>تماس با ما</h2>
-            <div style="display: grid;grid-template-columns: 1fr  1fr;">
-
-
-                <form id="basic-form" action="" method="post">
-                    <div class="contact-inner d-flex">
-                        <div class="input-block form-item">
-                            <label for="">نام</label>
-                            <input type="text" name="name" required>
-                        </div>
-                        <div class="input-block form-item">
-                            <label for="">فامیل</label>
-                            <input type="text" name="family" required>
-                        </div>
-                        <div class="input-block form-item">
-                            <label for="">ایمیل</label>
-                            <input type="email" name="email" required>
-                        </div>
-                        <div class="input-block form-item">
-                            <label for="">تلفن</label>
-                            <input type="text" name="phone" required>
+            <!-- PRODUCT SHOWCASE -->
+            <div class="product-showcase">
+                <!-- HEADLINE -->
+                <div class="headline">
+                    <h4>پرفروش ترین محصولات</h4>
+                    <!-- SLIDE CONTROLS -->
+                    <div class="slide-control-wrap">
+                        <div class="slide-control left">
+                            <!-- SVG ARROW -->
+                            <svg class="svg-arrow">
+                                <use xlink:href="#svg-arrow"></use>
+                            </svg>
+                            <!-- /SVG ARROW -->
                         </div>
 
-                        <div class="textarea form-item">
-                            <label for="">پیام شما</label>
-                            <textarea name="" id="" required></textarea>
-                        </div>
-                        <div class="submit-btn form-item">
-                            <button type="submit" value="submit" class="btn btn-blue"> ارسال پیام</button>
-
+                        <div class="slide-control right">
+                            <!-- SVG ARROW -->
+                            <svg class="svg-arrow">
+                                <use xlink:href="#svg-arrow"></use>
+                            </svg>
+                            <!-- /SVG ARROW -->
                         </div>
                     </div>
-                </form>
+                    <!-- /SLIDE CONTROLS -->
+                </div>
+                <!-- /HEADLINE -->
+
+                <!-- PRODUCT LIST -->
+                <div id="pl-5" class="product-list grid column4-wrap owl-carousel">
+
+                    @if(isset($newProducts) && count($newProducts)>0)
+                        @foreach($newProducts as $nProduct)
+                            <!-- PRODUCT ITEM -->
+                            <div class="product-item column">
+                                <!-- PRODUCT PREVIEW ACTIONS -->
+                                <div class="product-preview-actions">
+                                    <!-- PRODUCT PREVIEW IMAGE -->
+                                    <figure class="product-preview-image">
+                                        <img style="width: 258px;
+                                            height: 150px; " src="{{asset('storage/images/products/'.$nProduct->id.'/'.$nProduct->image)}}" alt="{{$nProduct->name}}">
+                                    </figure>
+                                    <!-- /PRODUCT PREVIEW IMAGE -->
+
+                                    <!-- PREVIEW ACTIONS -->
+                                    <div class="preview-actions " >
+                                        <!-- PREVIEW ACTION -->
+                                        <div class="preview-action" style="  right: 110px;">
+                                            <a href="item-v1.html">
+                                                <div class="circle tiny primary">
+                                                    <span class="icon-tag"></span>
+                                                </div>
+                                            </a>
+                                            <a href="item-v1.html">
+                                                <p>نمایش</p>
+                                            </a>
+                                        </div>
+                                        <!-- /PREVIEW ACTION -->
+
+                                    </div>
+                                    <!-- /PREVIEW ACTIONS -->
+                                </div>
+                                <!-- /PRODUCT PREVIEW ACTIONS -->
+
+                                <!-- PRODUCT INFO -->
+                                <div class="product-info">
+                                    <a href="item-v1.html">
+                                        <p class="text-header">{{$nProduct->name}}</p>
+                                    </a>
+                                    <p class="product-description">
+                                        @foreach($nProduct->material as $material)
+                                            <span>{{$material['name']}}</span>
+                                        @endforeach
+                                    </p>
+                                    <a href="shop-gridview-v1.html">
+                                        <p class="category tertiary">{{$nProduct->Category()->get()->first()->name}}</p>
+                                    </a>
+                                    <p class="price">
+
+                                        {{number_format($nProduct->BasePrice)}}
+                                        <span>تومان</span>
+
+                                    </p>
+                                </div>
+                                <!-- /PRODUCT INFO -->
+                                <hr class="line-separator">
+
+                                <!-- USER RATING -->
+                                <div class="user-rating">
+                                    <a href="author-profile.html">
+                                        @foreach($nProduct->color as $color)
+
+                                            <figure class="user-avatar small">
+                                                <div style="border: solid 1px;border-radius: 50%;border-color: #0c0c0c;height: 20px;background-color: {{$color['color']}}"></div>
+                                            </figure>
+                                        @endforeach
+                                    </a>
+                                    <p class="price" style="padding-top: 2px">
+                                        @foreach($nProduct->size as $size)
+                                            <span style="border: solid 1px;border-color: #0ae7c2;border-radius: 30%;">{{$size['name']}}</span>
+                                        @endforeach
 
 
+                                    </p>
+
+                                </div>
+                                <!-- /USER RATING -->
+                            </div>
+                            <!-- /PRODUCT ITEM -->
+
+
+
+
+
+                        @endforeach
+                    @endif
+
+                </div>
+                <!-- PRODUCT LIST -->
             </div>
-
-
+            <!-- PRODUCT SHOWCASE -->
         </div>
+    </div>
+    <!-- /PRODUCTS SIDESHOW -->
 
+
+    <!-- SUBSCRIBE BANNER -->
+    <div id="subscribe-banner-wrap">
+        <div id="subscribe-banner">
+            <!-- SUBSCRIBE CONTENT -->
+            <div class="subscribe-content">
+                <!-- SUBSCRIBE HEADER -->
+                <div class="subscribe-header">
+                    <figure>
+                        <img src="{{asset('front/images/news_icon.png')}}" alt="subscribe-icon">
+                    </figure>
+                    <p class="subscribe-title">تخفیف ها رو از دست ندید</p>
+                    <p>شمارتو برامون بزار</p>
+                </div>
+                <!-- /SUBSCRIBE HEADER -->
+
+                <!-- SUBSCRIBE FORM -->
+                <form class="subscribe-form">
+                    <input type="text" name="subscribe_email" id="subscribe_email" placeholder="شماره تلفن">
+                    <button class="button medium dark">ثبت</button>
+                </form>
+                <!-- /SUBSCRIBE FORM -->
+            </div>
+            <!-- /SUBSCRIBE CONTENT -->
         </div>
-    </section>
+    </div>
+    <!-- /SUBSCRIBE BANNER -->
 @endsection

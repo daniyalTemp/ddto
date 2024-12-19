@@ -7,7 +7,10 @@ Route::get('/', function () {
 });
 Route::middleware(\App\Http\Middleware\configFront::class)->namespace('App\Http\Controllers\front')->group(function () {
     Route::get('/', 'homePageController@index')->name('index');
-
+    Route::prefix('shop')->group(function () {
+        Route::get('/', 'shopController@index')->name('shop.index');
+        Route::get('/{id}', 'shopController@product')->name('shop.product');
+    });
 
 });
 

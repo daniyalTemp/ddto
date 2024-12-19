@@ -1,101 +1,436 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="en">
-
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> دیدیتو - دنیای دلخواه تو</title>
-    <link rel="icon" type="image/png" href="{{asset('assets/images/logo.png')}}" sizes="16x16">
-    <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/owl.carousel.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/owl.theme.green.css')}}">
-
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="{{asset('front/css/vendor/simple-line-icons.css')}}">
+    <link rel="stylesheet" href="{{asset('front/css/vendor/tooltipster.css')}}">
+    <link rel="stylesheet" href="{{asset('front/css/vendor/owl.carousel.css')}}">
+    <link rel="stylesheet" href="{{asset('front/css/style.css')}}">
+    <!-- favicon -->
+    <link rel="icon" href="{{asset('front/favicon.ico')}}">
+    <title>دنیای دلخواه تو - دیدتو</title>
 </head>
+<body>
+<!-- HEADER -->
+<div class="header-wrap">
+    <header>
+        <!-- LOGO -->
+        <a href="index.html">
+            <figure class="logo">
+                <img src="{{asset('front/images/logo-white.png')}}" alt="logo">
+            </figure>
+        </a>
+        <!-- /LOGO -->
 
-<body class="darkmode">
-<!-- Header -->
-<header>
-    <div class="container">
-        <nav class="nav d-flex" id="home">
-            <div class="logo">
-                <a href="#">
-                    <img src="assets/images/logo.png" alt="logo" class="logo-main">
-                    <img src="assets/images/logo-white.png" alt="logo" class="logo-dark">
+        <!-- MOBILE MENU HANDLER -->
+        <div class="mobile-menu-handler left primary">
+            <img src="{{asset('front/images/pull-icon.png')}}" alt="pull-icon">
+        </div>
+        <!-- /MOBILE MENU HANDLER -->
 
-                </a>
-            </div>
-            <!-- toggle icon -->
-            <a href="javascript:void(0)" class="burger">
-                <span class="one"></span>
-                <span class="two"></span>
-                <span class="three"></span>
-                <span class="four"></span>
+        <!-- LOGO MOBILE -->
+        <a href="index.html">
+            <figure class="logo-mobile">
+                <img src="{{asset('front/images/1.png')}}" alt="logo-mobile">
+            </figure>
+        </a>
+        <!-- /LOGO MOBILE -->
+        @if(\Illuminate\Support\Facades\Auth::check())
 
-                <div class="close-icon">
-                    <svg width="30" height="29" viewBox="0 0 30 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M17.4492 14.4202L29.5992 2.67518C29.8723 2.36697 30.015 1.97052 29.9988 1.56504C29.9826 1.15956 29.8087 0.774925 29.5118 0.487995C29.215 0.201065 28.8171 0.0329733 28.3977 0.0173115C27.9782 0.00164963 27.5681 0.139571 27.2492 0.403514L15.0992 12.1485L2.94924 0.387402C2.6304 0.12346 2.22028 -0.0144603 1.80082 0.00120154C1.38136 0.0168634 0.983459 0.184954 0.686635 0.471884C0.389811 0.758814 0.215923 1.14345 0.199721 1.54893C0.183519 1.95441 0.326196 2.35086 0.59924 2.65907L12.7492 14.4202L0.582573 26.1652C0.408104 26.3096 0.266403 26.4873 0.166364 26.6872C0.0663255 26.8871 0.0101078 27.1048 0.00124197 27.3267C-0.00762386 27.5486 0.0310527 27.7698 0.114844 27.9766C0.198635 28.1833 0.325732 28.3711 0.488156 28.5281C0.650581 28.6851 0.844826 28.808 1.0587 28.889C1.27258 28.97 1.50146 29.0074 1.731 28.9988C1.96053 28.9902 2.18575 28.9359 2.39252 28.8392C2.5993 28.7425 2.78316 28.6055 2.93257 28.4368L15.0992 16.6918L27.2492 28.4368C27.5681 28.7008 27.9782 28.8387 28.3977 28.823C28.8171 28.8074 29.215 28.6393 29.5118 28.3524C29.8087 28.0654 29.9826 27.6808 29.9988 27.2753C30.015 26.8698 29.8723 26.4734 29.5992 26.1652L17.4492 14.4202Z" />
+        <!-- MOBILE ACCOUNT OPTIONS HANDLER -->
+        <div class="mobile-account-options-handler right secondary">
+            <span class="icon-user"></span>
+        </div>
+        <!-- /MOBILE ACCOUNT OPTIONS HANDLER -->
+
+
+            <!-- USER BOARD -->
+            <div class="user-board">
+                <!-- USER QUICKVIEW -->
+                <div class="user-quickview">
+                    <!-- USER AVATAR -->
+                    <a href="author-profile.html">
+                        <div class="outer-ring">
+                            <div class="inner-ring"></div>
+                            <figure class="user-avatar">
+                                <img
+                                    src="{{asset('storage/images/profiles/'.\Illuminate\Support\Facades\Auth::user()->id.'/'.\Illuminate\Support\Facades\Auth::user()->pic)}}">
+                            </figure>
+                        </div>
+                    </a>
+                    <!-- /USER AVATAR -->
+
+                    <!-- USER INFORMATION -->
+                    <p class="user-name">{{ \Illuminate\Support\Facades\Auth::user()->firstName.' '.\Illuminate\Support\Facades\Auth::user()->lastName }}</p>
+                    <!-- SVG ARROW -->
+                    <svg class="svg-arrow">
+                        <use xlink:href="#svg-arrow"></use>
                     </svg>
+                    <!-- /SVG ARROW -->
+                    <p class="user-money">تومان745.00</p>
+                    <!-- /USER INFORMATION -->
+
+                    <!-- DROPDOWN -->
+                    <ul class="dropdown small hover-effect closed">
+                        <li class="dropdown-item">
+                            <div class="dropdown-triangle"></div>
+                            <a href="author-profile.html">صفحه پروفایل</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="dashboard-manageitems.html">حریدهای شما</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="{{route('logout')}}">خروج</a>
+                        </li>
+                    </ul>
+                    <!-- /DROPDOWN -->
+                </div>
+                <!-- /USER QUICKVIEW -->
+
+                <!-- ACCOUNT INFORMATION -->
+                <div class="account-information">
+
 
                 </div>
-            </a>
-            <div class="navigation-bar">
-                <ul id="nav">
-                    <li class="active"><a href="#home">خانه</a></li>
-                    <li><a href="#about">درباره ما</a></li>
-                    <li><a href="#services">خدمات ها</a></li>
-                    <li><a href="#portfolio">نمونه کار ها</a></li>
-                    <li><a href="#contact">تماس با ما</a></li>
-                    <li class="darkmode-btn d-desktop">
-                        <a href="javascript:void(0)">
-                            <img src="assets/images/brightness.svg" alt="brightness" class="bright">
-                            <img src="assets/images/moon.svg" alt="moon" class="dark"> </a>
+                <!-- /ACCOUNT INFORMATION -->
+
+                <!-- ACCOUNT ACTIONS -->
+
+                <!-- /ACCOUNT ACTIONS -->
+            </div>
+            <!-- /USER BOARD -->
+
+        @else
+            <div class="account-actions">
+                <a href="{{route('login')}}" class="button medium primary">ورود به حساب</a>
+
+            </div>
+        @endif
+
+    </header>
+</div>
+<!-- /HEADER -->
+
+<!-- SIDE MENU -->
+<div id="mobile-menu" class="side-menu left closed">
+    <!-- SVG PLUS -->
+    <svg class="svg-plus">
+        <use xlink:href="#svg-plus"></use>
+    </svg>
+    <!-- /SVG PLUS -->
+
+    <!-- SIDE MENU HEADER -->
+    <div class="side-menu-header">
+        <figure class="logo small">
+            <img src="{{asset('front/images/logo-white.png')}}" alt="logo">
+        </figure>
+    </div>
+    <!-- /SIDE MENU HEADER -->
+
+    <!-- SIDE MENU TITLE -->
+    <p class="side-menu-title">لینک های اصلی</p>
+    <!-- /SIDE MENU TITLE -->
+
+    <!-- DROPDOWN -->
+    <ul class="dropdown dark hover-effect interactive">
+        <!-- DROPDOWN ITEM -->
+        <li class="dropdown-item">
+            <a href="index.html">صفحه اصلی</a>
+        </li>
+        <!-- /DROPDOWN ITEM -->
+
+        <!-- DROPDOWN ITEM -->
+        <li class="dropdown-item">
+            <a href="{{route('shop.index')}}">فروشگاه</a>
+        </li>
+        <!-- /DROPDOWN ITEM -->
+
+        <!-- DROPDOWN ITEM -->
+        <li class="dropdown-item">
+            <a href="index.html">سوالات متداول</a>
+        </li>
+        <!-- /DROPDOWN ITEM -->
+
+        <!-- DROPDOWN ITEM -->
+        <li class="dropdown-item">
+            <a href="index.html">وبلاگ </a>
+        </li>
+        <!-- /DROPDOWN ITEM -->
+
+
+    </ul>
+    <!-- /DROPDOWN -->
+</div>
+<!-- /SIDE MENU -->
+
+@if(\Illuminate\Support\Facades\Auth::check())
+    <!-- SIDE MENU -->
+    <div id="account-options-menu" class="side-menu right closed">
+        <!-- SVG PLUS -->
+        <svg class="svg-plus">
+            <use xlink:href="#svg-plus"></use>
+        </svg>
+        <!-- /SVG PLUS -->
+
+        <!-- SIDE MENU HEADER -->
+        <div class="side-menu-header">
+            <!-- USER QUICKVIEW -->
+            <div class="user-quickview">
+                <!-- USER AVATAR -->
+                <a href="author-profile.html">
+                    <div class="outer-ring">
+                        <div class="inner-ring"></div>
+                        <figure class="user-avatar">
+                            <img src="{{asset('front/images/avatars/avatar_01.jpg')}}" alt="avatar">
+                        </figure>
+                    </div>
+                </a>
+                <!-- /USER AVATAR -->
+
+                <!-- USER INFORMATION -->
+                <p class="user-name">{{\Illuminate\Support\Facades\Auth::user()->firstName.' '.\Illuminate\Support\Facades\Auth::user()->lastName}}</p>
+                <p class="user-money">تومان745.00</p>
+                <!-- /USER INFORMATION -->
+            </div>
+            <!-- /USER QUICKVIEW -->
+        </div>
+        <!-- /SIDE MENU HEADER -->
+
+        <!-- SIDE MENU TITLE -->
+        <p class="side-menu-title">حساب شما</p>
+        <!-- /SIDE MENU TITLE -->
+
+        <!-- DROPDOWN -->
+        <ul class="dropdown dark hover-effect">
+            <!-- DROPDOWN ITEM -->
+            <li class="dropdown-item">
+                <a href="dashboard-notifications.html">صفحه پروفایل</a>
+            </li>
+            <!-- /DROPDOWN ITEM -->
+            <!-- DROPDOWN ITEM -->
+            <li class="dropdown-item">
+                <a href="dashboard-notifications.html">حریدهای شما</a>
+            </li>
+            <!-- /DROPDOWN ITEM -->
+            <!-- DROPDOWN ITEM -->
+            <li class="dropdown-item">
+                <a href="{{route('logout')}}">خروج</a>
+            </li>
+            <!-- /DROPDOWN ITEM -->
+
+        </ul>
+        <!-- /DROPDOWN -->
+
+
+    </div>
+    <!-- /SIDE MENU -->
+@else
+
+@endif
+<!-- MAIN MENU -->
+<div class="main-menu-wrap">
+    <div class="menu-bar">
+        <nav>
+            <ul class="main-menu">
+                <!-- MENU ITEM -->
+                <li class="menu-item">
+                    <a href="{{route('index')}}">صفحه اصلی</a>
+                </li>
+                <!-- /MENU ITEM -->
+
+                <!-- MENU ITEM -->
+                <li class="menu-item">
+                    <a href="{{route('shop.index')}}">فروشگاه</a>
+                </li>
+                <!-- /MENU ITEM -->
+
+                <!-- MENU ITEM -->
+                <li class="menu-item">
+                    <a href="{{route('index')}}">سوالات متداول</a>
+                </li>
+                <!-- /MENU ITEM -->
+
+                <!-- MENU ITEM -->
+                <li class="menu-item">
+                    <a href="{{route('index')}}">وبلاگ</a>
+                </li>
+                <!-- /MENU ITEM -->
+
+
+            </ul>
+        </nav>
+        <form class="search-form">
+            <input type="text" class="rounded" name="search" id="search_products" placeholder="جستجوی محصولات">
+            <input type="image" src="{{asset('front/images/search-icon.png')}}" alt="search-icon">
+        </form>
+    </div>
+</div>
+<!-- /MAIN MENU -->
+
+@yield('content')
+
+
+<!-- FOOTER -->
+<footer>
+    <!-- FOOTER TOP -->
+    <div id="footer-top-wrap">
+        <div id="footer-top">
+            <!-- COMPANY INFO -->
+            <div class="company-info">
+                <figure class="logo small">
+                    <img src="{{asset('front/images/logo-white.png')}}" alt="logo-small">
+                </figure>
+                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ. و با استفاده از طراحان گرافیک است. چاپگرها
+                    و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                <ul class="company-info-list">
+                    <li class="company-info-item">
+                        <span class="icon-present"></span>
+                        <p><span>850.296</span> محصولات</p>
+                    </li>
+                    <li class="company-info-item">
+                        <span class="icon-energy"></span>
+                        <p><span>1.207.300</span> اعضاء</p>
+                    </li>
+                    <li class="company-info-item">
+                        <span class="icon-user"></span>
+                        <p><span>74.059</span> فروشندگان</p>
                     </li>
                 </ul>
+                <!-- SOCIAL LINKS -->
+                <ul class="social-links">
+                    <li class="social-link ">
+                        <a href="#"></a>
+                    </li>
+
+                </ul>
+                <!-- /SOCIAL LINKS -->
+
+
             </div>
-            <div class="darkmode-btn d-mobile"><a href="javascript:void(0)">
-                    <img src="assets/images/brightness.svg" alt="brightness" class="bright">
-                    <img src="assets/images/moon.svg" alt="moon" class="dark"> </a></div>
-        </nav>
-    </div>
-</header>
-<main>
+            <!-- /COMPANY INFO -->
 
-    @yield('content')
-</main>
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="footer-inner">
 
-            <div class="footer-bottom d-flex">
-                <p class="copyright">فارسی و راست چین شده توسط <a href="https://netcopy.ir">نت کپی</a></p>
-                <div class="footer-social">
-                    <a href="#" class="footer-social"><img src="assets/images/social-icons/feather_instagram.svg"
-                                                           alt="instagram"></a>
-                    <a href="#" class="footer-social"><img src="assets/images/social-icons/feather_linkedin.svg"
-                                                           alt="linkedin"></a>
-                    <a href="#" class="footer-social"><img src="assets/images/social-icons/feather_github.svg"
-                                                           alt="github"></a>
-                    <a href="#" class="footer-social"><img src="assets/images/social-icons/feather_dribbble.svg"
-                                                           alt=""></a>
+            <!-- LINK INFO -->
+            <div class="link-info">
+                <p class="footer-title">راهنما و سوالات متداول</p>
+                <!-- LINK LIST -->
+                <ul class="link-list">
+                    <li class="link-item">
+                        <div class="bullet"></div>
+                        <a href="#">مرکز راهنمایی</a>
+                    </li>
+                    <li class="link-item">
+                        <div class="bullet"></div>
+                        <a href="#">سوالات متداول</a>
+                    </li>
+                    <li class="link-item">
+                        <div class="bullet"></div>
+                        <a href="#">شرایط و ضوابط</a>
+                    </li>
+                    <li class="link-item">
+                        <div class="bullet"></div>
+                        <a href="#">لایسنس محصولات</a>
+                    </li>
+                    <li class="link-item">
+                        <div class="bullet"></div>
+                        <a href="#">امنیت اطلاعات</a>
+                    </li>
+                </ul>
+                <!-- /LINK LIST -->
+            </div>
+            <!-- /LINK INFO -->
+
+            <!-- LINK INFO -->
+            <div class="link-info" style="color:white;margin: 0;width: 50%;">
+                <p class="footer-title">ثبت نظر </p>
+                <!-- LINK LIST -->
+                <div class="form-popup-content">
+                    <h4 class="popup-title"></h4>
+                    <!-- LINE SEPARATOR -->
+                    <hr class="line-separator">
+                    <!-- /LINE SEPARATOR -->
+                    <form id="register-form2">
+                        <label for="name" class="label ">نام و نام خانوادگی</label>
+                        <input type="text" id="name" name="name"
+                               placeholder="نام کامل ">
+                        <label for="phone" class="label ">تلفن</label>
+                        <input type="text" id="phone" name="phone"
+                               placeholder="تلفن">
+                        <label for="msg" class="label ">متن پیام</label>
+                        <input type="text" id="msg" name="msg"
+                        >
+                        <br>
+                        <button class="button mid primary btn-block" style="width: 100%"> ارسال</button>
+                    </form>
                 </div>
+                <!-- /LINK LIST -->
             </div>
+            <!-- /LINK INFO -->
+
+
         </div>
     </div>
+    <!-- /FOOTER TOP -->
+
+    <!-- FOOTER BOTTOM -->
+    <div id="footer-bottom-wrap">
+        <div id="footer-bottom">
+            <p> طراحی و توسعه توسط
+                <a href="#">
+                    دانیال رومیانی</a>
+        </div>
+    </div>
+    <!-- /FOOTER BOTTOM -->
 </footer>
+<!-- /FOOTER -->
 
-<!-- Scroll up -->
-<a href="javascript:void(0)" class="scrollup">
-    <img src="assets/images/uparrow.svg" alt="arrow up">
-</a>
+<div class="shadow-film closed"></div>
+
+<!-- SVG ARROW -->
+<svg style="display: none;">
+    <symbol id="svg-arrow" viewBox="0 0 3.923 6.64014" preserveAspectRatio="xMinYMin meet">
+        <path d="M3.711,2.92L0.994,0.202c-0.215-0.213-0.562-0.213-0.776,0c-0.215,0.215-0.215,0.562,0,0.777l2.329,2.329
+			L0.217,5.638c-0.215,0.215-0.214,0.562,0,0.776c0.214,0.214,0.562,0.215,0.776,0l2.717-2.718C3.925,3.482,3.925,3.135,3.711,2.92z"/>
+    </symbol>
+</svg>
+<!-- /SVG ARROW -->
+
+<!-- SVG STAR -->
+<svg style="display: none;">
+    <symbol id="svg-star" viewBox="0 0 10 10" preserveAspectRatio="xMinYMin meet">
+        <polygon points="4.994,0.249 6.538,3.376 9.99,3.878 7.492,6.313 8.082,9.751 4.994,8.129 1.907,9.751
+	2.495,6.313 -0.002,3.878 3.45,3.376 "/>
+    </symbol>
+</svg>
+<!-- /SVG STAR -->
+
+<!-- SVG PLUS -->
+<svg style="display: none;">
+    <symbol id="svg-plus" viewBox="0 0 13 13" preserveAspectRatio="xMinYMin meet">
+        <rect x="5" width="3" height="13"/>
+        <rect y="5" width="13" height="3"/>
+    </symbol>
+</svg>
+<!-- /SVG PLUS -->
+
+<!-- jQuery -->
+<script src="{{asset('front/js/vendor/jquery-3.1.0.min.js')}}"></script>
+<!-- Tooltipster -->
+<script src="{{asset('fromt/js/vendor/jquery.tooltipster.min.js')}}"></script>
+<!-- Owl Carousel -->
+<script src="{{asset('front/js/vendor/owl.carousel.min.js')}}"></script>
+<!-- Tweet -->
+<script src="{{asset('front/js/vendor/twitter/jquery.tweet.min.js')}}"></script>
+<!-- Side Menu -->
+<script src="{{asset('front/js/side-menu.js')}}"></script>
+<!-- Home -->
+<script src="{{asset('front/js/home.js')}}"></script>
+<!-- Tooltip -->
+<script src="{{asset('front/js/tooltip.js')}}"></script>
+<!-- User Quickview Dropdown -->
+<script src="{{asset('front/js/user-board.js')}}"></script>
+<!-- Footer -->
+<script src="{{asset('front/js/footer.js')}}"></script>
 </body>
-<script src="{{asset('assets/js/jquery.min.js')}}"></script>
-<script src="https://unpkg.com/scrollreveal"></script>
-<script src="https://cdn.jsdelivr.net/gh/cferdinandi/gumshoe/dist/gumshoe.polyfills.min.js"></script>
-<script src="{{asset('assets/js/owl.carousel.js')}}"></script>
-<script src="{{asset('assets/js/validate.js')}}"></script>
-<script src="{{asset('assets/js/main.js')}}"></script>
-
-
 </html>

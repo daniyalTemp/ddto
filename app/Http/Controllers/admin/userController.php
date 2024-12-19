@@ -204,6 +204,8 @@ class userController extends Controller
         );
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], ($request->has('remember') ? true : false))) {
+            if (Auth::user()->role=='user')
+                return redirect()->route('index');
             return redirect()->route('dashboard.index');
         } else
             return redirect()->route('login')->withErrors(['msg' => 'ورود ناموفق']);

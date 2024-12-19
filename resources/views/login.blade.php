@@ -22,7 +22,7 @@
                     <div class="row no-gutters">
                         <div class="col-xl-12" style="background-color: #3C3D37; color: white">
                             <div class="col-12">
-                                <img style="width: 45%;margin-right: 27%;margin-top: 10%;" src="{{asset('assets/images/1.png')}}">
+                                <img style="width: 45%;margin-right: 27%;margin-top: 10%;" src="{{asset('front/images/1.png')}}">
                             </div>
 
                             <div class="auth-form">

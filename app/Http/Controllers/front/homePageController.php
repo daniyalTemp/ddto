@@ -12,8 +12,10 @@ class homePageController extends Controller
     public function index()
     {
         $config = config::all()[0];
-        $products = products::all()->take(3);
+        $hotProducts = products::all()->take(10);
+        $newProducts = products::all()->take(10);
+//        dd($hotProducts);
 //        dd($config->presents);
-        return view('front.home', compact('config' , 'products'));
+        return view('front.home', compact('config' , 'hotProducts','newProducts'));
     }
 }
