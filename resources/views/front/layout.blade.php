@@ -38,15 +38,17 @@
         <!-- /LOGO MOBILE -->
         @if(\Illuminate\Support\Facades\Auth::check())
 
-        <!-- MOBILE ACCOUNT OPTIONS HANDLER -->
-        <div class="mobile-account-options-handler right secondary">
-            <span class="icon-user"></span>
-        </div>
-        <!-- /MOBILE ACCOUNT OPTIONS HANDLER -->
+            <!-- MOBILE ACCOUNT OPTIONS HANDLER -->
+            <div class="mobile-account-options-handler right secondary">
+                <span class="icon-user"></span>
+            </div>
+            <!-- /MOBILE ACCOUNT OPTIONS HANDLER -->
 
 
             <!-- USER BOARD -->
             <div class="user-board">
+
+
                 <!-- USER QUICKVIEW -->
                 <div class="user-quickview">
                     <!-- USER AVATAR -->
@@ -88,12 +90,6 @@
                 </div>
                 <!-- /USER QUICKVIEW -->
 
-                <!-- ACCOUNT INFORMATION -->
-                <div class="account-information">
-
-
-                </div>
-                <!-- /ACCOUNT INFORMATION -->
 
                 <!-- ACCOUNT ACTIONS -->
 
@@ -106,7 +102,74 @@
                 <a href="{{route('login')}}" class="button medium primary">ورود به حساب</a>
 
             </div>
+
+            @if(\Illuminate\Support\Facades\Cookie::has('ddtoOrderId'))
+
+                <div class="user-board">
+                    <!-- ACCOUNT INFORMATION -->
+                    <div class="account-information">
+
+                        <div class="account-settings-quickview">
+						<span class="icon-basket">
+							<!-- SVG ARROW -->
+							<svg class="svg-arrow">
+								<use xlink:href="#svg-arrow"></use>
+							</svg>
+                            <!-- /SVG ARROW -->
+						</span>
+
+                            <!-- PIN -->
+                            <span class="pin soft-edged primary" style="top: -10px;">{{count($card)}}</span>
+                            <!-- /PIN -->
+
+                            <!-- DROPDOWN NOTIFICATIONS -->
+                            <ul class="dropdown notifications no-hover closed">
+                                <!-- DROPDOWN ITEM -->
+                                @foreach($card as $p)
+                                    <li class="dropdown-item">
+                                        <a href="#">
+                                            <figure class="user-avatar">
+                                                <img src="{{asset('storage/images/products/'.$p->id.'/'.$p->image)}}"
+                                                     alt="">
+                                            </figure>
+                                        </a>
+                                        <p class="title">
+                                            {{$p->name}} * {{$p->getOriginal('pivot_count')}}
+                                        </p>
+                                        <p class="timestamp">
+                                        <span style="border: 1px solid;margin-left: 4px;  border-radius: 50%;border-color: #0c0c0c;background-color: {{json_decode($p->getOriginal('pivot_color'))->color}}; color:{{json_decode($p->getOriginal('pivot_color'))->color}}">
+                                            ---
+                                            </span>
+                                            <span>{{json_decode($p->getOriginal('pivot_size'))->name}}</span>
+                                            <span>{{json_decode($p->getOriginal('pivot_material'))->name}}</span>
+                                            {{--                                        <span>{{$p->material['name']}}</span>--}}
+                                        </p>
+                                        <span class="notification-type primary-new ">{{number_format($p->getOriginal('pivot_finalPrice'))}}</span>
+                                    </li>
+                                    <a   style="border-radius: 10%; width: 100%" href="#" class="button small tertiary text-center spaced">حذف از سبد </a>
+
+                                @endforeach
+                                <!-- /DROPDOWN ITEM -->
+
+
+                                <!-- DROPDOWN ITEM -->
+                                <li class="dropdown-item">
+
+                                    <a href="dashboard-notifications.html" class="button primary">اتمام خرید </a>
+                                </li>
+                                <!-- /DROPDOWN ITEM -->
+                            </ul>
+                            <!-- /DROPDOWN NOTIFICATIONS -->
+                        </div>
+                    </div>
+                    <!-- /ACCOUNT INFORMATION -->
+
+
+                </div>
+
+            @endif
         @endif
+
 
     </header>
 </div>

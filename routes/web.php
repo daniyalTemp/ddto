@@ -10,6 +10,11 @@ Route::middleware(\App\Http\Middleware\configFront::class)->namespace('App\Http\
     Route::prefix('shop')->group(function () {
         Route::get('/', 'shopController@index')->name('shop.index');
         Route::get('/{id}', 'shopController@product')->name('shop.product');
+        Route::prefix('order')->group(function () {
+            Route::post('/addCard/{product_Id}/{orderId}', 'orderController@addToChard')->name('shop.order.addCard');
+//            Route::get('/{id}', 'shopController@product')->name('shop.product');
+
+        });
     });
 
 });

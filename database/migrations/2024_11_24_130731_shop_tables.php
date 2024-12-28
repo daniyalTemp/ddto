@@ -41,7 +41,7 @@ return new class extends Migration {
 
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user');
+            $table->unsignedBigInteger('user')->nullable();
             $table->foreign('user')->references('id')->on('users');
             $table->enum('status', ['initial', 'getData','waiting','printing','delivered' , 'cancel'])->default('initial');
             $table->enum('paymentStatus', ['pay', 'waiting'])->default('waiting');
@@ -50,11 +50,26 @@ return new class extends Migration {
             $table->text('address')->nullable();
             $table->string('postRefCode')->nullable();
             $table->date('sendIn')->nullable();
-            $table->unsignedBigInteger('totalPrice')->nullable();
+            $table->unsignedBigInteger('totalPrice')->default(0);
             $table->unsignedBigInteger('cancelBy')->nullable();
             $table->foreign('cancelBy')->references('id')->on('users');
             $table->timestamps();
         });
+        Schema::create('order_products', function (Blueprint $table) {
+           $table->id();
+           $table->integer('count')->default(1);
+           $table->unsignedBigInteger('order_id');
+           $table->foreign('order_id')->references('id')->on('orders');
+           $table->unsignedBigInteger('product_id');
+           $table->foreign('product_id')->references('id')->on('products');
+           $table->text('color')->nullable();
+           $table->text('size')->nullable();
+           $table->text('material')->nullable();
+           $table->unsignedBigInteger('finalPrice')->default(0);
+           $table->string('hashed')->nullable();
+           $table->timestamps();
+        });
+
 
 
     }
@@ -64,7 +79,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('category');
+//        Schema::dropIfExists('category');
 
     }
 };

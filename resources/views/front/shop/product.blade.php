@@ -18,11 +18,8 @@
             <div class="sidebar right">
                 <!-- SIDEBAR ITEM -->
                 <div class="sidebar-item void buttons">
-                    @if($product->available)
-                        <a href="#" class="button big dark purchase " style="text-align: center">
-                            هم اکنون بخرید!
-                        </a>
-                    @else
+                    @if(!$product->available)
+
                         <a href="#" class="button big tertiary " style="text-align: center">
 
                             کالای موجود نیست
@@ -31,8 +28,6 @@
 
                 </div>
                 <!-- /SIDEBAR ITEM -->
-
-
                 <!-- SIDEBAR ITEM -->
                 <div class="sidebar-item product-info" +>
                     <h4>اطلاعات محصول</h4>
@@ -60,7 +55,8 @@
                         <!-- INFORMATION LAYOUT ITEM -->
                         <div class="information-layout-item">
                             <p class="text-header">سایزبندی :</p>
-                            <p> @foreach($product->size as $size)
+                            <p>
+                            @foreach($product->size as $size)
 
                                 <ul class="share-links" style="float: left">
                                     <li style="border: 0px solid;border-color: #0f4f99;border-radius:30%;
@@ -70,7 +66,8 @@
                                     </li>
                                 </ul>
                                 @endforeach
-                                </ul></p>
+                                </ul>
+                                </p>
                         </div>
                         <!-- /INFORMATION LAYOUT ITEM -->
 
@@ -109,7 +106,62 @@
                     <!-- INFORMATION LAYOUT -->
                 </div>
                 <!-- /SIDEBAR ITEM -->
+                @if($product->available)
 
+                    <div class="sidebar-item product-info">
+                        <h4>لیست قیمت ها </h4>
+                        <hr class="line-separator">
+                        <!-- INFORMATION LAYOUT -->
+                        <div class="information-layout">
+                            @foreach($product->material as $mat)
+                                @foreach($product->color as $col)
+                                    @foreach($product->size as $si)
+                                        <!-- INFORMATION LAYOUT ITEM -->
+                                        <div class="information-layout-item">
+
+                                            <ul class="share-links" style="float: right">
+                                                <li><a href="#"
+                                                       style="border: 1px solid;border-color: #0c0c0c;background-color: {{$col['color']}};margin-left: 4px"></a>
+                                                </li>
+
+                                                <li style="border: 0px solid;border-color: #0f4f99;border-radius:30%;
+                                    background-color:#d4eaea
+                                    ;margin-left: 4px">
+                                                    {{$si['name']}}
+                                                </li>
+                                                <li style="border: 0px solid;border-color: #0f4f99;border-radius:30%;
+                                    background-color:#d4eaea
+                                    ;margin-left: 4px">
+                                                    {{$mat['name']}}
+                                                </li>
+
+                                            </ul>
+                                            <p class="price">
+{{--@dd($product->getSelectedPrice($col,$si,$mat))--}}
+                                                {{number_format($product->getSelectedPrice($col,$si,$mat))}}
+                                                تومان
+                                            </p>
+                                            <br>
+                                            <p>
+                                                <form action="{{route('shop.order.addCard',[$product->id , (\Illuminate\Support\Facades\Cookie::get('ddtoOrderId'))?\Illuminate\Support\Facades\Cookie::get('ddtoOrderId') : -1])}}" method="post">
+                                                {{csrf_field()}}
+                                                <input type="hidden" hidden="hidden" name="color" value="{{json_encode($col)}}">
+                                                <input type="hidden" name="size" value="{{json_encode($si)}}">
+                                                <input  type="hidden" name="material" value="{{json_encode($mat)}}">
+                                                <button  type="submit" style="border-radius: 10%; margin-top: 6px" href="#" class="button small dark text-center spaced">افزودن به سبد </button>
+
+                                            </form>
+                                            </p>
+                                        </div>
+                                        <!-- /INFORMATION LAYOUT ITEM -->
+                                    @endforeach
+                                @endforeach
+                            @endforeach
+
+                        </div>
+                        <!-- INFORMATION LAYOUT -->
+                    </div>
+                @endif
             </div>
             <!-- /SIDEBAR -->
 
