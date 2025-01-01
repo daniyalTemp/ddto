@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\category;
 use App\Models\orders;
 use Closure;
 use Illuminate\Http\Request;
@@ -18,18 +19,26 @@ class configFront
      */
     public function handle(Request $request, Closure $next): Response
     {
+
+        $shareList=[];
 //        if (!orders::find(Cookie::get('order_id'))) {
 //        Cookie::expire('ddtoOrderId');
 //        }
 //        Cookie::expire('ddtoOrderId');
 //        dd(Cookie::get('ddtoOrderId'));
-        if (Cookie::has('ddtoOrderId')&&Cookie::get('ddtoOrderId')!=null) {
-            $card = orders::find(Cookie::get('ddtoOrderId'))->Products()->withPivot(['size','color','material' , 'count','finalPrice'])->get();
+        if (Cookie::has('ddtoOrderId') && Cookie::get('ddtoOrderId') != null) {
+            $card = orders::find(Cookie::get('ddtoOrderId'))->Products()->withPivot(['size', 'color', 'material', 'count', 'finalPrice'])->get();
+            $shareList['card'] = $card;
 //        dd($card);
 //            dd($card[]);
-            View::share(['card' => $card]);
 
+            ;
         }
+        $categoryList = category::all();
+
+        $shareList['categoryList'] = $categoryList;
+        View::share($shareList);
+//        dd(json_decode($card[0]->getOriginal('pivot_color')));
         return $next($request);
     }
 }

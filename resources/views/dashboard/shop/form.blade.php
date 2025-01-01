@@ -127,12 +127,12 @@
                                                                     <div class="form-group row">
                                                                         <label
                                                                             class="col-lg-4 col-form-label text-center"
-                                                                            for="available">موجود ؟
+                                                                            for="available">نمایش در سایت ؟
                                                                         </label>
                                                                         <div class="col-lg-8">
                                                                             <div class="col">
                                                                                 <div
-                                                                                    class="custom-control custom-checkbox mb-3 checkbox-success">
+                                                                                    class="custom-control col-4 custom-checkbox mb-3 checkbox-success">
                                                                                     <input type="checkbox"
                                                                                            class="custom-control-input"
                                                                                            {{((isset($product) && $product->available )?'checked' : '')}}
@@ -140,7 +140,18 @@
                                                                                            id="available"
                                                                                            name="available">
                                                                                     <label class="custom-control-label"
-                                                                                           for="available">بله</label>
+                                                                                           for="available">موجود؟</label>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="custom-control col-4 custom-checkbox mb-3 checkbox-success">
+                                                                                    <input type="checkbox"
+                                                                                           class="custom-control-input"
+                                                                                           {{((isset($product) && $product->hot )?'checked' : '')}}
+
+                                                                                           id="hot"
+                                                                                           name="hot">
+                                                                                    <label class="custom-control-label"
+                                                                                           for="hot">پرفروش ؟</label>
                                                                                 </div>
                                                                             </div>
                                                                         </div>

@@ -146,9 +146,17 @@
                                         </p>
                                         <span class="notification-type primary-new ">{{number_format($p->getOriginal('pivot_finalPrice'))}}</span>
                                     </li>
-                                    <a   style="border-radius: 10%; width: 100%" href="#" class="button small tertiary text-center spaced">حذف از سبد </a>
 
-                                @endforeach
+                                    <form action="{{route('shop.order.removeCard' ,[$p->id , (\Illuminate\Support\Facades\Cookie::get('ddtoOrderId')?\Illuminate\Support\Facades\Cookie::get('ddtoOrderId') : -1)] )}}" method="get">
+                                        {{csrf_field()}}
+                                        <input type="hidden" hidden="hidden" name="color" value="{{$p->getOriginal('pivot_color')}}">
+                                        <input type="hidden" name="size" value="{{$p->getOriginal('pivot_size')}}">
+                                        <input  type="hidden" name="material" value="{{$p->getOriginal('pivot_material')}}">
+                                        {{--                                        <button  type="submit" style="border-radius: 10%; margin-top: 6px" href="#" class="button small dark text-center spaced">افزودن به سبد </button>--}}
+                                        <button  type="submit" style="border-radius: 10%; width: 100%" href="{{route('shop.order.removeCard' ,[$p->id, (\Illuminate\Support\Facades\Cookie::get('ddtoOrderId'))?\Illuminate\Support\Facades\Cookie::get('ddtoOrderId') : -1] )}}" class="button small tertiary text-center spaced">حذف از سبد </button>
+                                    </form>
+
+                                        @endforeach
                                 <!-- /DROPDOWN ITEM -->
 
 
@@ -301,12 +309,43 @@
                     <a href="{{route('index')}}">صفحه اصلی</a>
                 </li>
                 <!-- /MENU ITEM -->
+                <li class="menu-item sub">
+                    <a href="{{route('shop.index')}}">فروشگاه
+                        <svg class="svg-arrow" style="  position: initial;">
+                            <use xlink:href="#svg-arrow"></use>
+                        </svg>
+                        <!-- /SVG ARROW -->
+                    </a>
+                    <div class="content-dropdown">
+                        <!-- FEATURE LIST BLOCK -->
+                        <div class="feature-list-block">
+                            <h6 class="feature-list-title">انواع محصولات </h6>
+                            <hr class="line-separator">
+                            <!-- FEATURE LIST -->
+                            <ul class="feature-list">
+                                @if(isset($categoryList))
+                                    @foreach($categoryList as $menuCat)
+                                        <!-- FEATURE LIST ITEM -->
+                                        <li class="feature-list-item">
+                                            <a href="{{route('shop.index.category' , $menuCat->id)}}">{{$menuCat->name}}</a>
+                                        </li>
+                                        <!-- /FEATURE LIST ITEM -->
+                                    @endforeach
+                                @endif
 
-                <!-- MENU ITEM -->
-                <li class="menu-item">
-                    <a href="{{route('shop.index')}}">فروشگاه</a>
+
+
+                            </ul>
+                            <!-- /FEATURE LIST -->
+
+
+                        </div>
+                        <!-- /FEATURE LIST BLOCK -->
+
+
+                    </div>
                 </li>
-                <!-- /MENU ITEM -->
+
 
                 <!-- MENU ITEM -->
                 <li class="menu-item">

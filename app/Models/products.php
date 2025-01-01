@@ -21,6 +21,7 @@ class products extends Model
         'material',
         'image',
         'weight',
+        'hot',
     ];
     protected $casts = [
         'color' => 'array',

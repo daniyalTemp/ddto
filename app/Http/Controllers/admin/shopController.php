@@ -148,6 +148,7 @@ class shopController extends Controller
             $product->available = (bool)$request->available;
             $product->discount = $request->discount ? $request->discount : $product->discount;
             $product->BasePrice = $request->BasePrice;
+            $product->hot    = (bool)$request->hot;
             $product->description = $request->description ? $request->description : $product->description;
             $product->weight = $request->weight ? $request->weight : $product->weight;
 //            $path='public/storage/pages/productsDes/';

@@ -4,8 +4,19 @@
     <!-- SECTION HEADLINE -->
     <div class="section-headline-wrap ">
         <div class="section-headline">
-            <h2>محصولات</h2>
-            <p>صفحه اصلی<span class="separator">/</span><span class="current-section">محصولات</span></p>
+            <h2>
+
+                    محصولات -
+                @if(isset($selectedCategory))
+                    {{$selectedCategory->name}}
+                @endif
+            </h2>
+
+            <p>صفحه اصلی<span class="separator">/</span><span class="current-section">محصولات</span>
+            @if(isset($selectedCategory))
+                    - <span class="current-section">{{$selectedCategory->name}}</span>
+            @endif
+            </p>
         </div>
     </div>
     <!-- /SECTION HEADLINE -->
@@ -54,7 +65,7 @@
                                                         <span class="icon-tag"></span>
                                                     </div>
                                                 </a>
-                                                <a href="{{route('shop.product' , $product->id)}}" " >
+                                                <a href="{{route('shop.product' , $product->id)}}"  >
                                                     <p>نمایش</p>
                                                 </a>
                                             </div>
@@ -80,9 +91,15 @@
                                         </a>
                                         <p class="price">
 
-                                            {{number_format($product->BasePrice)}}
-                                            <span>تومان</span>
+                                           @if($product->available)
+                                                <i style="font-size: small">از</i>
+                                                {{number_format($product->BasePrice)}}
+                                                <span>تومان</span>
 
+                                            @else
+
+                                                <span>ناموجود</span>
+                                            @endif
                                         </p>
                                     </div>
                                     <!-- /PRODUCT INFO -->
@@ -149,8 +166,8 @@
                 <ul class="dropdown hover-effect tertiary">
                     @if(isset($cats) && count($cats)>0)
                         @foreach($cats as $cat)
-                            <li class="dropdown-item ">
-                                <a   href="#">{{$cat->name}}
+                            <li class="dropdown-item @if(isset($selectedCategory) && $selectedCategory->id == $cat->id) active @endif ">
+                                <a   href="{{route('shop.index.category' , $cat->id)}}">{{$cat->name}}
                                 <span style="float: left;padding-left: 5%;font-size: smaller">{{count($cat->Products()->get())}}</span>
                                 </a>
                             </li>

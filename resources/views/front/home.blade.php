@@ -2,7 +2,6 @@
 
 @section('content')
 
-
     <!-- BANNER -->
     <div class="banner-wrap">
         <section class="banner">
@@ -20,14 +19,11 @@
                     <label for="categories" class="select-block">
                         <select name="categories" id="categories">
                             <option value="0">تمام دسته بندیها</option>
-                            <option value="1">قالبهای PSD</option>
-                            <option value="2">نصاویر</option>
-                            <option value="3">سایت کودک</option>
-                            <option value="4">بسته ههای آیکن</option>
-                            <option value="5">گرافیک</option>
-                            <option value="6">آگهی</option>
-                            <option value="7">پس زمینه ها</option>
-                            <option value="8">شبکه اجتماعی</option>
+                            @if(isset($categoryList))
+                                @foreach($categoryList as $searchCat)
+                                    <option value="{{$searchCat->id}}">{{$searchCat->name}}</option>
+                                @endforeach
+                            @endif
                         </select>
                         <!-- SVG ARROW -->
                         <svg class="svg-arrow">
@@ -168,89 +164,93 @@
 
                 <!-- PRODUCT LIST -->
                 <div id="pl-1" class="product-list grid column4-wrap owl-carousel">
+{{--@dd(is_null($hotProducts))--}}
+                        @if(count($hotProducts)>0)
+                            @foreach($hotProducts as $hProduct)
+                                <!-- PRODUCT ITEM -->
+                                <div class="product-item column">
+                                    <!-- PRODUCT PREVIEW ACTIONS -->
+                                    <div class="product-preview-actions">
+                                        <!-- PRODUCT PREVIEW IMAGE -->
+                                        <figure class="product-preview-image">
+                                            <img style="width: 258px;
+                                            height: 150px; "
+                                                 src="{{asset('storage/images/products/'.$hProduct->id.'/'.$hProduct->image)}}"
+                                                 alt="{{$hProduct->name}}">
+                                        </figure>
+                                        <!-- /PRODUCT PREVIEW IMAGE -->
 
-
-                    @if(isset($hotProducts) && count($hotProducts)>0)
-                        @foreach($hotProducts as $hProduct)
-                            <!-- PRODUCT ITEM -->
-                            <div class="product-item column">
-                                <!-- PRODUCT PREVIEW ACTIONS -->
-                                <div class="product-preview-actions">
-                                    <!-- PRODUCT PREVIEW IMAGE -->
-                                    <figure class="product-preview-image">
-                                        <img style="width: 258px;
-                                            height: 150px; " src="{{asset('storage/images/products/'.$hProduct->id.'/'.$hProduct->image)}}" alt="{{$hProduct->name}}">
-                                    </figure>
-                                    <!-- /PRODUCT PREVIEW IMAGE -->
-
-                                    <!-- PREVIEW ACTIONS -->
-                                    <div class="preview-actions " >
-                                        <!-- PREVIEW ACTION -->
-                                        <div class="preview-action" style="  right: 110px;">
-                                            <a href="item-v1.html">
-                                                <div class="circle tiny primary">
-                                                    <span class="icon-tag"></span>
-                                                </div>
-                                            </a>
-                                            <a href="item-v1.html">
+                                        <!-- PREVIEW ACTIONS -->
+                                        <div class="preview-actions ">
+                                            <!-- PREVIEW ACTION -->
+                                            <div class="preview-action" style="  right: 110px;">
+                                                <a href="{{route('shop.product' , $hProduct->id)}}">
+                                                    <div class="circle tiny primary">
+                                                        <span class="icon-tag"></span>
+                                                    </div>
+                                                </a>
+                                                <a href="{{route('shop.product' , $hProduct->id)}}" >
                                                 <p>نمایش</p>
-                                            </a>
+                                                </a>
+                                            </div>
+                                            <!-- /PREVIEW ACTION -->
+
                                         </div>
-                                        <!-- /PREVIEW ACTION -->
+                                        <!-- /PREVIEW ACTIONS -->
+                                    </div>
+                                    <!-- /PRODUCT PREVIEW ACTIONS -->
+
+                                    <!-- PRODUCT INFO -->
+                                    <div class="product-info">
+                                        <a href="#">
+                                            <p class="text-header">{{$hProduct->name}}</p>
+                                        </a>
+                                        <p class="product-description">
+                                            @foreach($hProduct->material as $material)
+                                                <span>{{$material['name']}}</span>
+                                            @endforeach
+                                        </p>
+                                        <a href="shop-gridview-v1.html">
+                                            <p class="category primary">{{$hProduct->Category()->get()->first()->name}}</p>
+                                        </a>
+                                        <p class="price">
+
+                                            {{number_format($hProduct->BasePrice)}}
+                                            <span>تومان</span>
+
+                                        </p>
+                                    </div>
+                                    <!-- /PRODUCT INFO -->
+                                    <hr class="line-separator">
+
+                                    <!-- USER RATING -->
+                                    <div class="user-rating">
+                                        <a href="author-profile.html">
+                                            @foreach($hProduct->color as $color)
+
+                                                <figure class="user-avatar small">
+                                                    <div
+                                                        style="border: solid 1px;border-radius: 50%;border-color: #0c0c0c;height: 20px;background-color: {{$color['color']}}"></div>
+                                                </figure>
+                                            @endforeach
+                                        </a>
+                                        <p class="price" style="padding-top: 2px">
+                                            @foreach($hProduct->size as $size)
+                                                <span
+                                                    style="border: solid 1px;border-color: #0ae7c2;border-radius: 30%;">{{$size['name']}}</span>
+                                            @endforeach
+
+
+                                        </p>
 
                                     </div>
-                                    <!-- /PREVIEW ACTIONS -->
+                                    <!-- /USER RATING -->
                                 </div>
-                                <!-- /PRODUCT PREVIEW ACTIONS -->
+                                <!-- /PRODUCT ITEM -->
 
-                                <!-- PRODUCT INFO -->
-                                <div class="product-info">
-                                    <a href="item-v1.html">
-                                        <p class="text-header">{{$hProduct->name}}</p>
-                                    </a>
-                                    <p class="product-description">
-                                        @foreach($hProduct->material as $material)
-                                            <span>{{$material['name']}}</span>
-                                        @endforeach
-                                    </p>
-                                    <a href="shop-gridview-v1.html">
-                                        <p class="category primary">{{$hProduct->Category()->get()->first()->name}}</p>
-                                    </a>
-                                    <p class="price">
+                            @endforeach
+                        @endif
 
-                                       {{number_format($hProduct->BasePrice)}}
-<span>تومان</span>
-
-                                    </p>
-                                </div>
-                                <!-- /PRODUCT INFO -->
-                                <hr class="line-separator">
-
-                                <!-- USER RATING -->
-                                <div class="user-rating">
-                                    <a href="author-profile.html">
-                                        @foreach($hProduct->color as $color)
-
-                                        <figure class="user-avatar small">
-                                            <div style="border: solid 1px;border-radius: 50%;border-color: #0c0c0c;height: 20px;background-color: {{$color['color']}}"></div>
-                                        </figure>
-                                        @endforeach
-                                    </a>
-                                    <p class="price" style="padding-top: 2px">
-                                        @foreach($hProduct->size as $size)
-                                            <span style="border: solid 1px;border-color: #0ae7c2;border-radius: 30%;">{{$size['name']}}</span>
-                                        @endforeach
-
-
-                                    </p>
-
-                                </div>
-                                <!-- /USER RATING -->
-                            </div>
-                            <!-- /PRODUCT ITEM -->
-
-                        @endforeach
-                    @endif
 
 
                 </div>
@@ -290,91 +290,92 @@
                 <!-- PRODUCT LIST -->
                 <div id="pl-5" class="product-list grid column4-wrap owl-carousel">
 
-                    @if(isset($newProducts) && count($newProducts)>0)
-                        @foreach($newProducts as $nProduct)
-                            <!-- PRODUCT ITEM -->
-                            <div class="product-item column">
-                                <!-- PRODUCT PREVIEW ACTIONS -->
-                                <div class="product-preview-actions">
-                                    <!-- PRODUCT PREVIEW IMAGE -->
-                                    <figure class="product-preview-image">
-                                        <img style="width: 258px;
-                                            height: 150px; " src="{{asset('storage/images/products/'.$nProduct->id.'/'.$nProduct->image)}}" alt="{{$nProduct->name}}">
-                                    </figure>
-                                    <!-- /PRODUCT PREVIEW IMAGE -->
 
-                                    <!-- PREVIEW ACTIONS -->
-                                    <div class="preview-actions " >
-                                        <!-- PREVIEW ACTION -->
-                                        <div class="preview-action" style="  right: 110px;">
-                                            <a href="item-v1.html">
-                                                <div class="circle tiny primary">
-                                                    <span class="icon-tag"></span>
-                                                </div>
-                                            </a>
-                                            <a href="item-v1.html">
-                                                <p>نمایش</p>
-                                            </a>
+                        @if(count($newProducts)>0)
+                            @foreach($newProducts as $nProduct)
+                                <!-- PRODUCT ITEM -->
+                                <div class="product-item column">
+                                    <!-- PRODUCT PREVIEW ACTIONS -->
+                                    <div class="product-preview-actions">
+                                        <!-- PRODUCT PREVIEW IMAGE -->
+                                        <figure class="product-preview-image">
+                                            <img style="width: 258px;
+                                            height: 150px; "
+                                                 src="{{asset('storage/images/products/'.$nProduct->id.'/'.$nProduct->image)}}"
+                                                 alt="{{$nProduct->name}}">
+                                        </figure>
+                                        <!-- /PRODUCT PREVIEW IMAGE -->
+
+                                        <!-- PREVIEW ACTIONS -->
+                                        <div class="preview-actions ">
+                                            <!-- PREVIEW ACTION -->
+                                            <div class="preview-action" style="  right: 110px;">
+                                                <a href="{{route('shop.product' , $nProduct->id)}}">
+                                                    <div class="circle tiny primary">
+                                                        <span class="icon-tag"></span>
+                                                    </div>
+                                                </a>
+                                                <a href="{{route('shop.product' , $nProduct->id)}}" >
+                                                    <p>نمایش</p>
+                                                </a>
+                                            </div>
+                                            <!-- /PREVIEW ACTION -->
+
                                         </div>
-                                        <!-- /PREVIEW ACTION -->
+                                        <!-- /PREVIEW ACTIONS -->
+                                    </div>
+                                    <!-- /PRODUCT PREVIEW ACTIONS -->
+
+                                    <!-- PRODUCT INFO -->
+                                    <div class="product-info">
+                                        <a href="#">
+                                            <p class="text-header">{{$nProduct->name}}</p>
+                                        </a>
+                                        <p class="product-description">
+                                            @foreach($nProduct->material as $material)
+                                                <span>{{$material['name']}}</span>
+                                            @endforeach
+                                        </p>
+                                        <a href="shop-gridview-v1.html">
+                                            <p class="category tertiary">{{$nProduct->Category()->get()->first()->name}}</p>
+                                        </a>
+                                        <p class="price">
+
+                                            {{number_format($nProduct->BasePrice)}}
+                                            <span>تومان</span>
+
+                                        </p>
+                                    </div>
+                                    <!-- /PRODUCT INFO -->
+                                    <hr class="line-separator">
+
+                                    <!-- USER RATING -->
+                                    <div class="user-rating">
+                                        <a href="author-profile.html">
+                                            @foreach($nProduct->color as $color)
+
+                                                <figure class="user-avatar small">
+                                                    <div
+                                                        style="border: solid 1px;border-radius: 50%;border-color: #0c0c0c;height: 20px;background-color: {{$color['color']}}"></div>
+                                                </figure>
+                                            @endforeach
+                                        </a>
+                                        <p class="price" style="padding-top: 2px">
+                                            @foreach($nProduct->size as $size)
+                                                <span
+                                                    style="border: solid 1px;border-color: #0ae7c2;border-radius: 30%;">{{$size['name']}}</span>
+                                            @endforeach
+
+
+                                        </p>
 
                                     </div>
-                                    <!-- /PREVIEW ACTIONS -->
+                                    <!-- /USER RATING -->
                                 </div>
-                                <!-- /PRODUCT PREVIEW ACTIONS -->
+                                <!-- /PRODUCT ITEM -->
 
-                                <!-- PRODUCT INFO -->
-                                <div class="product-info">
-                                    <a href="item-v1.html">
-                                        <p class="text-header">{{$nProduct->name}}</p>
-                                    </a>
-                                    <p class="product-description">
-                                        @foreach($nProduct->material as $material)
-                                            <span>{{$material['name']}}</span>
-                                        @endforeach
-                                    </p>
-                                    <a href="shop-gridview-v1.html">
-                                        <p class="category tertiary">{{$nProduct->Category()->get()->first()->name}}</p>
-                                    </a>
-                                    <p class="price">
-
-                                        {{number_format($nProduct->BasePrice)}}
-                                        <span>تومان</span>
-
-                                    </p>
-                                </div>
-                                <!-- /PRODUCT INFO -->
-                                <hr class="line-separator">
-
-                                <!-- USER RATING -->
-                                <div class="user-rating">
-                                    <a href="author-profile.html">
-                                        @foreach($nProduct->color as $color)
-
-                                            <figure class="user-avatar small">
-                                                <div style="border: solid 1px;border-radius: 50%;border-color: #0c0c0c;height: 20px;background-color: {{$color['color']}}"></div>
-                                            </figure>
-                                        @endforeach
-                                    </a>
-                                    <p class="price" style="padding-top: 2px">
-                                        @foreach($nProduct->size as $size)
-                                            <span style="border: solid 1px;border-color: #0ae7c2;border-radius: 30%;">{{$size['name']}}</span>
-                                        @endforeach
-
-
-                                    </p>
-
-                                </div>
-                                <!-- /USER RATING -->
-                            </div>
-                            <!-- /PRODUCT ITEM -->
-
-
-
-
-
-                        @endforeach
-                    @endif
+                            @endforeach
+                        @endif
 
                 </div>
                 <!-- PRODUCT LIST -->

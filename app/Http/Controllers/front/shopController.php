@@ -26,4 +26,13 @@ class shopController extends Controller
 
         return view('front.shop.product', compact('product'));
     }
+
+    public function indexCatedory( Request $request , int $catId)
+    {
+        $selectedCategory = category::find($catId);
+        $cats = Category::all();
+        $products= $selectedCategory->Products()->get();
+        return view('front.shop.index', compact('products' , 'cats' , 'selectedCategory'));
+
+    }
 }

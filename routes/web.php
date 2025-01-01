@@ -9,9 +9,11 @@ Route::middleware(\App\Http\Middleware\configFront::class)->namespace('App\Http\
     Route::get('/', 'homePageController@index')->name('index');
     Route::prefix('shop')->group(function () {
         Route::get('/', 'shopController@index')->name('shop.index');
+        Route::get('/category/{catId}', 'shopController@indexCatedory')->name('shop.index.category');
         Route::get('/{id}', 'shopController@product')->name('shop.product');
         Route::prefix('order')->group(function () {
             Route::post('/addCard/{product_Id}/{orderId}', 'orderController@addToChard')->name('shop.order.addCard');
+            Route::get('/removeCard/{product_Id}/{orderId}', 'orderController@removeCard')->name('shop.order.removeCard');
 //            Route::get('/{id}', 'shopController@product')->name('shop.product');
 
         });

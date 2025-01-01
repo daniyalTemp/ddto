@@ -12,9 +12,10 @@ class homePageController extends Controller
     public function index()
     {
         $config = config::all()[0];
-        $hotProducts = products::all()->take(10);
-        $newProducts = products::all()->take(10);
-//        dd($hotProducts);
+        $hotProducts = products::where('available' , true)->where('hot' , true)->take(10)->get();
+        $newProducts = products::where('available' , true)->take(10)->get();
+//        dd(count());
+
 //        dd($config->presents);
         return view('front.home', compact('config' , 'hotProducts','newProducts'));
     }
