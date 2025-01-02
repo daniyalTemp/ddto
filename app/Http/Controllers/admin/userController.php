@@ -8,8 +8,9 @@ use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
-use function Laravel\Prompts\alert;
-use function Symfony\Component\String\u;
+use Laravel\Socialite\Facades\Socialite;
+
+use Throwable;
 
 class userController extends Controller
 {
@@ -216,4 +217,50 @@ class userController extends Controller
         Auth::logout();
         return redirect()->route('login');
     }
+
+    /**
+     * Redirect the user to Google’s OAuth page.
+     */
+    public function redirect()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    /**
+     * Handle the callback from Google.
+     */
+    public function callback(Request $request)
+    {
+        dd($request->all());
+        dd(Socialite::driver('google'));
+        try {
+            // Get the user information from Google
+            $user = Socialite::driver('google')->user();
+            dd($user);
+        } catch (Throwable $e) {
+            return redirect('/')->with('error', 'Google authentication failed.');
+        }
+
+        // Check if the user already exists in the database
+        $existingUser = User::where('email', $user->email)->first();
+
+        if ($existingUser) {
+            // Log the user in if they already exist
+            Auth::login($existingUser);
+        } else {
+            // Otherwise, create a new user and log them in
+            $newUser = User::updateOrCreate([
+                'email' => $user->email
+            ], [
+                'name' => $user->name,
+                'password' => bcrypt(Str::random(16)), // Set a random password
+                'email_verified_at' => now()
+            ]);
+            Auth::login($newUser);
+        }
+
+        // Redirect the user to the dashboard or any other secure page
+        return redirect('/dashboard');
+    }
+
 }

@@ -25,7 +25,12 @@ Route::middleware(\App\Http\Middleware\configFront::class)->namespace('App\Http\
 Route::get('/logout', 'App\Http\Controllers\admin\userController@logout')->name('logout');
 Route::get('/login', 'App\Http\Controllers\admin\userController@login')->name('login');
 Route::post('/login', 'App\Http\Controllers\admin\userController@doLogin')->name('doLogin');
-
+// Route to redirect to Google's OAuth page
+Route::get('/auth/google/redirect','App\Http\Controllers\admin\userController@redirect')->name('auth.google.redirect');
+Route::get('/auth/google/callback','App\Http\Controllers\admin\userController@callback')->name('auth.google.callback');
+//
+//// Route to handle the callback from Google
+//Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
 
 //panel
 Route::prefix('panel')->middleware(['auth',\App\Http\Middleware\getConfigForAll::class])->namespace('App\Http\Controllers\admin')->group(function () {
