@@ -7,8 +7,12 @@ Route::get('/', function () {
 });
 Route::middleware(\App\Http\Middleware\configFront::class)->namespace('App\Http\Controllers\front')->group(function () {
     Route::get('/', 'homePageController@index')->name('index');
+    Route::get('/profile', 'userController@profile')->name('profile');
+    Route::post('/profile', 'userController@profileSave')->name('profileSave');
     Route::prefix('shop')->group(function () {
+
         Route::get('/', 'shopController@index')->name('shop.index');
+        Route::get('/myOrders', 'orderController@userOrders')->name('shop.userOrders');
         Route::get('/category/{catId}', 'shopController@indexCatedory')->name('shop.index.category');
         Route::get('/{id}', 'shopController@product')->name('shop.product');
         Route::prefix('order')->group(function () {
@@ -26,8 +30,8 @@ Route::get('/logout', 'App\Http\Controllers\admin\userController@logout')->name(
 Route::get('/login', 'App\Http\Controllers\admin\userController@login')->name('login');
 Route::post('/login', 'App\Http\Controllers\admin\userController@doLogin')->name('doLogin');
 // Route to redirect to Google's OAuth page
-Route::get('/auth/google/redirect','App\Http\Controllers\admin\userController@redirect')->name('auth.google.redirect');
-Route::get('/auth/google/callback','App\Http\Controllers\admin\userController@callback')->name('auth.google.callback');
+Route::get('/auth/google/redirect','App\Http\Controllers\front\userController@redirect')->name('auth.google.redirect');
+Route::get('/auth/google/callback','App\Http\Controllers\front\userController@callback')->name('auth.google.callback');
 //
 //// Route to handle the callback from Google
 //Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
@@ -43,9 +47,8 @@ Route::prefix('panel')->middleware(['auth',\App\Http\Middleware\getConfigForAll:
         Route::post('/Profile', 'userController@saveProfile')->name('dashboard.user.saveProfile');
         Route::get('/add', 'userController@add')->name('dashboard.user.add');
         Route::get('/edit/{id}', 'userController@edit')->name('dashboard.user.edit');
-        Route::get('/del', 'userController@del')->name('dashboard.user.del');
+        Route::get('/del/{id}', 'userController@del')->name('dashboard.user.del');
         Route::post('/save/{id}', 'userController@save')->name('dashboard.user.save');
-
     });
     Route::prefix('config')->group(function () {
         Route::get('/', 'configController@showConfig')->name('dashboard.config');

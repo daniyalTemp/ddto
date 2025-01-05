@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="mb-1"><strong>رمز عبور</strong></label>
-                                        <input type="password" name="password" class="form-control" value="رمز عبور">
+                                        <input type="password" name="password" class="form-control" value="">
                                     </div>
                                     <br>
                                     <br>
@@ -47,6 +47,10 @@
                                         </button>
                                     </div>
                                 </form>
+
+                                <h4 class="text-center mt-4" style="color: white">یا </h4>
+                                <button onclick="window.open('{{route('auth.google.redirect')}}' , '_self')" type="button" class="btn btn-google-plus btn-block">  ورود از طریق گوگل <span class="btn-icon-right"><i class="fa fa-google"></i></span>
+                                </button>
 
                             </div>
                         </div>

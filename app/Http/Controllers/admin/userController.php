@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\orders;
 use App\Models\User;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
+use Psy\VersionUpdater\Downloader\FileDownloader;
 use Throwable;
 
 class userController extends Controller
@@ -109,6 +113,13 @@ class userController extends Controller
 //        dd($request->all());
     }
 
+    public function del(Request $request, int $id)
+    {
+        User::destroy([$id]);
+        return redirect()->route('dashboard.user.list')->with(['msg' => 'عملیات با موفیت انجام شد']);
+
+    }
+
     public function Profile()
     {
         $user = Auth::user();
@@ -205,7 +216,17 @@ class userController extends Controller
         );
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], ($request->has('remember') ? true : false))) {
-            if (Auth::user()->role=='user')
+
+            if (\Illuminate\Support\Facades\Cookie::has('ddtoOrderId')) {
+                $order = orders::find((\Illuminate\Support\Facades\Cookie::get('ddtoOrderId')));
+                if ($order->user == null) {
+                    $order->user = Auth::user()->id;
+                    $order->save();
+                } elseif ($order->user != Auth::user()->id) {
+                    \Illuminate\Support\Facades\Cookie::expire('ddtoOrderId');
+                }
+            }
+            if (Auth::user()->role == 'user')
                 return redirect()->route('index');
             return redirect()->route('dashboard.index');
         } else
@@ -221,46 +242,6 @@ class userController extends Controller
     /**
      * Redirect the user to Google’s OAuth page.
      */
-    public function redirect()
-    {
-        return Socialite::driver('google')->redirect();
-    }
 
-    /**
-     * Handle the callback from Google.
-     */
-    public function callback(Request $request)
-    {
-        dd($request->all());
-        dd(Socialite::driver('google'));
-        try {
-            // Get the user information from Google
-            $user = Socialite::driver('google')->user();
-            dd($user);
-        } catch (Throwable $e) {
-            return redirect('/')->with('error', 'Google authentication failed.');
-        }
-
-        // Check if the user already exists in the database
-        $existingUser = User::where('email', $user->email)->first();
-
-        if ($existingUser) {
-            // Log the user in if they already exist
-            Auth::login($existingUser);
-        } else {
-            // Otherwise, create a new user and log them in
-            $newUser = User::updateOrCreate([
-                'email' => $user->email
-            ], [
-                'name' => $user->name,
-                'password' => bcrypt(Str::random(16)), // Set a random password
-                'email_verified_at' => now()
-            ]);
-            Auth::login($newUser);
-        }
-
-        // Redirect the user to the dashboard or any other secure page
-        return redirect('/dashboard');
-    }
 
 }

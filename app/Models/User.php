@@ -24,6 +24,9 @@ class User extends Authenticatable
         'lastName',
         'cardNumber',
         'birthday',
+        'phone',
+        'googleId',
+        'sex',
         'sex',
         'wallet',
         'isActive',
@@ -63,4 +66,11 @@ class User extends Authenticatable
         return $this->attributes['firstName'] . ' ' . $this->attributes['lastName'];
     }
 
+
+
+    public function Orders()
+    {
+        return $this->hasMany(orders::class , 'user');
+
+    }
 }

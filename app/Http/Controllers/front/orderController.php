@@ -7,6 +7,7 @@ use App\Models\order_product;
 use App\Models\orders;
 use App\Models\products;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
 class orderController extends Controller
@@ -97,5 +98,21 @@ class orderController extends Controller
             Cookie::expire('ddtoOrderId');
         }
         return redirect()->back();
+    }
+    public function userOrders(Request $request)
+    {
+        $user= Auth::user();
+        $orders= $user->Orders()->get();
+        $statistics=[
+          'initial'=>orders::where('status','initial')->count(),
+          'getData'=>orders::where('status','getData')->count(),
+          'waiting'=>orders::where('status','waiting')->count(),
+          'printing'=>orders::where('status','printing')->count(),
+          'delivered'=>orders::where('status','delivered')->count(),
+          'cancel'=>orders::where('status','cancel')->count(),
+        ];
+//        dd($statistics);
+        return view('front.user.orderList' ,compact('user','orders','statistics'));
+
     }
 }

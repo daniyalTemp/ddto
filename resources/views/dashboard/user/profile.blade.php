@@ -10,12 +10,13 @@
                 </div>
                 <div class="card-body">
                     <div class="form-validation">
+                        @include('error')
                         <form class="form-valide"
                               action="{{route('dashboard.user.saveProfile' , isset($user)? $user->id :-1)}}"
                               enctype="multipart/form-data" method="post">
                             <div class="row ">
 
-                                @include('error')
+
                                 {{csrf_field()}}
                                 <div class="col-xl-6">
                                     <div class="form-group row">
@@ -54,7 +55,7 @@
                                         <div class="col-lg-6">
                                             <input type="text" class="form-control" id="email" name="email"
                                                    value="{{(isset($user)?$user->email : (old('email') ? old('email') : ''))}}"
-                                                   readonly
+
                                                    placeholder="وارد کردن نام کاربری(ایمیل)">
                                         </div>
                                     </div>
@@ -81,7 +82,7 @@
                                             <input type="text" class="form-control" id="NationalCode"
                                                    name="NationalCode"
                                                    value="{{(isset($user)?$user->NationalCode : (old('NationalCode') ? old('NationalCode') : ''))}}"
-                                                   readonly
+
                                                    placeholder="کد ملی ">
                                         </div>
                                     </div>

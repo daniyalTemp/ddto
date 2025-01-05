@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="{{asset('front/css/vendor/tooltipster.css')}}">
     <link rel="stylesheet" href="{{asset('front/css/vendor/owl.carousel.css')}}">
     <link rel="stylesheet" href="{{asset('front/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('front/dashboard-css/vendor/magnific-popup.css')}}">
+
     <!-- favicon -->
     <link rel="icon" href="{{asset('front/favicon.ico')}}">
     <title>دنیای دلخواه تو - دیدتو</title>
@@ -16,7 +18,7 @@
 <div class="header-wrap">
     <header>
         <!-- LOGO -->
-        <a href="index.html">
+        <a href="{{route('index')}}">
             <figure class="logo">
                 <img src="{{asset('front/images/logo-white.png')}}" alt="logo">
             </figure>
@@ -30,7 +32,7 @@
         <!-- /MOBILE MENU HANDLER -->
 
         <!-- LOGO MOBILE -->
-        <a href="index.html">
+        <a href="{{route('index')}}">
             <figure class="logo-mobile">
                 <img src="{{asset('front/images/1.png')}}" alt="logo-mobile">
             </figure>
@@ -52,7 +54,7 @@
                 <!-- USER QUICKVIEW -->
                 <div class="user-quickview">
                     <!-- USER AVATAR -->
-                    <a href="author-profile.html">
+                    <a href="#">
                         <div class="outer-ring">
                             <div class="inner-ring"></div>
                             <figure class="user-avatar">
@@ -70,17 +72,20 @@
                         <use xlink:href="#svg-arrow"></use>
                     </svg>
                     <!-- /SVG ARROW -->
-                    <p class="user-money">تومان745.00</p>
+                    <p class="user-money">
+                        {{number_format(\Illuminate\Support\Facades\Auth::user()->wallet)}}
+                        تومان
+                    </p>
                     <!-- /USER INFORMATION -->
 
                     <!-- DROPDOWN -->
                     <ul class="dropdown small hover-effect closed">
                         <li class="dropdown-item">
                             <div class="dropdown-triangle"></div>
-                            <a href="author-profile.html">صفحه پروفایل</a>
+                            <a href="{{route('profile')}}">صفحه پروفایل</a>
                         </li>
                         <li class="dropdown-item">
-                            <a href="dashboard-manageitems.html">حریدهای شما</a>
+                            <a href="#">حریدهای شما</a>
                         </li>
                         <li class="dropdown-item">
                             <a href="{{route('logout')}}">خروج</a>
@@ -103,13 +108,15 @@
 
             </div>
 
-            @if(\Illuminate\Support\Facades\Cookie::has('ddtoOrderId'))
 
-                <div class="user-board">
-                    <!-- ACCOUNT INFORMATION -->
-                    <div class="account-information">
+        @endif
+        @if(\Illuminate\Support\Facades\Cookie::has('ddtoOrderId'))
 
-                        <div class="account-settings-quickview">
+            <div class="user-board">
+                <!-- ACCOUNT INFORMATION -->
+                <div class="account-information">
+
+                    <div class="account-settings-quickview">
 						<span class="icon-basket">
 							<!-- SVG ARROW -->
 							<svg class="svg-arrow">
@@ -118,66 +125,64 @@
                             <!-- /SVG ARROW -->
 						</span>
 
-                            <!-- PIN -->
-                            <span class="pin soft-edged primary" style="top: -10px;">{{count($card)}}</span>
-                            <!-- /PIN -->
+                        <!-- PIN -->
+                        <span class="pin soft-edged primary" style="top: -10px;">{{count($card)}}</span>
+                        <!-- /PIN -->
 
-                            <!-- DROPDOWN NOTIFICATIONS -->
-                            <ul class="dropdown notifications no-hover closed">
-                                <!-- DROPDOWN ITEM -->
-                                @foreach($card as $p)
-                                    <li class="dropdown-item">
-                                        <a href="#">
-                                            <figure class="user-avatar">
-                                                <img src="{{asset('storage/images/products/'.$p->id.'/'.$p->image)}}"
-                                                     alt="">
-                                            </figure>
-                                        </a>
-                                        <p class="title">
-                                            {{$p->name}} * {{$p->getOriginal('pivot_count')}}
-                                        </p>
-                                        <p class="timestamp">
+                        <!-- DROPDOWN NOTIFICATIONS -->
+                        <ul class="dropdown notifications no-hover closed">
+                            <!-- DROPDOWN ITEM -->
+                            @foreach($card as $p)
+                                <li class="dropdown-item">
+                                    <a href="#">
+                                        <figure class="user-avatar">
+                                            <img src="{{asset('storage/images/products/'.$p->id.'/'.$p->image)}}"
+                                                 alt="">
+                                        </figure>
+                                    </a>
+                                    <p class="title">
+                                        {{$p->name}} * {{$p->getOriginal('pivot_count')}}
+                                    </p>
+                                    <p class="timestamp">
                                         <span style="border: 1px solid;margin-left: 4px;  border-radius: 50%;border-color: #0c0c0c;background-color: {{json_decode($p->getOriginal('pivot_color'))->color}}; color:{{json_decode($p->getOriginal('pivot_color'))->color}}">
                                             ---
                                             </span>
-                                            <span>{{json_decode($p->getOriginal('pivot_size'))->name}}</span>
-                                            <span>{{json_decode($p->getOriginal('pivot_material'))->name}}</span>
-                                            {{--                                        <span>{{$p->material['name']}}</span>--}}
-                                        </p>
-                                        <span class="notification-type primary-new ">{{number_format($p->getOriginal('pivot_finalPrice'))}}</span>
-                                    </li>
-
-                                    <form action="{{route('shop.order.removeCard' ,[$p->id , (\Illuminate\Support\Facades\Cookie::get('ddtoOrderId')?\Illuminate\Support\Facades\Cookie::get('ddtoOrderId') : -1)] )}}" method="get">
-                                        {{csrf_field()}}
-                                        <input type="hidden" hidden="hidden" name="color" value="{{$p->getOriginal('pivot_color')}}">
-                                        <input type="hidden" name="size" value="{{$p->getOriginal('pivot_size')}}">
-                                        <input  type="hidden" name="material" value="{{$p->getOriginal('pivot_material')}}">
-                                        {{--                                        <button  type="submit" style="border-radius: 10%; margin-top: 6px" href="#" class="button small dark text-center spaced">افزودن به سبد </button>--}}
-                                        <button  type="submit" style="border-radius: 10%; width: 100%" href="{{route('shop.order.removeCard' ,[$p->id, (\Illuminate\Support\Facades\Cookie::get('ddtoOrderId'))?\Illuminate\Support\Facades\Cookie::get('ddtoOrderId') : -1] )}}" class="button small tertiary text-center spaced">حذف از سبد </button>
-                                    </form>
-
-                                        @endforeach
-                                <!-- /DROPDOWN ITEM -->
-
-
-                                <!-- DROPDOWN ITEM -->
-                                <li class="dropdown-item">
-
-                                    <a href="dashboard-notifications.html" class="button primary">اتمام خرید </a>
+                                        <span>{{json_decode($p->getOriginal('pivot_size'))->name}}</span>
+                                        <span>{{json_decode($p->getOriginal('pivot_material'))->name}}</span>
+                                        {{--                                        <span>{{$p->material['name']}}</span>--}}
+                                    </p>
+                                    <span class="notification-type primary-new ">{{number_format($p->getOriginal('pivot_finalPrice'))}}</span>
                                 </li>
-                                <!-- /DROPDOWN ITEM -->
-                            </ul>
-                            <!-- /DROPDOWN NOTIFICATIONS -->
-                        </div>
+
+                                <form action="{{route('shop.order.removeCard' ,[$p->id , (\Illuminate\Support\Facades\Cookie::get('ddtoOrderId')?\Illuminate\Support\Facades\Cookie::get('ddtoOrderId') : -1)] )}}" method="get">
+                                    {{csrf_field()}}
+                                    <input type="hidden" hidden="hidden" name="color" value="{{$p->getOriginal('pivot_color')}}">
+                                    <input type="hidden" name="size" value="{{$p->getOriginal('pivot_size')}}">
+                                    <input  type="hidden" name="material" value="{{$p->getOriginal('pivot_material')}}">
+                                    {{--                                        <button  type="submit" style="border-radius: 10%; margin-top: 6px" href="#" class="button small dark text-center spaced">افزودن به سبد </button>--}}
+                                    <button  type="submit" style="border-radius: 10%; width: 100%" href="{{route('shop.order.removeCard' ,[$p->id, (\Illuminate\Support\Facades\Cookie::get('ddtoOrderId'))?\Illuminate\Support\Facades\Cookie::get('ddtoOrderId') : -1] )}}" class="button small tertiary text-center spaced">حذف از سبد </button>
+                                </form>
+
+                            @endforeach
+                            <!-- /DROPDOWN ITEM -->
+
+
+                            <!-- DROPDOWN ITEM -->
+                            <li class="dropdown-item">
+
+                                <a href="dashboard-notifications.html" class="button primary">اتمام خرید </a>
+                            </li>
+                            <!-- /DROPDOWN ITEM -->
+                        </ul>
+                        <!-- /DROPDOWN NOTIFICATIONS -->
                     </div>
-                    <!-- /ACCOUNT INFORMATION -->
-
-
                 </div>
+                <!-- /ACCOUNT INFORMATION -->
 
-            @endif
+
+            </div>
+
         @endif
-
 
     </header>
 </div>
@@ -534,5 +539,21 @@
 <script src="{{asset('front/js/user-board.js')}}"></script>
 <!-- Footer -->
 <script src="{{asset('front/js/footer.js')}}"></script>
+
+
+<!-- Magnific Popup -->
+<script src="{{asset('front/dashboard-js/vendor/jquery.magnific-popup.min.js')}}"></script>
+<!-- imgLiquid -->
+<script src="{{asset('front/dashboard-js/vendor/imgLiquid-min.js')}}"></script>
+<!-- XM Pie Chart -->
+<script src="{{asset('front/dashboard-js/vendor/jquery.xmpiechart.min.js')}}"></script>
+
+{{--<!-- Dashboard Header -->--}}
+{{--<script src="{{asset('front/dashboard-js/dashboard-header.js')}}"></script>--}}
+{{--<!-- Liquid -->--}}
+{{--<script src="{{asset('front/dashboard-js/liquid.js')}}"></script>--}}
+{{--<!-- Dashboard Purchases -->--}}
+{{--<script src="{{asset('front/dashboard-js/dashboard-purchases.js')}}"></script>--}}
+
 </body>
 </html>
