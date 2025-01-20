@@ -312,7 +312,7 @@ Preloader start
 
                         </ul>
                     </li>
-                    <li class="nav-label">پزوفایل</li>
+                    <li class="nav-label">پروفایل</li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
                                  height="24px" viewBox="0 0 24 24" version="1.1" class="svg-main-icon">
@@ -326,9 +326,11 @@ Preloader start
                                         fill="#000000" fill-rule="nonzero"/>
                                 </g>
                             </svg>
-                            <span class="nav-text">پزوفایل </span>
+                            <span class="nav-text">پروفایل </span>
                         </a>
+
                         <ul aria-expanded="false">
+
                             <li><a  href="{{route('profile')}}" aria-expanded="false">پروفایل</a>
 
                             </li>

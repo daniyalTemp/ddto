@@ -20,7 +20,7 @@ class configFront
     public function handle(Request $request, Closure $next): Response
     {
 
-        $shareList=[];
+        $shareList = [];
 //        if (!orders::find(Cookie::get('order_id'))) {
 //        Cookie::expire('ddtoOrderId');
 //        }
@@ -37,6 +37,14 @@ class configFront
         $categoryList = category::all();
 
         $shareList['categoryList'] = $categoryList;
+
+        if (auth()->check() && count(auth()->user()->Orders()->where('status', 'initial')->get()) > 0) {
+            $card = auth()->user()->Orders()->where('status', 'initial')->get()->first()->Products()->withPivot(['size', 'color', 'material', 'count', 'finalPrice'])->get();
+            $shareList['card'] = $card;
+
+        }
+
+
         View::share($shareList);
 //        dd(json_decode($card[0]->getOriginal('pivot_color')));
         return $next($request);

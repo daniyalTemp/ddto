@@ -4,152 +4,93 @@
     <!-- SECTION HEADLINE -->
     <div class="section-headline-wrap">
         <div class="section-headline">
-            <h2>پروفایل</h2>
-            <p>صفحه اصلی<span class="separator">/</span><span class="current-section">پروفایل</span></p>
+            <h2>خریدهای شما</h2>
+            <p>صفحه اصلی<span class="separator">/</span><span class="current-section">خریدهای شما</span></p>
         </div>
     </div>
     <!-- /SECTION HEADLINE -->
 
 
-    <!-- AUTHOR PROFILE META -->
-    <div class="author-profile-meta-wrap">
-        <div class="author-profile-meta">
-            <!-- AUTHOR PROFILE INFO -->
-            <div class="author-profile-info">
-                <!-- AUTHOR PROFILE INFO ITEM -->
-                <div class="author-profile-info-item">
-                    <p class="text-header">عضویت در</p>
-                    <p>{{$user->created_at}}</p>
-                </div>
-                <!-- /AUTHOR PROFILE INFO ITEM -->
-
-                <!-- AUTHOR PROFILE INFO ITEM -->
-                <div class="author-profile-info-item">
-                    <p class="text-header">مجموع سفارش ها</p>
-                    <p>{{count($user->Orders()->get())}}</p>
-                </div>
-                <!-- /AUTHOR PROFILE INFO ITEM -->
-
-                <!-- AUTHOR PROFILE INFO ITEM -->
-                <div class="author-profile-info-item">
-                    <p class="text-header">درگاه ورودی </p>
-                    <p>
-                        @if(isset($user->googleId))
-                            گوگل
-                        @else
-                            دیدیتو
-                        @endif
-                    </p>
-                </div>
-                <!-- /AUTHOR PROFILE INFO ITEM -->
-
-                <!-- AUTHOR PROFILE INFO ITEM -->
-                <div class="author-profile-info-item">
-                    <p class="text-header">موجودری هدیه</p>
-                    <p>{{$user->wallet}}</p>
-                </div>
-                <!-- /AUTHOR PROFILE INFO ITEM -->
-            </div>
-            <!-- /AUTHOR PROFILE INFO -->
-        </div>
-    </div>
-    <!-- /AUTHOR PROFILE META -->
 
     <!-- SECTION -->
     <div class="section-wrap">
         <div class="section overflowable">
-            <!-- SIDEBAR -->
-            <div class="sidebar left author-profile" style="top: -160px">
-                <!-- SIDEBAR ITEM -->
-                <div class="sidebar-item author-bio">
-                    <!-- USER AVATAR -->
-                    <a href="user-profile.html" class="user-avatar-wrap medium">
-                        <figure class="user-avatar medium">
-                            <img src="{{'storage/images/profiles/'.$user->id.'/'.$user->pic}}" alt="">
-                        </figure>
-                    </a>
-                    <!-- /USER AVATAR -->
-                    <p class="text-header">{{$user->getFullName()}}</p>
-                    <p class="text-oneline">{{$user->email}}</p>
-                    <p class="text-oneline">{{$user->phone}}</p>
-                    <!-- SHARE LINKS -->
 
-                    <!-- /SHARE LINKS -->
-                    <a href="#" class="button mid dark spaced">لیست <span class="primary">سفارش ها</span></a>
-                </div>
-                <!-- /SIDEBAR ITEM -->
+            <!-- /SIDEBAR -->
+            <div class="sidebar left author-profile" style="top: 0">
 
+                <!-- DROPDOWN -->
+                <ul class="dropdown hover-effect">
+                    @if(isset($statistics))
+                        @foreach($statistics as $key =>$statistic)
+                            <li class="dropdown-item @if(str_contains(url()->full(),(new \App\Utility\orderStatus($key))->enStatus)) active @endif">
+                                <a href="{{route('shop.userOrders', (new \App\Utility\orderStatus($key))->enStatus)}}">{{(new \App\Utility\orderStatus($key))->faStatus}}
+                                <span style="float: left;padding-left: 5%;font-size: smaller">{{$statistic}}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    @endif
+
+
+                </ul>
+                <!-- /DROPDOWN -->
 
 
             </div>
-            <!-- /SIDEBAR -->
+            <!-- /SIDEBAR end -->
 
             <!-- CONTENT -->
             <div class="content right">
                 <!-- HEADLINE -->
                 <div class="headline buttons primary">
-                    <h4>ویرایش اطلاعات </h4>
+                    <h4>لیست سفارش ها</h4>
                     {{--                    <h4> @include('error') </h4>--}}
                 </div>
 
 
+                <div class="badges-showcase column5-wrap">
 
-                <form id="register-form2"   method="post">
-                    {{csrf_field()}}
-                    <div style="float: right;width: 48%; ">
-                        <label for="firstName" class="label">نام </label>
-                        <input type="text" id="firstName" name="firstName"
-                               value="{{$user->firstName?$user->firstName : ''}}"
+                    @if(isset($orders))
+                        @foreach($orders as $order)
+                            <!-- BADGES SHOWCASE ITEM -->
+                            <div class="badges-showcase-item column">
+                                <a href="#">
+                                <figure class="badge big pinned liquid">
+                                    <img src="{{asset('front/images/badges/community/master_b.png')}}" alt="">
+                                </figure>
+                                <p class="text-header">کد {{$order->id}} </p>
+                                <p class="badge-description">
+                                    {{count($order->Products()->get())}}
+                                    کالا
+                                    <br>
+{{number_format($order->totalPrice)}}
+                                    تومان
 
-                               placeholder="نام">
-                    </div>
-                    <div style="float: left;width: 48%">
-                        <label for="lastName" class="label ">نام خانوادگی </label>
-                        <input type="text" id="lastName" name="lastName"
-                               value="{{$user->lastName?$user->lastName : ''}}"
-                               placeholder="نام خانوادگی ">
-                    </div>
-                    <br>
-                    <br>
-                    <br>
-                    <div style="float: right;width: 48%;">
-                        <label for="NationalCode" class="label">کد ملی (جهت ارسال مرسولات)</label>
-                        <input type="text" id="NationalCode" name="NationalCode"
-                               value="{{$user->NationalCode?$user->NationalCode : ''}}"
+                                </p>
+                                <p class="text-header badge-progress-title">{{$order->status->faStatus}}
+                                    @if($order->status->enStatus == 'getData')
+                                    -
+                                    {{$order->paymentStatus->faStatus}}
+                                    @endif
+                                </p>
+                                <!-- BADGE PROGRESS -->
+                                <div class="badge-progress badge-progress27 xmlinefill"
+                                     style="width: 170px; height: 18px; position: relative;">
+                                    <canvas width="170" height="18"
+                                            style="position: absolute; z-index: 0; top: 0px; left: 0px;"></canvas>
+                                    <canvas class="lineOutline" width="170" height="18"
+                                            style="position: absolute; z-index: 1; top: 0px; left: 0px;"></canvas>
+                                </div>
+                                <!-- /BADGE PROGRESS -->
+                                </a>
+                            </div>
+                            <!-- /BADGES SHOWCASE ITEM -->
 
-                               placeholder="کدملی">
-                    </div>
-                    <div style="float: left;width: 48%">
-                        <label for="phone" class="label">تلفن</label>
-                        <input type="text" id="phone" name="phone"
-                               value="{{$user->phone?$user->phone : ''}}"
+                        @endforeach
+                    @endif
 
-                               placeholder="تلفن">
-                    </div>
 
-                    <br>
-                    <br>
-                    <br>
-                    <div style="float: right;width: 48%;">
-                        <label for="cardNumber" class="label">شماره کارت </label>
-                        <input type="text" id="cardNumber" name="cardNumber"
-                               value="{{$user->cardNumber?$user->cardNumber : ''}}"
-
-                               placeholder="شماره کارت">
-                    </div>
-                    <div style="float: left;width: 48%">
-                        <label for="password" class="label">رمز عبور (در صورت نیاز به تعویض)</label>
-                        <input type="text" id="password" name="password"
-                               {{--                               value="{{$user->phone?$user->phone : ''}}"--}}
-
-                               placeholder="رمز عبور">
-                    </div>
-
-                    <br>
-                    <br>
-                    <br>
-                    <button class="button mid primary btn-block" style="width: 100%"> ذخیره</button>
-                </form>
+                </div>
 
                 <div class="clearfix"></div>
 
@@ -162,3 +103,4 @@
     </div>
     <!-- /SECTION -->
 @endsection
+

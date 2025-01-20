@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{asset('front/css/vendor/owl.carousel.css')}}">
     <link rel="stylesheet" href="{{asset('front/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('front/dashboard-css/vendor/magnific-popup.css')}}">
+    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
 
     <!-- favicon -->
     <link rel="icon" href="{{asset('front/favicon.ico')}}">
@@ -85,7 +86,7 @@
                             <a href="{{route('profile')}}">صفحه پروفایل</a>
                         </li>
                         <li class="dropdown-item">
-                            <a href="#">حریدهای شما</a>
+                            <a href="{{route('shop.userOrders')}}">حریدهای شما</a>
                         </li>
                         <li class="dropdown-item">
                             <a href="{{route('logout')}}">خروج</a>
@@ -110,7 +111,7 @@
 
 
         @endif
-        @if(\Illuminate\Support\Facades\Cookie::has('ddtoOrderId'))
+        @if(\Illuminate\Support\Facades\Cookie::has('ddtoOrderId') || isset($card))
 
             <div class="user-board">
                 <!-- ACCOUNT INFORMATION -->
@@ -170,7 +171,7 @@
                             <!-- DROPDOWN ITEM -->
                             <li class="dropdown-item">
 
-                                <a href="dashboard-notifications.html" class="button primary">اتمام خرید </a>
+                                <a href="{{route('shop.order.checkOut' , Illuminate\Support\Facades\Cookie::get('ddtoOrderId'))}}" class="button primary">اتمام خرید </a>
                             </li>
                             <!-- /DROPDOWN ITEM -->
                         </ul>
@@ -524,7 +525,7 @@
 <!-- jQuery -->
 <script src="{{asset('front/js/vendor/jquery-3.1.0.min.js')}}"></script>
 <!-- Tooltipster -->
-<script src="{{asset('fromt/js/vendor/jquery.tooltipster.min.js')}}"></script>
+<script src="{{asset('front/js/vendor/jquery.tooltipster.min.js')}}"></script>
 <!-- Owl Carousel -->
 <script src="{{asset('front/js/vendor/owl.carousel.min.js')}}"></script>
 <!-- Tweet -->
@@ -541,19 +542,23 @@
 <script src="{{asset('front/js/footer.js')}}"></script>
 
 
-<!-- Magnific Popup -->
-<script src="{{asset('front/dashboard-js/vendor/jquery.magnific-popup.min.js')}}"></script>
-<!-- imgLiquid -->
-<script src="{{asset('front/dashboard-js/vendor/imgLiquid-min.js')}}"></script>
-<!-- XM Pie Chart -->
-<script src="{{asset('front/dashboard-js/vendor/jquery.xmpiechart.min.js')}}"></script>
+{{--<!-- Magnific Popup -->--}}
+{{--<script src="{{asset('front/dashboard-js/vendor/jquery.magnific-popup.min.js')}}"></script>--}}
+{{--<!-- imgLiquid -->--}}
+{{--<script src="{{asset('front/dashboard-js/vendor/imgLiquid-min.js')}}"></script>--}}
+{{--<!-- XM Pie Chart -->--}}
+{{--<script src="{{asset('front/dashboard-js/vendor/jquery.xmpiechart.min.js')}}"></script>--}}
+<!-- Badges -->
+<script src="{{asset('front/js/badges.js')}}"></script>
 
-{{--<!-- Dashboard Header -->--}}
-{{--<script src="{{asset('front/dashboard-js/dashboard-header.js')}}"></script>--}}
-{{--<!-- Liquid -->--}}
-{{--<script src="{{asset('front/dashboard-js/liquid.js')}}"></script>--}}
-{{--<!-- Dashboard Purchases -->--}}
-{{--<script src="{{asset('front/dashboard-js/dashboard-purchases.js')}}"></script>--}}
+
+<!-- XM LineFill -->
+<script src="{{asset('front/js/vendor/jquery.xmlinefill.min.js')}}"></script>
+
+<script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+<script>
+    jalaliDatepicker.startWatch();
+</script>
 
 </body>
 </html>

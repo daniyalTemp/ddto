@@ -45,8 +45,9 @@ return new class extends Migration {
             $table->unsignedBigInteger('user')->nullable();
             $table->foreign('user')->references('id')->on('users')->onDelete(null)->onUpdate(null);
             $table->enum('status', ['initial', 'getData','waiting','printing','delivered' , 'cancel'])->default('initial');
-            $table->enum('paymentStatus', ['pay', 'waiting'])->default('waiting');
+            $table->enum('paymentStatus', ['pay', 'waiting',])->default('waiting');
             $table->string('cancelReason')->nullable();
+            $table->string('postalCode')->nullable();
             $table->text('comment')->nullable();
             $table->text('address')->nullable();
             $table->string('postRefCode')->nullable();

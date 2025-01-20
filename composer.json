@@ -9,7 +9,8 @@
         "hekmatinasser/verta": "^8.4",
         "laravel/framework": "^11.9",
         "laravel/socialite": "^5.16",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "ext-curl": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

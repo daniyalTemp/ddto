@@ -75,7 +75,7 @@
                     <!-- SHARE LINKS -->
 
                     <!-- /SHARE LINKS -->
-                    <a href="#" class="button mid dark spaced">لیست <span class="primary">سفارش ها</span></a>
+                    <a href="{{route('shop.userOrders')}}" class="button mid dark spaced">لیست <span class="primary">سفارش ها</span></a>
                 </div>
                 <!-- /SIDEBAR ITEM -->
 

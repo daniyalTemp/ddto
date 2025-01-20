@@ -5,7 +5,9 @@ namespace App\Http\Controllers\front;
 use App\Http\Controllers\Controller;
 use App\Models\order_product;
 use App\Models\orders;
+use App\Models\payments;
 use App\Models\products;
+use App\Utility\paymentHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -33,18 +35,22 @@ class orderController extends Controller
 //        dd($request->color);
         $order->totalPrice += $product->getSelectedPrice($request->color, $request->size, $request->material);
 //        $ids=$order->Products()->withPivot(['hashed'])->get();
-        $selectProduct = order_product::where('order_id', $order->id)->where('product_id' , $productId)->where('hashed' , $this->getHashedAttribute($product->id ,$request->color, $request->size, $request->material))->get();
-        if(count($selectProduct) > 0){
+        $selectProduct = order_product::where('order_id', $order->id)->where('product_id', $productId)->where('hashed', $this->getHashedAttribute($product->id, $request->color, $request->size, $request->material))->get();
+        if (count($selectProduct) > 0) {
             $selectProduct = $selectProduct[0];
             $selectProduct->update([
-                'count'=> $selectProduct->count+1,
-                'finalPrice'=> $selectProduct->finalPrice+$product->getSelectedPrice($request->color, $request->size, $request->material),
-                ]);
+                'count' => $selectProduct->count + 1,
+                'finalPrice' => $selectProduct->finalPrice + $product->getSelectedPrice($request->color, $request->size, $request->material),
+            ]);
             $selectProduct->save();
 //            dd($selectProduct);
-        }else{
-            $order->products()->attach($productId, ['color' => $request->color, 'size' => $request->size, 'material' => $request->material , 'finalPrice'=>$product->getSelectedPrice($request->color, $request->size, $request->material) ,'hashed'=>$this->getHashedAttribute($product->id ,$request->color, $request->size, $request->material)]);
+        } else {
+            $order->products()->attach($productId, ['color' => $request->color, 'size' => $request->size, 'material' => $request->material, 'finalPrice' => $product->getSelectedPrice($request->color, $request->size, $request->material), 'hashed' => $this->getHashedAttribute($product->id, $request->color, $request->size, $request->material)]);
         }
+        if (Auth::check())
+//            if (count($order->user()))
+            $order->user = Auth::user()->id;
+
 //        if(in_array($productId , $ids)){
 //       $keys = array_keys([$productId]);
 //            dd($keys);
@@ -54,10 +60,10 @@ class orderController extends Controller
         return redirect()->back()->cookie('ddtoOrderId', $order->id);
     }
 
-    private function getHashedAttribute($productId ,$requestColor, $requestSize, $requestMaterial)
+    private function getHashedAttribute($productId, $requestColor, $requestSize, $requestMaterial)
     {
 //        dd(json_decode($requestColor));
-        return md5(json_encode([$productId ,json_decode($requestColor)->name,json_decode($requestColor)->status, json_decode($requestSize)->name,json_decode($requestSize)->status, json_decode($requestMaterial)->name, json_decode($requestMaterial)->status]));
+        return md5(json_encode([$productId, json_decode($requestColor)->name, json_decode($requestColor)->status, json_decode($requestSize)->name, json_decode($requestSize)->status, json_decode($requestMaterial)->name, json_decode($requestMaterial)->status]));
 
     }
 
@@ -66,21 +72,21 @@ class orderController extends Controller
 //
 //        dd(json_decode($request->color));
 //        dd($orderId);
-        $order=orders::find($orderId);
-        $product=products::find($productId);
+        $order = orders::find($orderId);
+        $product = products::find($productId);
 
 
 //        dd($order->products->contains($productId));
-        if ($order->products->contains($productId)){
+        if ($order->products->contains($productId)) {
             $tempProducts = order_product::where('order_id', $order->id)
-                ->where('product_id' , $productId)
-                ->where('hashed' , $this->getHashedAttribute($product->id ,$request->color, $request->size, $request->material))
+                ->where('product_id', $productId)
+                ->where('hashed', $this->getHashedAttribute($product->id, $request->color, $request->size, $request->material))
                 ->get()->first();
-            if ($tempProducts != null){
-                if ($tempProducts->count > 1){
+            if ($tempProducts != null) {
+                if ($tempProducts->count > 1) {
                     $tempProducts->count--;
                     $tempProducts->save();
-                }else{
+                } else {
                     $tempProducts->delete();
                 }
 
@@ -89,30 +95,140 @@ class orderController extends Controller
         }
 //        dd(count($order->Products()->get()));
 
-        if (count($order->Products()->get())==0)
-        {
-            $order->update([
-                'status' => 'cancel',
-                'cancelReason' => 'سیستمی - خالی شدن سبد'
-            ]);
+        if (count($order->Products()->get()) == 0) {
+            $order->delete();
             Cookie::expire('ddtoOrderId');
         }
         return redirect()->back();
     }
-    public function userOrders(Request $request)
+
+    public function userOrders(Request $request, $status = -1)
     {
-        $user= Auth::user();
-        $orders= $user->Orders()->get();
-        $statistics=[
-          'initial'=>orders::where('status','initial')->count(),
-          'getData'=>orders::where('status','getData')->count(),
-          'waiting'=>orders::where('status','waiting')->count(),
-          'printing'=>orders::where('status','printing')->count(),
-          'delivered'=>orders::where('status','delivered')->count(),
-          'cancel'=>orders::where('status','cancel')->count(),
+
+//        dd(str_contains(url()->full(),));
+        $user = Auth::user();
+        if ($status == -1)
+            $orders = $user->Orders()->get();
+        else
+            $orders = $user->Orders()->where('status', $status)->get();
+
+//        dd($orders);
+        $statistics = [
+            'initial' => $user->Orders()->where('status', 'initial')->count(),
+            'getData' => $user->Orders()->where('status', 'getData')->count(),
+            'waiting' => $user->Orders()->where('status', 'waiting')->count(),
+            'printing' => $user->Orders()->where('status', 'printing')->count(),
+            'delivered' => $user->Orders()->where('status', 'delivered')->count(),
+            'cancel' => $user->Orders()->where('status', 'cancel')->count(),
         ];
+
 //        dd($statistics);
-        return view('front.user.orderList' ,compact('user','orders','statistics'));
+        return view('front.user.orderList', compact('user', 'orders', 'statistics'));
+
+    }
+
+    public function userOrder(Request $request, int $id)
+    {
+        $order = orders::find($id);
+        if ($order->user != Auth::user()->id)
+            abort(403);
+
+        return view('front.user.order', compact('order'));
+    }
+
+    public function checkOut(Request $request, int $id)
+    {
+
+
+        $order = orders::find($id);
+
+
+//dd(Cookie::get('ddtoOrderId'));
+        if ($order == null) {
+            $order = orders::find(Cookie::get('ddtoOrderId'));
+        }
+//        dd($order);
+        //        dd( json_decode($order->Products()->withPivot(['size', 'color', 'material', 'count', 'finalPrice'])->get()[0]->pivot->finalPrice));
+        return view('front.shop.orders.checkout', compact('order'));
+    }
+
+    public function completeOrder(Request $request, int $orderId)
+    {
+//        dd($request->all());
+        $valRules = [
+            'name' => 'required',
+            'address' => 'required',
+            'NationalCode' => 'required|numeric',
+            'phone' => 'required|digits:11',
+            'postalCode' => 'required|numeric',
+        ];
+        $valMassage = [
+            'name.required' => 'ورود نام الزامیست',
+            'NationalCode.required' => 'ورود کد ملی الزامیست',
+            'NationalCode.numeric' => 'کدملی  وارد شده معتبر نیست',
+            'postalCode.required' => 'ورود کد پستی الزامیست',
+            'postalCode.numeric' => 'کد پستی  وارد شده معتبر نیست',
+            'phone.required' => 'ورود تلفن الزامیست',
+            'address.required' => 'ورود آدرس الزامیست',
+            'phone.digits' => 'تلفن  وارد شده معتبر نیست',
+
+        ];
+        $this->validate($request, $valRules, $valMassage);
+
+        $order = orders::find($orderId);
+        $order->update([
+
+            'status' => 'getData',
+            'comment' => $request->comment,
+            'address' => $request->address,
+            'postalCode' => $request->postalCode,
+            'sendIn' => $request->sendIn,
+
+
+        ]);
+
+        return redirect()->route('shop.order.payment', $orderId);
+
+    }
+
+    public function payment(Request $request, int $orderId)
+    {
+        $order = orders::find($orderId);
+        $payment = new payments([
+            'order' => $order->id,
+            'amount' => $order->totalPrice,
+            'customData' => '',
+//        'card_holder',
+//        'trans_id',
+//        'shaparak_ID',
+//        'status',
+        ]);
+//payment
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://nextpay.org/nx/gateway/token',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => 'api_key='.paymentHelper::$api_key.
+                '&order_id='.$orderId.
+                '&customer_phone='.\auth()->user()->phone.
+                '&amount='.$order->totalPrice.
+                '.&custom_json_fields={ "productName":"Shoes752" , "id":52 }
+                &callback_uri=http://localhost/callback',
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+//        echo $response;
+        dd(json_decode($response));
 
     }
 }
