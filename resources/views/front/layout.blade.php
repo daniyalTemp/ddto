@@ -225,7 +225,7 @@
 
         <!-- DROPDOWN ITEM -->
         <li class="dropdown-item">
-            <a href="index.html">سوالات متداول</a>
+            <a href="{{route('faq.index')}}">سوالات متداول</a>
         </li>
         <!-- /DROPDOWN ITEM -->
 
@@ -355,7 +355,7 @@
 
                 <!-- MENU ITEM -->
                 <li class="menu-item">
-                    <a href="{{route('index')}}">سوالات متداول</a>
+                    <a href="{{route('faq.index')}}">سوالات متداول</a>
                 </li>
                 <!-- /MENU ITEM -->
 
@@ -538,23 +538,21 @@
 <script src="{{asset('front/js/tooltip.js')}}"></script>
 <!-- User Quickview Dropdown -->
 <script src="{{asset('front/js/user-board.js')}}"></script>
-<!-- Footer -->
-<script src="{{asset('front/js/footer.js')}}"></script>
 
-
-{{--<!-- Magnific Popup -->--}}
-{{--<script src="{{asset('front/dashboard-js/vendor/jquery.magnific-popup.min.js')}}"></script>--}}
-{{--<!-- imgLiquid -->--}}
-{{--<script src="{{asset('front/dashboard-js/vendor/imgLiquid-min.js')}}"></script>--}}
-{{--<!-- XM Pie Chart -->--}}
-{{--<script src="{{asset('front/dashboard-js/vendor/jquery.xmpiechart.min.js')}}"></script>--}}
-<!-- Badges -->
-<script src="{{asset('front/js/badges.js')}}"></script>
-
+<!-- XM Accordion -->
+<script src="{{asset('front/js/vendor/jquery.xmaccordion.min.js')}}"></script>
+<!-- XM Pie Chart -->
+<script src="{{asset('front/js/vendor/jquery.xmpiechart.min.js')}}"></script>
+<!-- XM Countdown -->
+<script src="{{asset('front/js/vendor/jquery.xmcountdown.min.js')}}"></script>
 
 <!-- XM LineFill -->
 <script src="{{asset('front/js/vendor/jquery.xmlinefill.min.js')}}"></script>
-
+<!-- Footer -->
+<script src="{{asset('front/js/footer.js')}}"></script>
+<script src="{{asset('front/js/badges.js')}}"></script>
+<script src="{{asset('front/js/auction-page.js')}}"></script>
+<script src="{{asset('front/js/post-tab.js')}}"></script>
 <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
 <script>
     jalaliDatepicker.startWatch();

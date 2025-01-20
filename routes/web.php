@@ -8,6 +8,7 @@ Route::get('/', function () {
 Route::middleware(\App\Http\Middleware\configFront::class)->namespace('App\Http\Controllers\front')->group(function () {
     Route::get('/', 'homePageController@index')->name('index');
     Route::get('/profile', 'userController@profile')->name('profile');
+    Route::get('/profile', 'userController@profile')->name('profile');
     Route::post('/profile', 'userController@profileSave')->name('profileSave');
     Route::prefix('shop')->group(function () {
 
@@ -26,6 +27,12 @@ Route::middleware(\App\Http\Middleware\configFront::class)->namespace('App\Http\
 //            Route::get('/{id}', 'shopController@product')->name('shop.product');
 
         });
+    });
+    Route::prefix('faq')->group(function () {
+
+        Route::get('/', 'faqController@index')->name('faq.index');
+
+
     });
 
 });
@@ -59,6 +66,15 @@ Route::prefix('panel')->middleware(['auth',\App\Http\Middleware\getConfigForAll:
         Route::get('/', 'configController@showConfig')->name('dashboard.config');
         Route::post('/', 'configController@saveConfig')->name('dashboard.saveConfig');
         Route::post('/saveService', 'configController@saveservice')->name('dashboard.saveService');
+    });
+    Route::prefix('faq')->group(function () {
+        Route::get('/', 'faqController@index')->name('dashboard.faq');
+        Route::get('/add', 'faqController@add')->name('dashboard.faq.add');
+        Route::get('/edit/{id}', 'faqController@edit')->name('dashboard.faq.edit');
+        Route::get('/del/{id}', 'faqController@del')->name('dashboard.faq.del');
+        Route::post('/save/{id}', 'faqController@save')->name('dashboard.faq.save');
+//        Route::post('/', 'configController@saveConfig')->name('dashboard.saveConfig');
+//        Route::post('/saveService', 'configController@saveservice')->name('dashboard.saveService');
     });
     //shop
     Route::prefix('shop')->group(function () {
