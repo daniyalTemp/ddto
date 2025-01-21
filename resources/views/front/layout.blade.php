@@ -368,8 +368,9 @@
 
             </ul>
         </nav>
-        <form class="search-form">
-            <input type="text" class="rounded" name="search" id="search_products" placeholder="جستجوی محصولات">
+        <form class="search-form" method="get" action="{{route('search' , -1)}}">
+            {{csrf_field()}}
+            <input type="text" class="rounded" name="inq" id="search_products" placeholder="جستجوی محصولات">
             <input type="image" src="{{asset('front/images/search-icon.png')}}" alt="search-icon">
         </form>
     </div>
@@ -389,20 +390,21 @@
                 <figure class="logo small">
                     <img src="{{asset('front/images/logo-white.png')}}" alt="logo-small">
                 </figure>
-                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ. و با استفاده از طراحان گرافیک است. چاپگرها
-                    و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
+                <p>
+                    جایی که رویاهای شما ساخته می شوند
+                </p>
                 <ul class="company-info-list">
                     <li class="company-info-item">
                         <span class="icon-present"></span>
-                        <p><span>850.296</span> محصولات</p>
+                        <p><span>{{number_format($footerStat['orderCount'])}}</span> سفارش </p>
                     </li>
                     <li class="company-info-item">
                         <span class="icon-energy"></span>
-                        <p><span>1.207.300</span> اعضاء</p>
+                        <p><span>{{number_format($footerStat['productCount'])}}</span> محصول </p>
                     </li>
                     <li class="company-info-item">
                         <span class="icon-user"></span>
-                        <p><span>74.059</span> فروشندگان</p>
+                        <p><span>{{number_format($footerStat['userCount'])}}</span> کاربر </p>
                     </li>
                 </ul>
                 <!-- SOCIAL LINKS -->
@@ -419,38 +421,9 @@
             <!-- /COMPANY INFO -->
 
 
-            <!-- LINK INFO -->
-            <div class="link-info">
-                <p class="footer-title">راهنما و سوالات متداول</p>
-                <!-- LINK LIST -->
-                <ul class="link-list">
-                    <li class="link-item">
-                        <div class="bullet"></div>
-                        <a href="#">مرکز راهنمایی</a>
-                    </li>
-                    <li class="link-item">
-                        <div class="bullet"></div>
-                        <a href="#">سوالات متداول</a>
-                    </li>
-                    <li class="link-item">
-                        <div class="bullet"></div>
-                        <a href="#">شرایط و ضوابط</a>
-                    </li>
-                    <li class="link-item">
-                        <div class="bullet"></div>
-                        <a href="#">لایسنس محصولات</a>
-                    </li>
-                    <li class="link-item">
-                        <div class="bullet"></div>
-                        <a href="#">امنیت اطلاعات</a>
-                    </li>
-                </ul>
-                <!-- /LINK LIST -->
-            </div>
-            <!-- /LINK INFO -->
 
             <!-- LINK INFO -->
-            <div class="link-info" style="color:white;margin: 0;width: 50%;">
+            <div class="link-info" style="color:white;margin: 0;width: 70%;">
                 <p class="footer-title">ثبت نظر </p>
                 <!-- LINK LIST -->
                 <div class="form-popup-content">
@@ -458,7 +431,8 @@
                     <!-- LINE SEPARATOR -->
                     <hr class="line-separator">
                     <!-- /LINE SEPARATOR -->
-                    <form id="register-form2">
+                    <form id="register-form2" action="{{route('sendComment')}}" method="post">
+                        {{csrf_field()}}
                         <label for="name" class="label ">نام و نام خانوادگی</label>
                         <input type="text" id="name" name="name"
                                placeholder="نام کامل ">
@@ -466,8 +440,10 @@
                         <input type="text" id="phone" name="phone"
                                placeholder="تلفن">
                         <label for="msg" class="label ">متن پیام</label>
-                        <input type="text" id="msg" name="msg"
+                        <textarea type="text" id="msg" name="msg"
                         >
+                        </textarea>
+                        <br>
                         <br>
                         <button class="button mid primary btn-block" style="width: 100%"> ارسال</button>
                     </form>

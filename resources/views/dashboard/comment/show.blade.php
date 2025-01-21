@@ -16,15 +16,15 @@
                             <div class="card-body">
                                 <div class="row text-center">
 
-                                    <div class="col-lg-4 col-xl-4 col-sm-12 mt-4">
+                                    <div class="col-lg-6 col-xl-6 col-sm-12 mt-4">
                                         <div class="bgl-primary rounded p-3">
-                                            <h4 class="mb-0">{{$comment->firstName.' '.$comment->lastName}}</h4>
+                                            <h4 class="mb-0">{{$comment->name}}</h4>
                                             <small>نام و نام خانوادگی</small>
                                         </div>
                                     </div>
 
 
-                                    <div class="col-lg-4 col-xl-4 col-sm-12 mt-4">
+                                    <div class="col-lg-6 col-xl-6 col-sm-12 mt-4">
                                         <div class="bgl-primary rounded p-3">
                                             <h4 class="mb-0">{{$comment->phone}}</h4>
                                             <small>تلفن همراه</small>
@@ -32,19 +32,14 @@
                                     </div>
 
 
-                                    <div class="col-lg-4 col-xl-4 col-sm-12 mt-4">
+                                    <div class="col-lg-3 col-xl-3 col-sm-12 mt-4">
 
                                         <div class="bgl-primary rounded p-3">
                                             <h4 class="mb-0">{{$comment->email}}</h4>
                                             <small>ایمیل</small>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-xl-3 col-sm-12 mt-4">
-                                        <div class="bgl-primary rounded p-3">
-                                            <h4 class="mb-0">{{$comment->email}}</h4>
-                                            <small>ایمیل</small>
-                                        </div>
-                                    </div>
+
 
                                     <div class="col-lg-3 col-xl-3 col-sm-12 mt-4">
                                         <div class="bgl-primary rounded p-3">

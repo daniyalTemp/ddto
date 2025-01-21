@@ -23,6 +23,7 @@
                                 <th>وضعیت</th>
                                 <th>نام</th>
                                 <th>تلقن</th>
+                                <th>نمایش</th>
 
                                 <th>تاریخ ثبت</th>
                                 <th>عملیات</th>
@@ -52,8 +53,20 @@
                                             @endif
                                             </td>
 
-                                        <td>{{$comment->firstName .' '.$comment->lastName}}</td>
+                                        <td>{{$comment->name}}</td>
                                         <td><a href="javascript:void(0);"><strong>{{$comment->phone}}</strong></a></td>
+                                        <td>
+                                            @if($comment->showInWebsite)
+                                                <a href="#" class="btn btn-success shadow btn-xs sharp"    ><i
+                                                        class="fa fa-check-circle"></i></a>
+
+                                            @else
+                                                <a href="#" class="btn btn-danger shadow btn-xs sharp"    ><i
+                                                        class="fa fa-crosshairs"></i></a>
+
+                                            @endif
+
+                                        </td>
                                         <td>{{verta($comment->created_at)->format('Y/m/d - H:i:s')}}</td>
                                         <td>
                                             <div class="d-flex">

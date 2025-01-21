@@ -8,7 +8,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">لیست سوالات متداول </h4>
+                    <h4 class="card-title">لیست دسته بندی وبلاگ  </h4>
                 </div>
                 <div class="card-body">
                     @include('error')
@@ -19,54 +19,44 @@
                             <tr>
                                 <th></th>
                                 <th>عنوان</th>
-                                <th>نمایش در سایت</th>
                                 <th>عملیات</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @if(isset($faqs))
-                                @foreach($faqs as $faq)
+                            @if(isset($cats))
+                                @foreach($cats as $cat)
                                     <tr>
-                                        <td>{{$faq->id}}</td>
-                                        <td>{{$faq->title}}</td>
-                                        <td>
+                                        <td>{{$cat->id}}</td>
+                                        <td>{{$cat->name}}</td>
 
-                                            @if(boolval($faq->show) )
-                                                <a href="#" class="btn btn-success shadow btn-xs sharp" ><i
-                                                        class="fa fa-check-circle"></i></a>
-                                            @else
-                                                <a href="#" class="btn btn-danger shadow btn-xs sharp"><i
-                                                        class="fa fa-crosshairs"></i></a>
-                                            @endif
-                                        </td>
                                         <td>
                                             <div class="d-flex">
-                                                <a href="{{route('dashboard.faq.edit' , $faq->id)}}" class="btn btn-primary shadow btn-xs sharp mr-1"><i
+                                                <a href="{{route('dashboard.blog.category.edit' , $cat->id)}}" class="btn btn-primary shadow btn-xs sharp mr-1"><i
                                                         class="fa fa-pencil"></i></a>
-                                                <a href="#" class="btn btn-danger shadow btn-xs sharp"   data-toggle="modal" data-target="#delete{{$faq->id}}" ><i
+                                                <a href="#" class="btn btn-danger shadow btn-xs sharp"   data-toggle="modal" data-target="#delete{{$cat->id}}" ><i
                                                         class="fa fa-trash"></i></a>
 
 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="delete{{$faq->id}}">
+                                                <div class="modal fade" id="delete{{$cat->id}}">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title">حذف کاربر</h5>
+                                                                <h5 class="modal-title">حذف دسته بندی </h5>
                                                                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>
                                                                     ایا از حذف آیتم
-                                                                    {{$faq->title}}
+                                                                    {{$cat->name}}
 
                                                                     اطمینان دارید؟
                                                                 </p>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-dark light" data-dismiss="modal">بستن</button>
-                                                                <a href="{{route('dashboard.faq.del' , $faq->id)}}" class="btn btn-danger">حذف</a>
+                                                                <a href="{{route('dashboard.blog.category.delete' , $cat->id)}}" class="btn btn-danger">حذف</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -83,7 +73,7 @@
                         </table>
 
                         <div class="card-body col-4 pull-left">
-                            <a type="button" href="{{route('dashboard.faq.add')}}" class="btn btn-rounded btn-block btn-primary"><span
+                            <a type="button" href="{{route('dashboard.blog.category.add')}}" class="btn btn-rounded btn-block btn-primary"><span
                                     class="btn-icon-left text-info"><i class="fa fa-plus color-info"></i>
                                     </span>افزودن
                             </a>

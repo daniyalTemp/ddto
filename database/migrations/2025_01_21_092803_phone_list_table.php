@@ -11,15 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('phone_list', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
             $table->string('phone')->nullable();
-            $table->text('msg')->nullable();
-            $table->enum('type', ['comment' , 'contact'])->default('contact');
-            $table->boolean('showInWebsite')->default(false);
-            $table->boolean('seen')->default(false);
-            $table->text('adminNote')->nullable();
             $table->timestamps();
         });
     }

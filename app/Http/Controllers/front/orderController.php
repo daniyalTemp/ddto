@@ -205,30 +205,25 @@ class orderController extends Controller
         ]);
 //payment
 
-        $curl = curl_init();
+        $response = zarinpal()
+            ->merchantId('77ff43f2-2ae9-4112-8c92-cfc833d593c8') // تعیین مرچنت کد در حین اجرا - اختیاری
+            ->amount(100) // مبلغ تراکنش
+            ->request()
+            ->description('transaction info') // توضیحات تراکنش
+            ->callbackUrl('http://domain.com/verification') // آدرس برگشت پس از پرداخت
+            ->mobile('09123456789') // شماره موبایل مشتری - اختیاری
+            ->email('name@domain.com') // ایمیل مشتری - اختیاری
+            ->send();
+//    dd($response);
+        if (!$response->success()) {
+            return $response->error()->message();
+        }
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://nextpay.org/nx/gateway/token',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => 'api_key='.paymentHelper::$api_key.
-                '&order_id='.$orderId.
-                '&customer_phone='.\auth()->user()->phone.
-                '&amount='.$order->totalPrice.
-                '.&custom_json_fields={ "productName":"Shoes752" , "id":52 }
-                &callback_uri=http://localhost/callback',
-        ));
+// ذخیره اطلاعات در دیتابیس
+// $response->authority();
 
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-//        echo $response;
-        dd(json_decode($response));
+// هدایت مشتری به درگاه پرداخت
+        return $response->redirect();
 
     }
 }

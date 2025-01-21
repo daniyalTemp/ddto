@@ -14,11 +14,11 @@
 
             <!-- SEARCH WIDGET -->
             <div class="search-widget">
-                <form class="search-widget-form">
-                    <input type="text" name="category_name" placeholder="جستجوی محصولات و یا خدمات">
+                <form class="search-widget-form" method="get"  action="{{route('search' )}}">
+                    <input type="text" name="inq" placeholder="جستجوی محصولات و یا خدمات">
                     <label for="categories" class="select-block">
                         <select name="categories" id="categories">
-                            <option value="0">تمام دسته بندیها</option>
+                            <option value="-1">تمام دسته بندیها</option>
                             @if(isset($categoryList))
                                 @foreach($categoryList as $searchCat)
                                     <option value="{{$searchCat->id}}">{{$searchCat->name}}</option>
@@ -165,8 +165,8 @@
                 <!-- PRODUCT LIST -->
                 <div id="pl-1" class="product-list grid column4-wrap owl-carousel">
 {{--@dd(is_null($hotProducts))--}}
-                        @if(count($hotProducts)>0)
-                            @foreach($hotProducts as $hProduct)
+                        @if(count($newProducts)>0)
+                            @foreach($newProducts as $nProduct)
                                 <!-- PRODUCT ITEM -->
                                 <div class="product-item column">
                                     <!-- PRODUCT PREVIEW ACTIONS -->
@@ -175,8 +175,8 @@
                                         <figure class="product-preview-image">
                                             <img style="width: 258px;
                                             height: 150px; "
-                                                 src="{{asset('storage/images/products/'.$hProduct->id.'/'.$hProduct->image)}}"
-                                                 alt="{{$hProduct->name}}">
+                                                 src="{{asset('storage/images/products/'.$nProduct->id.'/'.$nProduct->image)}}"
+                                                 alt="{{$nProduct->name}}">
                                         </figure>
                                         <!-- /PRODUCT PREVIEW IMAGE -->
 
@@ -184,12 +184,12 @@
                                         <div class="preview-actions ">
                                             <!-- PREVIEW ACTION -->
                                             <div class="preview-action" style="  right: 110px;">
-                                                <a href="{{route('shop.product' , $hProduct->id)}}">
+                                                <a href="{{route('shop.product' , $nProduct->id)}}">
                                                     <div class="circle tiny primary">
                                                         <span class="icon-tag"></span>
                                                     </div>
                                                 </a>
-                                                <a href="{{route('shop.product' , $hProduct->id)}}" >
+                                                <a href="{{route('shop.product' , $nProduct->id)}}" >
                                                 <p>نمایش</p>
                                                 </a>
                                             </div>
@@ -203,19 +203,19 @@
                                     <!-- PRODUCT INFO -->
                                     <div class="product-info">
                                         <a href="#">
-                                            <p class="text-header">{{$hProduct->name}}</p>
+                                            <p class="text-header">{{$nProduct->name}}</p>
                                         </a>
                                         <p class="product-description">
-                                            @foreach($hProduct->material as $material)
+                                            @foreach($nProduct->material as $material)
                                                 <span>{{$material['name']}}</span>
                                             @endforeach
                                         </p>
                                         <a href="shop-gridview-v1.html">
-                                            <p class="category primary">{{$hProduct->Category()->get()->first()->name}}</p>
+                                            <p class="category primary">{{$nProduct->Category()->get()->first()->name}}</p>
                                         </a>
                                         <p class="price">
 
-                                            {{number_format($hProduct->BasePrice)}}
+                                            {{number_format($nProduct->BasePrice)}}
                                             <span>تومان</span>
 
                                         </p>
@@ -226,7 +226,7 @@
                                     <!-- USER RATING -->
                                     <div class="user-rating">
                                         <a href="author-profile.html">
-                                            @foreach($hProduct->color as $color)
+                                            @foreach($nProduct->color as $color)
 
                                                 <figure class="user-avatar small">
                                                     <div
@@ -235,7 +235,7 @@
                                             @endforeach
                                         </a>
                                         <p class="price" style="padding-top: 2px">
-                                            @foreach($hProduct->size as $size)
+                                            @foreach($nProduct->size as $size)
                                                 <span
                                                     style="border: solid 1px;border-color: #0ae7c2;border-radius: 30%;">{{$size['name']}}</span>
                                             @endforeach
@@ -291,8 +291,8 @@
                 <div id="pl-5" class="product-list grid column4-wrap owl-carousel">
 
 
-                        @if(count($newProducts)>0)
-                            @foreach($newProducts as $nProduct)
+                        @if(count($hotProducts)>0)
+                            @foreach($hotProducts as $hotProducts)
                                 <!-- PRODUCT ITEM -->
                                 <div class="product-item column">
                                     <!-- PRODUCT PREVIEW ACTIONS -->
@@ -301,8 +301,8 @@
                                         <figure class="product-preview-image">
                                             <img style="width: 258px;
                                             height: 150px; "
-                                                 src="{{asset('storage/images/products/'.$nProduct->id.'/'.$nProduct->image)}}"
-                                                 alt="{{$nProduct->name}}">
+                                                 src="{{asset('storage/images/products/'.$hotProducts->id.'/'.$hotProducts->image)}}"
+                                                 alt="{{$hotProducts->name}}">
                                         </figure>
                                         <!-- /PRODUCT PREVIEW IMAGE -->
 
@@ -310,12 +310,12 @@
                                         <div class="preview-actions ">
                                             <!-- PREVIEW ACTION -->
                                             <div class="preview-action" style="  right: 110px;">
-                                                <a href="{{route('shop.product' , $nProduct->id)}}">
+                                                <a href="{{route('shop.product' , $hotProducts->id)}}">
                                                     <div class="circle tiny primary">
                                                         <span class="icon-tag"></span>
                                                     </div>
                                                 </a>
-                                                <a href="{{route('shop.product' , $nProduct->id)}}" >
+                                                <a href="{{route('shop.product' , $hotProducts->id)}}" >
                                                     <p>نمایش</p>
                                                 </a>
                                             </div>
@@ -329,19 +329,19 @@
                                     <!-- PRODUCT INFO -->
                                     <div class="product-info">
                                         <a href="#">
-                                            <p class="text-header">{{$nProduct->name}}</p>
+                                            <p class="text-header">{{$hotProducts->name}}</p>
                                         </a>
                                         <p class="product-description">
-                                            @foreach($nProduct->material as $material)
+                                            @foreach($hotProducts->material as $material)
                                                 <span>{{$material['name']}}</span>
                                             @endforeach
                                         </p>
                                         <a href="shop-gridview-v1.html">
-                                            <p class="category tertiary">{{$nProduct->Category()->get()->first()->name}}</p>
+                                            <p class="category tertiary">{{$hotProducts->Category()->get()->first()->name}}</p>
                                         </a>
                                         <p class="price">
 
-                                            {{number_format($nProduct->BasePrice)}}
+                                            {{number_format($hotProducts->BasePrice)}}
                                             <span>تومان</span>
 
                                         </p>
@@ -352,7 +352,7 @@
                                     <!-- USER RATING -->
                                     <div class="user-rating">
                                         <a href="author-profile.html">
-                                            @foreach($nProduct->color as $color)
+                                            @foreach($hotProducts->color as $color)
 
                                                 <figure class="user-avatar small">
                                                     <div
@@ -361,7 +361,7 @@
                                             @endforeach
                                         </a>
                                         <p class="price" style="padding-top: 2px">
-                                            @foreach($nProduct->size as $size)
+                                            @foreach($hotProducts->size as $size)
                                                 <span
                                                     style="border: solid 1px;border-color: #0ae7c2;border-radius: 30%;">{{$size['name']}}</span>
                                             @endforeach
@@ -402,8 +402,9 @@
                 <!-- /SUBSCRIBE HEADER -->
 
                 <!-- SUBSCRIBE FORM -->
-                <form class="subscribe-form">
-                    <input type="text" name="subscribe_email" id="subscribe_email" placeholder="شماره تلفن">
+                <form class="subscribe-form" method="post" action="{{route('addPhone')}}">
+                    {{csrf_field()}}
+                    <input type="text" name="phone" id="phone" placeholder="شماره تلفن">
                     <button class="button medium dark">ثبت</button>
                 </form>
                 <!-- /SUBSCRIBE FORM -->

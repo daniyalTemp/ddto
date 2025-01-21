@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use App\Models\category;
 use App\Models\orders;
+use App\Models\products;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -43,6 +45,12 @@ class configFront
             $shareList['card'] = $card;
 
         }
+        $footerStat = [
+            'orderCount' => orders::all()->count(),
+            'userCount' => User::all()->count(),
+            'productCount'=>products::all()->count(),
+        ];
+        $shareList['footerStat'] = $footerStat;
 
 
         View::share($shareList);

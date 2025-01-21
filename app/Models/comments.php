@@ -8,9 +8,7 @@ class comments extends Model
 {
     protected $table = 'comments';
     protected $fillable = [
-        'firstName',
-        'lastName',
-        'email',
+        'name',
         'phone',
         'msg',
         'type',

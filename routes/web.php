@@ -7,6 +7,9 @@ Route::get('/', function () {
 });
 Route::middleware(\App\Http\Middleware\configFront::class)->namespace('App\Http\Controllers\front')->group(function () {
     Route::get('/', 'homePageController@index')->name('index');
+    Route::post('/comment', 'homePageController@sendComment')->name('sendComment');
+    Route::get('/search', 'homePageController@search')->name('search');
+    Route::post('/addPhone', 'homePageController@addPhone')->name('addPhone');
     Route::get('/profile', 'userController@profile')->name('profile');
     Route::get('/profile', 'userController@profile')->name('profile');
     Route::post('/profile', 'userController@profileSave')->name('profileSave');
@@ -76,6 +79,8 @@ Route::prefix('panel')->middleware(['auth',\App\Http\Middleware\getConfigForAll:
 //        Route::post('/', 'configController@saveConfig')->name('dashboard.saveConfig');
 //        Route::post('/saveService', 'configController@saveservice')->name('dashboard.saveService');
     });
+
+
     //shop
     Route::prefix('shop')->group(function () {
         //payments
@@ -121,5 +126,23 @@ Route::prefix('panel')->middleware(['auth',\App\Http\Middleware\getConfigForAll:
         Route::get('/showInWeb/{id}/{status}', 'commentController@showInWeb')->name('dashboard.comments.showInWeb');
         Route::post('/addNote/{id}', 'commentController@addNote')->name('dashboard.comments.addNote');
 
+    });
+    Route::prefix('phoneBook')->group(function () {
+        Route::get('/', 'phoneBookController@index')->name('dashboard.phoneBook.list');
+    });
+
+    Route::prefix('blog')->group(function () {
+        Route::prefix('category')->group(function () {
+            Route::get('/', 'blogController@catIndex')->name('dashboard.blog.category.list');
+            Route::get('/add', 'blogController@catAdd')->name('dashboard.blog.category.add');
+            Route::get('/edit/{id}', 'blogController@catEdit')->name('dashboard.blog.category.edit');
+            Route::post('/save/{id}', 'blogController@catSave')->name('dashboard.blog.category.save');
+            Route::get('/del/{id}', 'blogController@catDelete')->name('dashboard.blog.category.delete');
+        });
+        Route::get('/', 'blogController@index')->name('dashboard.blog.list');
+        Route::get('/add', 'blogController@add')->name('dashboard.blog.add');
+        Route::get('/edit/{id}', 'blogController@edit')->name('dashboard.blog.edit');
+        Route::post('/save/{id}', 'blogController@save')->name('dashboard.blog.save');
+        Route::get('/del/{id}', 'blogController@delete')->name('dashboard.blog.delete');
     });
 });
