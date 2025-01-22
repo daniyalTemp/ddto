@@ -231,7 +231,7 @@
 
         <!-- DROPDOWN ITEM -->
         <li class="dropdown-item">
-            <a href="index.html">وبلاگ </a>
+            <a href="{{route('blog.index')}}">وبلاگ </a>
         </li>
         <!-- /DROPDOWN ITEM -->
 
@@ -361,7 +361,7 @@
 
                 <!-- MENU ITEM -->
                 <li class="menu-item">
-                    <a href="{{route('index')}}">وبلاگ</a>
+                    <a href="{{route('blog.index')}}">وبلاگ</a>
                 </li>
                 <!-- /MENU ITEM -->
 

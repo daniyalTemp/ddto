@@ -56,7 +56,7 @@
                                                 class="custom-control col-12 custom-checkbox mb-3 checkbox-success">
                                                 <input type="checkbox"
                                                        class="custom-control-input"
-                                                       {{((isset($faq) && $faq->show )?'checked' : '')}}
+                                                       {{((isset($blog) && $blog->show )?'checked' : '')}}
 
                                                        id="show"
                                                        name="show">
@@ -88,7 +88,13 @@
 
                                                 @foreach($cats as $cat)
                                                     <option value="{{$cat->id}}"
-{{--                                                            selected="selected"--}}
+                                                            @foreach($blog->Category()->get(['category_id'])->toArray() as $selectedCat)
+                                                                @if($selectedCat['category_id'] == $cat->id)
+                                                                    selected="selected"
+
+                                                        @endif
+                                                            @endforeach
+
                                                     >{{$cat->name}}</option>
 
                                                 @endforeach

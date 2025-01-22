@@ -7,12 +7,14 @@ use App\Models\blogCategory;
 use App\Models\blogs;
 use App\Models\category;
 use Illuminate\Http\Request;
+use function Symfony\Component\String\b;
 
 class blogController extends Controller
 {
     public function index()
     {
         $blogs = blogs::all();
+
         return view('dashboard.blog.list', compact('blogs'));
     }
 
@@ -27,6 +29,7 @@ class blogController extends Controller
     {
 
         $blog = blogs::find($id);
+//        dd($blog->Category()->get(['category_id'])->toArray());
         $cats = blogCategory::all();
         return view('dashboard.blog.form', compact('blog', 'cats'));
     }
@@ -59,6 +62,7 @@ class blogController extends Controller
                 'title' => $request->title,
                 'text' => $request->text,
                 'seen' => $request->seen,
+                'show' => $request->has('show'),
             ]);
         } else {
             $blog = blogs::find($id);
@@ -66,10 +70,12 @@ class blogController extends Controller
                 'title' => $request->title,
                 'text' => $request->text,
                 'seen' => $request->seen,
+                'show' => $request->has('show'),
             ]);
         }
+//        dd();
         if ($request->has('cats') && count($request->cats) > 0 )
-//            $blog->Category()->sync([$request->cats]);
+            $blog->Category()->sync($request->cats);
         if ($request->files->count() > 0) {
             $blog->image = $request->file('image')->getClientOriginalName();
             $blog->save();

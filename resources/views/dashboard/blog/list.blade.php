@@ -33,10 +33,10 @@
                                         <td>
                                             @if($blog->show)
                                                 <a href="#" class="btn btn-success shadow btn-xs sharp"
-                                                   data-toggle="modal" data-target="#delete{{$blog->id}}"><i
+                                                   data-toggle="modal" ><i
                                                         class="fa fa-check-circle"></i></a>
                                             @else
-                                                <a href="#" class="btn btn-danger shadow btn-xs sharp"   data-toggle="modal" data-target="#delete{{$blog->id}}" ><i
+                                                <a href="#" class="btn btn-danger shadow btn-xs sharp"   ><i
                                                         class="fa fa-crosshairs"></i></a>
                                             @endif
                                         </td>

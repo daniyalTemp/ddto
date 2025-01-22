@@ -31,9 +31,17 @@ Route::middleware(\App\Http\Middleware\configFront::class)->namespace('App\Http\
 
         });
     });
+    //faq
     Route::prefix('faq')->group(function () {
-
         Route::get('/', 'faqController@index')->name('faq.index');
+    });
+
+    //blogs
+    Route::prefix('blog')->group(function () {
+
+        Route::get('/', 'blogController@index')->name('blog.index');
+        Route::get('/{id}', 'blogController@showPost')->name('blog.showPost');
+        Route::get('/category/{id}', 'blogController@categoryPostList')->name('blog.categoryPostList');
 
 
     });

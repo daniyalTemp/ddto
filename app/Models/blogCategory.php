@@ -11,6 +11,6 @@ class blogCategory extends Model
 
     public function Blog()
     {
-        return $this->belongsToMany('App\Models\blog','blog_category_pivot','category_id','blog_id');
+        return $this->belongsToMany(blogs::class,'blog_category_pivot','category_id','blog_id');
     }
 }
