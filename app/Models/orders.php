@@ -14,7 +14,7 @@ class orders extends Model
     protected $table = 'orders';
     public function user()
     {
-        dd($this);
+//        dd($this);
         return $this->belongsTo(User::class, 'user', 'id');
     }
     protected $fillable = [
@@ -32,6 +32,9 @@ class orders extends Model
     ];
     public function products(){
         return $this->belongsToMany(products::class, 'order_products', 'order_id', 'product_id');
+    }
+    public function payment(){
+        return $this->hasMany(payments::class , 'order');
     }
     protected $casts = [
        'sendIn'=>ShamsiTOMiladiDateCast::class,

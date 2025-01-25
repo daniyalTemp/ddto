@@ -54,7 +54,7 @@
                         @foreach($orders as $order)
                             <!-- BADGES SHOWCASE ITEM -->
                             <div class="badges-showcase-item column">
-                                <a href="#">
+                                <a href="{{route('shop.userOrder' , $order->id)}}">
                                 <figure class="badge big pinned liquid">
                                     <img src="{{asset('front/images/badges/community/master_b.png')}}" alt="">
                                 </figure>

@@ -8,7 +8,10 @@ class paymentStatus
     public $enStatus;
 
     private $list=[
+        'payed'=>'پرداخت شده',
         'pay'=>'پرداخت شده',
+        'failed'=>'پرداخت ناموفق',
+        'pending'=>'در انتظار پرداخت',
         'waiting'=>'در انتظار پرداخت'
 
     ];

@@ -13,13 +13,17 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->string('authority')->nullable()->unique();
             $table->string('amount')->nullable();
             $table->unsignedBigInteger('order');
             $table->foreign('order')->references('id')->on('orders');
+            $table->unsignedBigInteger('user');
+            $table->foreign('user')->references('id')->on('users');
             $table->text('customData')->nullable();
             $table->string('card_holder')->nullable();
-            $table->string('trans_id')->nullable();
-            $table->string('shaparak_ID')->nullable();
+            $table->string('refCode')->nullable();
+            $table->string('cardHash')->nullable();
+            $table->text('result')->nullable();
             $table->enum('status', ['pending' , 'payed' , 'failed'])->default('pending');
             $table->timestamps();
         });

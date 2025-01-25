@@ -80,7 +80,6 @@
                 <!-- /SIDEBAR ITEM -->
 
 
-
             </div>
             <!-- /SIDEBAR -->
 
@@ -89,19 +88,30 @@
                 <!-- HEADLINE -->
                 <div class="headline buttons primary">
                     <h4>ویرایش اطلاعات </h4>
-{{--                    <h4> @include('error') </h4>--}}
+                    {{--                    <h4> @include('error') </h4>--}}
+                </div>
+
+
+                @if(isset($errors) && count($errors)>0)
+                    <div class="headline buttons tertiary">
+                        @foreach ($errors->all() as $error)
+
+                            <label style="border-radius: 10%; width: 25%;float: right"
+                                   class="button small tertiary text-center spaced">
+                                {{$error}}
+                            </label>
+
+                        @endforeach
                     </div>
-
-
-
-                <form id="register-form2"   method="post">
+                @endif
+                <form id="register-form2" method="post"   enctype="multipart/form-data">
                     {{csrf_field()}}
                     <div style="float: right;width: 48%; ">
-                    <label for="firstName" class="label">نام </label>
-                    <input type="text" id="firstName" name="firstName"
-                           value="{{$user->firstName?$user->firstName : ''}}"
+                        <label for="firstName" class="label">نام </label>
+                        <input type="text" id="firstName" name="firstName"
+                               value="{{$user->firstName?$user->firstName : ''}}"
 
-                           placeholder="نام">
+                               placeholder="نام">
                     </div>
                     <div style="float: left;width: 48%">
                         <label for="lastName" class="label ">نام خانوادگی </label>
@@ -113,11 +123,11 @@
                     <br>
                     <br>
                     <div style="float: right;width: 48%;">
-                    <label for="NationalCode" class="label">کد ملی (جهت ارسال مرسولات)</label>
-                    <input type="text" id="NationalCode" name="NationalCode"
-                           value="{{$user->NationalCode?$user->NationalCode : ''}}"
+                        <label for="NationalCode" class="label">کد ملی (جهت ارسال مرسولات)</label>
+                        <input type="text" id="NationalCode" name="NationalCode"
+                               value="{{$user->NationalCode?$user->NationalCode : ''}}"
 
-                           placeholder="کدملی">
+                               placeholder="کدملی">
                     </div>
                     <div style="float: left;width: 48%">
                         <label for="phone" class="label">تلفن</label>
@@ -131,16 +141,16 @@
                     <br>
                     <br>
                     <div style="float: right;width: 48%;">
-                    <label for="cardNumber" class="label">شماره کارت </label>
-                    <input type="text" id="cardNumber" name="cardNumber"
-                           value="{{$user->cardNumber?$user->cardNumber : ''}}"
+                        <label for="cardNumber" class="label">شماره کارت </label>
+                        <input type="text" id="cardNumber" name="cardNumber"
+                               value="{{$user->cardNumber?$user->cardNumber : ''}}"
 
-                           placeholder="شماره کارت">
+                               placeholder="شماره کارت">
                     </div>
                     <div style="float: left;width: 48%">
                         <label for="password" class="label">رمز عبور (در صورت نیاز به تعویض)</label>
                         <input type="text" id="password" name="password"
-{{--                               value="{{$user->phone?$user->phone : ''}}"--}}
+                               {{--                               value="{{$user->phone?$user->phone : ''}}"--}}
 
                                placeholder="رمز عبور">
                     </div>
@@ -148,6 +158,17 @@
                     <br>
                     <br>
                     <br>
+                    <br>
+                    <br>
+                    <div style="float: left;width: 100% ; border:  solid 1px;border-radius: 5%">
+                        <label  for="image" style="float: right;margin-right:10px ;" class="label">عکس </label>
+
+                        <input type="file" id="image" style="float: left" name="image">
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+
                     <button class="button mid primary btn-block" style="width: 100%"> ذخیره</button>
                 </form>
 

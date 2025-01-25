@@ -120,7 +120,7 @@ class userController extends Controller
 
         }
         if ($request->get('cardNumber') != null) {
-            $valMassage = ['cardNumber.digits' => 'شماره کارت 16 مجاز نیست',
+            $valMassage = ['cardNumber.digits' => 'شماره کارت  مجاز نیست',
             ];
             $valRules = ['cardNumber' => 'digits:16',
 

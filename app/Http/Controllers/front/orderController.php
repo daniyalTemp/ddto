@@ -11,6 +11,7 @@ use App\Utility\paymentHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use function Symfony\Component\Translation\t;
 
 class orderController extends Controller
 {
@@ -73,6 +74,7 @@ class orderController extends Controller
 //        dd(json_decode($request->color));
 //        dd($orderId);
         $order = orders::find($orderId);
+//        dd($order);
         $product = products::find($productId);
 
 
@@ -82,10 +84,15 @@ class orderController extends Controller
                 ->where('product_id', $productId)
                 ->where('hashed', $this->getHashedAttribute($product->id, $request->color, $request->size, $request->material))
                 ->get()->first();
+//            dd($tempProducts->color);
+//            dd($tempProducts);
             if ($tempProducts != null) {
                 if ($tempProducts->count > 1) {
+                    $tempProducts->finalPrice -=($product->getSelectedPrice($tempProducts->color, $tempProducts->size,$tempProducts->material));
+                    $order->totalPrice -=($product->getSelectedPrice($tempProducts->color, $tempProducts->size,$tempProducts->material));
                     $tempProducts->count--;
                     $tempProducts->save();
+                    $order->save();
                 } else {
                     $tempProducts->delete();
                 }
@@ -99,6 +106,7 @@ class orderController extends Controller
             $order->delete();
             Cookie::expire('ddtoOrderId');
         }
+
         return redirect()->back();
     }
 
@@ -108,13 +116,16 @@ class orderController extends Controller
 //        dd(str_contains(url()->full(),));
         $user = Auth::user();
         if ($status == -1)
-            $orders = $user->Orders()->get();
+            $orders = $user->Orders()
+                ->where('status', 'getData')
+                ->orWhere('status', 'waiting')
+                ->orWhere('status', 'printing')
+                ->get();
         else
             $orders = $user->Orders()->where('status', $status)->get();
 
 //        dd($orders);
         $statistics = [
-            'initial' => $user->Orders()->where('status', 'initial')->count(),
             'getData' => $user->Orders()->where('status', 'getData')->count(),
             'waiting' => $user->Orders()->where('status', 'waiting')->count(),
             'printing' => $user->Orders()->where('status', 'printing')->count(),
@@ -133,7 +144,9 @@ class orderController extends Controller
         if ($order->user != Auth::user()->id)
             abort(403);
 
-        return view('front.user.order', compact('order'));
+        $payment = $order->payment()->get()->last();
+//        dd($order->Products()->withPivot(['size', 'color', 'material', 'count', 'finalPrice'])->get()[0]->getOriginal('pivot_size'));
+        return view('front.shop.orders.order', compact('order' , 'payment'));
     }
 
     public function checkOut(Request $request, int $id)
@@ -194,36 +207,12 @@ class orderController extends Controller
     public function payment(Request $request, int $orderId)
     {
         $order = orders::find($orderId);
-        $payment = new payments([
-            'order' => $order->id,
-            'amount' => $order->totalPrice,
-            'customData' => '',
-//        'card_holder',
-//        'trans_id',
-//        'shaparak_ID',
-//        'status',
+        $payment =payments::create([
+            'order'=>$order->id,
+            'user'=>$order->user()->get()->first()->id,
+            'amount'=>$order->totalPrice,
         ]);
-//payment
-
-        $response = zarinpal()
-            ->merchantId('77ff43f2-2ae9-4112-8c92-cfc833d593c8') // تعیین مرچنت کد در حین اجرا - اختیاری
-            ->amount(100) // مبلغ تراکنش
-            ->request()
-            ->description('transaction info') // توضیحات تراکنش
-            ->callbackUrl('http://domain.com/verification') // آدرس برگشت پس از پرداخت
-            ->mobile('09123456789') // شماره موبایل مشتری - اختیاری
-            ->email('name@domain.com') // ایمیل مشتری - اختیاری
-            ->send();
-//    dd($response);
-        if (!$response->success()) {
-            return $response->error()->message();
-        }
-
-// ذخیره اطلاعات در دیتابیس
-// $response->authority();
-
-// هدایت مشتری به درگاه پرداخت
-        return $response->redirect();
-
+//        dd($payment->order()->get()->first());
+        return paymentHelper::pay($payment);
     }
 }

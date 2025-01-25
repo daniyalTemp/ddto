@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/paymentCallBack', 'App\Http\Controllers\front\paymentController@callback')->name('payment.callback');
+
 Route::middleware(\App\Http\Middleware\configFront::class)->namespace('App\Http\Controllers\front')->group(function () {
     Route::get('/', 'homePageController@index')->name('index');
     Route::post('/comment', 'homePageController@sendComment')->name('sendComment');
@@ -13,6 +15,8 @@ Route::middleware(\App\Http\Middleware\configFront::class)->namespace('App\Http\
     Route::get('/profile', 'userController@profile')->name('profile');
     Route::get('/profile', 'userController@profile')->name('profile');
     Route::post('/profile', 'userController@profileSave')->name('profileSave');
+    Route::get('/paymentResult/{id}', 'App\Http\Controllers\front\paymentController@showResult')->name('payment.result');
+
     Route::prefix('shop')->group(function () {
 
         Route::get('/', 'shopController@index')->name('shop.index');
@@ -101,7 +105,9 @@ Route::prefix('panel')->middleware(['auth',\App\Http\Middleware\getConfigForAll:
             Route::get('/', 'orderController@index')->name('dashboard.shop.order.list');
             Route::get('/add', 'orderController@create')->name('dashboard.shop.order.add');
             Route::post('/save/{id}', 'orderController@store')->name('dashboard.shop.order.save');
-            Route::get('/edit/{id}', 'orderController@iedit')->name('dashboard.shop.order.edit');
+            Route::get('/edit/{id}', 'orderController@edit')->name('dashboard.shop.order.edit');
+            Route::get('/show/{id}', 'orderController@show')->name('dashboard.shop.order.show');
+//            Route::get('/del/{id}', 'orderController@del')->name('dashboard.shop.order.del');
 //            Route::get('/add', 'paymentController@create')->name('dashboard.shop.payment.add');
 
         });
