@@ -25,7 +25,8 @@ class orderController extends Controller
     }
     public function show($id){
         $order= orders::find($id);
-        return view('dashboard.shop.order.show' , compact('order'));
+        $payment= $order->payment()->get()->last();
+        return view('dashboard.shop.order.show' , compact('order' , 'payment'));
 
     }
     public function edit($id){
