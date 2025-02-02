@@ -36,6 +36,11 @@ class orders extends Model
     public function payment(){
         return $this->hasMany(payments::class , 'order');
     }
+    public function cancelBy()
+    {
+        return $this->belongsTo(User::class, 'cancelBy', 'id');
+
+    }
     protected $casts = [
        'sendIn'=>ShamsiTOMiladiDateCast::class,
         'address'=>addressCast::class,

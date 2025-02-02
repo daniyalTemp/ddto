@@ -9,7 +9,7 @@ class orderStatus
     public $colorStatus;
     public $panelColor;
     public $percentStatus;
-
+public $nextSep;
     private $list=[
         'initial'=>'ثبت اولیه',
         'getData'=>'در انتظار تکمیل اطلاعات و پرداخت',
@@ -30,7 +30,7 @@ class orderStatus
      private $panelColorList=[
         'initial'=>'dark',
         'getData'=>'dark',
-        'waiting'=>'blue',
+        'waiting'=>'warning',
         'printing'=>'primary',
         'delivered'=>'success',
         'cancel'=>'danger',
@@ -43,6 +43,14 @@ class orderStatus
         'delivered'=>100,
         'cancel'=>100,
     ];
+     private $nextStepList=[
+        'initial'=>'getData',
+        'getData'=> 'waiting',
+        'waiting'=>'printing',
+        'printing'=> 'delivered',
+        'delivered'=>'delivered',
+        'cancel'=>'cancel',
+    ];
 
     public function __construct($enStatus){
         $this->enStatus=$enStatus;
@@ -50,6 +58,7 @@ class orderStatus
         $this->colorStatus=$this->colorList[$this->enStatus];
         $this->panelColor=$this->panelColorList[$this->enStatus];
         $this->percentStatus=$this->percentList[$this->enStatus];
+        $this->nextSep=$this->nextStepList[$this->enStatus];
 
 
 //        var_dump($this);
