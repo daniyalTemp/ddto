@@ -112,7 +112,7 @@
                         </ul>
                         <!-- /DROPDOWN NOTIFICATIONS -->
                     <div style="float: left">
-                        <a href="#" class="button mid dark spaced">دریافت رسید</a>
+                        <a href="{{route('shop..order.receipt' ,$payment->order()->get()->first()->id )}}" class="button mid dark spaced">دریافت رسید</a>
                         <br>
                         <a href="{{route('shop.userOrders')}}" class="button mid dark spaced">لیست <span class="primary">سفارش ها</span></a>
 

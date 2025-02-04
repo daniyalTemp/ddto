@@ -8,30 +8,43 @@ Route::get('/', function () {
 Route::get('/paymentCallBack', 'App\Http\Controllers\front\paymentController@callback')->name('payment.callback');
 
 Route::middleware(\App\Http\Middleware\configFront::class)->namespace('App\Http\Controllers\front')->group(function () {
+
+
+    Route::middleware('auth')->group(function () {
+        Route::post('/addPhone', 'homePageController@addPhone')->name('addPhone');
+        Route::get('/profile', 'userController@profile')->name('profile');
+        Route::get('/profile', 'userController@profile')->name('profile');
+        Route::post('/profile', 'userController@profileSave')->name('profileSave');
+        Route::get('/paymentResult/{id}', 'App\Http\Controllers\front\paymentController@showResult')->name('payment.result');
+        Route::prefix('shop')->group(function () {
+
+            Route::get('/myOrders/{status?}', 'orderController@userOrders')->name('shop.userOrders');
+            Route::get('/myOrder/{id}', 'orderController@userOrder')->name('shop.userOrder');
+            Route::prefix('order')->group(function () {
+
+                Route::get('/checkOut/{id}', 'orderController@checkOut')->name('shop.order.checkOut');
+                Route::post('/checkOut/{orderId}', 'orderController@completeOrder')->name('shop.order.completeOrder');
+                Route::get('/payment/{orderId}', 'orderController@payment')->name('shop.order.payment');
+                Route::get('/receipt/{id}', 'orderController@receipt')->name('shop..order.receipt');
+
+            });
+        });
+    });
+
     Route::get('/', 'homePageController@index')->name('index');
     Route::post('/comment', 'homePageController@sendComment')->name('sendComment');
     Route::get('/search', 'homePageController@search')->name('search');
-    Route::post('/addPhone', 'homePageController@addPhone')->name('addPhone');
-    Route::get('/profile', 'userController@profile')->name('profile');
-    Route::get('/profile', 'userController@profile')->name('profile');
-    Route::post('/profile', 'userController@profileSave')->name('profileSave');
-    Route::get('/paymentResult/{id}', 'App\Http\Controllers\front\paymentController@showResult')->name('payment.result');
+
 
     Route::prefix('shop')->group(function () {
 
         Route::get('/', 'shopController@index')->name('shop.index');
-        Route::get('/myOrders/{status?}', 'orderController@userOrders')->name('shop.userOrders');
-        Route::get('/myOrder/{id}', 'orderController@userOrder')->name('shop.userOrder');
         Route::get('/category/{catId}', 'shopController@indexCatedory')->name('shop.index.category');
         Route::get('/{id}', 'shopController@product')->name('shop.product');
         Route::prefix('order')->group(function () {
             Route::post('/addCard/{product_Id}/{orderId}', 'orderController@addToChard')->name('shop.order.addCard');
             Route::get('/removeCard/{product_Id}/{orderId}', 'orderController@removeCard')->name('shop.order.removeCard');
 
-            Route::get('/checkOut/{id}', 'orderController@checkOut')->name('shop.order.checkOut');
-            Route::post('/checkOut/{orderId}', 'orderController@completeOrder')->name('shop.order.completeOrder');
-            Route::get('/payment/{orderId}', 'orderController@payment')->name('shop.order.payment');
-//            Route::get('/{id}', 'shopController@product')->name('shop.product');
 
         });
     });
@@ -57,14 +70,14 @@ Route::get('/logout', 'App\Http\Controllers\admin\userController@logout')->name(
 Route::get('/login', 'App\Http\Controllers\admin\userController@login')->name('login');
 Route::post('/login', 'App\Http\Controllers\admin\userController@doLogin')->name('doLogin');
 // Route to redirect to Google's OAuth page
-Route::get('/auth/google/redirect','App\Http\Controllers\front\userController@redirect')->name('auth.google.redirect');
-Route::get('/auth/google/callback','App\Http\Controllers\front\userController@callback')->name('auth.google.callback');
+Route::get('/auth/google/redirect', 'App\Http\Controllers\front\userController@redirect')->name('auth.google.redirect');
+Route::get('/auth/google/callback', 'App\Http\Controllers\front\userController@callback')->name('auth.google.callback');
 //
 //// Route to handle the callback from Google
 //Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
 
 //panel
-Route::prefix('panel')->middleware(['auth',\App\Http\Middleware\getConfigForAll::class])->namespace('App\Http\Controllers\admin')->group(function () {
+Route::prefix('panel')->middleware(['auth', \App\Http\Middleware\getConfigForAll::class, \App\Http\Middleware\adminOnly::class])->namespace('App\Http\Controllers\admin')->group(function () {
     Route::get('/', 'dashboardController@index')->name('dashboard.index');
 
 

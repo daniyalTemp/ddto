@@ -8,6 +8,8 @@ use App\Models\orders;
 use App\Models\payments;
 use App\Models\products;
 use App\Utility\paymentHelper;
+use App\Utility\PdfGenerator;
+use misterspelik\LaravelPdf\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -214,5 +216,19 @@ class orderController extends Controller
         ]);
 //        dd($payment->order()->get()->first());
         return paymentHelper::pay($payment);
+    }
+
+    public function receipt(Request $request, int $id)
+    {
+        $order=orders::find($id);
+
+//        return view('front.shop.orders.receipt', compact('order'));
+        $data = [
+            'order'=>$order,
+        ];
+        $pdf = PdfGenerator::loadView ('front.shop.orders.receipt' ,$data);
+
+        return $pdf->download('DDTO.shop-receipt-'.$order->id.'.pdf');
+
     }
 }
